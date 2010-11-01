@@ -1,0 +1,38 @@
+#!/bin/bash
+
+############## get from Info.plist
+function GetFromInfoPlist {
+	exec < "$1"
+	while read LINE; do
+		if [ "$OLDLINE" == "<key>$2</key>" ]; then
+			if [ "$3" == "string" ]; then
+				TEMPVAR=${LINE#<string>}
+				TEMPVAR=${TEMPVAR%</string>}
+			fi
+			if [ "$3" == "boolean" ]; then
+				TEMPVAR=${LINE#<}
+				TEMPVAR=${TEMPVAR%/>}
+			fi
+		fi
+		OLDLINE="$LINE"
+	done
+	echo "$TEMPVAR"
+}
+
+MACOSFOLD="$(dirname "$0")"
+SWMPREFIX="${MACOSFOLD%/*S}/Resources"
+INFOPLISTFILE="${MACOSFOLD%/*S}/Info.plist"
+
+######### Read Info.plist for all info needed from it
+GAME_ID="$(GetFromInfoPlist "$INFOPLISTFILE" "CFBundleName" "string")"
+DESCNAME="$(GetFromInfoPlist "$INFOPLISTFILE" "CFBundleDisplayName" "string")"
+
+SAVEPATH="${SWMPREFIX}/saves"
+GAMEPATH="${SWMPREFIX}/game"
+
+mkdir -p "${HOME}/Library/ScummvmSaveGame/${GAME_ID}" > /dev/null 2>&1
+/bin/ln -sfh "${HOME}/Library/ScummvmSaveGame/${GAME_ID}" "${SAVEPATH}" > /dev/null 2>&1
+
+echo "ScummvmWrapper: Starting ${DESCNAME}"
+"${MACOSFOLD}/scummvm" --savepath="$SAVEPATH" --path="$GAMEPATH" $GAME_ID
+echo "ScummvmWrapper: Finished ${DESCNAME}"
