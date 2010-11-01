@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>game.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.dotalux.scummwrapper.game_identifier</string>
+	<string>com.dotalux.scummwrapper.@</string>
 	<key>CFBundleName</key>
 	<string>game_identifier</string>
 	<key>CFBundlePackageType</key>
@@ -22,5 +22,9 @@
 	<string>Copyright dotalux.com</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SVWEnableSubtitles</key>
+	<true/>
+	<key>SVWFullScreen</key>
+	<false/>
 </dict>
 </plist>

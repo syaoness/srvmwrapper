@@ -26,13 +26,27 @@ INFOPLISTFILE="${MACOSFOLD%/*S}/Info.plist"
 ######### Read Info.plist for all info needed from it
 GAME_ID="$(GetFromInfoPlist "$INFOPLISTFILE" "CFBundleName" "string")"
 DESCNAME="$(GetFromInfoPlist "$INFOPLISTFILE" "CFBundleDisplayName" "string")"
+ENABLESUBS="$(GetFromInfoPlist "$INFOPLISTFILE" "SVWEnableSubtitles" "boolean")"
+FULLSCREENMODE="$(GetFromInfoPlist "$INFOPLISTFILE" "SVWFullScreen" "boolean")"
 
 SAVEPATH="${SWMPREFIX}/saves"
 GAMEPATH="${SWMPREFIX}/game"
 
-mkdir -p "${HOME}/Library/ScummvmSaveGame/${GAME_ID}" > /dev/null 2>&1
-/bin/ln -sfh "${HOME}/Library/ScummvmSaveGame/${GAME_ID}" "${SAVEPATH}" > /dev/null 2>&1
+if [ ! -f "${SAVEPATH}/.dontdeletethis" ]; then
+	mkdir -p "${HOME}/Library/ScummvmSaveGame/${GAME_ID}" > /dev/null 2>&1
+	/bin/ln -sfh "${HOME}/Library/ScummvmSaveGame/${GAME_ID}" "${SAVEPATH}" > /dev/null 2>&1
+fi
+
+if [ "${FULLSCREENMODE}" == "true" ]; then
+	ADDITIONALPARAMS=" --fullscreen"
+else
+	ADDITIONALPARAMS=" --no-fullscreen"
+fi
+
+if [ "${ENABLESUBS}" == "true" ]; then
+	ADDITIONALPARAMS="${ADDITIONALPARAMS} -n"
+fi
 
 echo "ScummvmWrapper: Starting ${DESCNAME}"
-"${MACOSFOLD}/scummvm" --savepath="$SAVEPATH" --path="$GAMEPATH" $GAME_ID
+"${MACOSFOLD}/scummvm" --savepath="$SAVEPATH" --path="$GAMEPATH" $ADDITIONALPARAMS $GAME_ID
 echo "ScummvmWrapper: Finished ${DESCNAME}"
