@@ -9,22 +9,34 @@
 	<key>CFBundleIconFile</key>
 	<string>game.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.dotalux.scummwrapper.@</string>
+	<string>com.dotalux.scummwrapper.game_identifier</string>
 	<key>CFBundleName</key>
 	<string>game_identifier</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>2.1-1.2.0</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>false</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright dotalux.com</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SVWAspectRatio</key>
+	<false/>
 	<key>SVWEnableSubtitles</key>
 	<true/>
 	<key>SVWFullScreen</key>
 	<false/>
+	<key>SVWGFXMode</key>
+	<string>1x</string>
+	<key>SVWLanguage</key>
+	<string>en</string>
+	<key>SVWMusicVolume</key>
+	<integer>192</integer>
+	<key>SVWSFXVolume</key>
+	<integer>192</integer>
+	<key>SVWSpeechVolume</key>
+	<integer>192</integer>
 </dict>
 </plist>
