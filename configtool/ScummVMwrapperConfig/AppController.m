@@ -116,18 +116,14 @@
 		aspectRatioCorrection = ((numTemp=[prefs valueForKey:@"SVWAspectRatio"]) != nil ?
 				[numTemp boolValue] : NO);
 
-		if( (strTemp=[prefs objectForKey:@"SVWGFXMode"]) != nil )
-			gfxMode = [[NSString alloc] initWithString:strTemp];
-		else
-			gfxMode = [[NSString alloc] init];
+		gfxMode = [[NSString alloc] initWithString:((strTemp=[prefs objectForKey:@"SVWGFXMode"]) != nil ?
+				strTemp : @"2x")];
 
 		enableSubtitles = ((numTemp=[prefs valueForKey:@"SVWEnableSubtitles"]) != nil ?
 				[numTemp boolValue] : YES);
 
-		if( (strTemp=[prefs objectForKey:@"SVWLanguage"]) != nil )
-			language = [[NSString alloc] initWithString:strTemp];
-		else
-			language = [[NSString alloc] init];
+		language = [[NSString alloc] initWithString:((strTemp=[prefs objectForKey:@"SVWLanguage"]) != nil ?
+				strTemp : @"en")];
 
 		musicVolume = [[NSNumber alloc] initWithInteger:
 				((numTemp=[prefs valueForKey:@"SVWMusicVolume"]) != nil ? [numTemp intValue] : 192)];
@@ -142,7 +138,7 @@
 		gameID = [[NSString alloc] init];
 		fullScreenMode = NO;
 		aspectRatioCorrection = NO;
-		gfxMode = [[NSString alloc] initWithString:@"1x"];
+		gfxMode = [[NSString alloc] initWithString:@"2x"];
 		enableSubtitles = YES;
 		language = [[NSString alloc] initWithString:@"en"];
 		musicVolume = [[NSNumber alloc] initWithInteger:192];
@@ -177,7 +173,7 @@
 	
 	[prefs setObject:gameName forKey:@"CFBundleDisplayName"];
 	[prefs setObject:gameID forKey:@"CFBundleName"];
-	[prefs setObject:[NSString stringWithFormat:@"com.dotalux.scummwrapper.@%", gameID]
+	[prefs setObject:[NSString stringWithFormat:@"com.dotalux.scummwrapper.%@", gameID]
 			forKey:@"CFBundleIdentifier"];
 	[prefs setObject:[NSNumber numberWithBool:fullScreenMode] forKey:@"SVWFullScreen"];
 	[prefs setObject:[NSNumber numberWithBool:aspectRatioCorrection] forKey:@"SVWAspectRatio"];

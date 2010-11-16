@@ -55,23 +55,23 @@ if [ "${ENABLESUBS}" == "true" ]; then
 	ADDITIONALPARAMS="${ADDITIONALPARAMS} --subtitles"
 fi
 
-if [ -z "${GFXMODE}" ]; then
+if [ -n "${GFXMODE}" ]; then
 	ADDITIONALPARAMS="${ADDITIONALPARAMS} --gfx-mode=${GFXMODE}"
 fi
 
-if [ -z "${LANGUAGE_ID}" ]; then
+if [ -n "${LANGUAGE_ID}" ]; then
 	ADDITIONALPARAMS="${ADDITIONALPARAMS} --language=${LANGUAGE_ID}"
 fi
 
-if [ -z "${MUSIC_VOLUME}" ]; then
+if [ -n "${MUSIC_VOLUME}" ]; then
 	ADDITIONALPARAMS="${ADDITIONALPARAMS} --music-volume=${MUSIC_VOLUME}"
 fi
 
-if [ -z "${SFX_VOLUME}" ]; then
+if [ -n "${SFX_VOLUME}" ]; then
 	ADDITIONALPARAMS="${ADDITIONALPARAMS} --sfx-volume=${SFX_VOLUME}"
 fi
 
-if [ -z "${SPEECH_VOLUME}" ]; then
+if [ -n "${SPEECH_VOLUME}" ]; then
 	ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-volume=${SPEECH_VOLUME}"
 fi
 
