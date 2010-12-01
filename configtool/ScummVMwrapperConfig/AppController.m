@@ -14,6 +14,20 @@
 - (id) init {
 	self = [super init];
 
+	gameName = nil;
+	gameID = nil;
+	saveIntoHome = YES;
+	fullScreenMode = NO;
+	aspectRatioCorrection = NO;
+	gfxMode = nil;
+	enableSubtitles = YES;
+	language = nil;
+	musicVolume = 0;
+	sfxVolume = 0;
+	speechVolume = 0;
+	iconChanged = NO;
+	gameIcon = nil;
+	
 	[self loadData];
 	
 	return self;
@@ -22,9 +36,11 @@
 - (void) dealloc {
 	[self saveData];
 
-	[gameName autorelease];
-	[gameID autorelease];
-	[gameIcon autorelease];
+	[gameName release];
+	[gameID release];
+	[gfxMode release];
+	[language release];
+	[gameIcon release];
 
 	[super dealloc];
 }
@@ -97,54 +113,52 @@
 			[NSString stringWithFormat:@"%@/../Contents/Info.plist", [mainBundle bundlePath]]];
 	filemanager = [NSFileManager defaultManager];
 	
+	[gameName autorelease];
+	[gameID autorelease];
+	fullScreenMode = NO;
+	aspectRatioCorrection = NO;
+	[gfxMode autorelease];
+	enableSubtitles = YES;
+	[language autorelease];
+	musicVolume = -1;
+	sfxVolume = -1;
+	speechVolume = -1;
+	[gameIcon autorelease];
 	if( prefs ) {
 		NSString *strTemp;
 		NSNumber *numTemp;
 
-		if( (strTemp=[prefs objectForKey:@"CFBundleDisplayName"]) != nil )
+		if( (strTemp=[prefs objectForKey:@"CFBundleDisplayName"]) )
 			gameName = [[NSString alloc] initWithString:strTemp];
-		else
-			gameName = [[NSString alloc] init];
-
-		if( (strTemp=[prefs objectForKey:@"CFBundleName"]) != nil )
+		if( (strTemp=[prefs objectForKey:@"CFBundleName"]) )
 			gameID = [[NSString alloc] initWithString:strTemp];
-		else
-			gameID = [[NSString alloc] init];
-
-		fullScreenMode = ((numTemp=[prefs valueForKey:@"SVWFullScreen"]) != nil ? [numTemp boolValue] : NO);
-
-		aspectRatioCorrection = ((numTemp=[prefs valueForKey:@"SVWAspectRatio"]) != nil ?
-				[numTemp boolValue] : NO);
-
-		gfxMode = [[NSString alloc] initWithString:((strTemp=[prefs objectForKey:@"SVWGFXMode"]) != nil ?
-				strTemp : @"2x")];
-
-		enableSubtitles = ((numTemp=[prefs valueForKey:@"SVWEnableSubtitles"]) != nil ?
-				[numTemp boolValue] : YES);
-
-		language = [[NSString alloc] initWithString:((strTemp=[prefs objectForKey:@"SVWLanguage"]) != nil ?
-				strTemp : @"en")];
-
-		musicVolume = [[NSNumber alloc] initWithInteger:
-				((numTemp=[prefs valueForKey:@"SVWMusicVolume"]) != nil ? [numTemp intValue] : 192)];
-
-		sfxVolume = [[NSNumber alloc] initWithInteger:
-				((numTemp=[prefs valueForKey:@"SVWSFXVolume"]) != nil ? [numTemp intValue] : 192)];
-
-		speechVolume = [[NSNumber alloc] initWithInteger:
-				((numTemp=[prefs valueForKey:@"SVWSpeechVolume"]) != nil ? [numTemp intValue] : 192)];
-	} else {
-		gameName = [[NSString alloc] init];
-		gameID = [[NSString alloc] init];
-		fullScreenMode = NO;
-		aspectRatioCorrection = NO;
-		gfxMode = [[NSString alloc] initWithString:@"2x"];
-		enableSubtitles = YES;
-		language = [[NSString alloc] initWithString:@"en"];
-		musicVolume = [[NSNumber alloc] initWithInteger:192];
-		sfxVolume = [[NSNumber alloc] initWithInteger:192];
-		speechVolume = [[NSNumber alloc] initWithInteger:192];
+		if( (numTemp=[prefs valueForKey:@"SVWFullScreen"]) )
+			fullScreenMode = [numTemp boolValue];
+		if( (numTemp=[prefs valueForKey:@"SVWAspectRatio"]) )
+			aspectRatioCorrection = [numTemp boolValue];
+		if( (strTemp=[prefs objectForKey:@"SVWGFXMode"]) )
+			gfxMode = [[NSString alloc] initWithString:strTemp];
+		if( (numTemp=[prefs valueForKey:@"SVWEnableSubtitles"]) )
+			enableSubtitles = [numTemp boolValue];
+		if( (strTemp=[prefs objectForKey:@"SVWLanguage"]) )
+			language = [[NSString alloc] initWithString:strTemp];
+		if( (numTemp=[prefs valueForKey:@"SVWMusicVolume"]) )
+			musicVolume = [numTemp intValue];
+		if( (numTemp=[prefs valueForKey:@"SVWSFXVolume"]) )
+			sfxVolume = [numTemp intValue];
+		if( (numTemp=[prefs valueForKey:@"SVWSpeechVolume"]) )
+			speechVolume = [numTemp intValue];
 	}
+	if( !gfxMode )
+		gfxMode = [[NSString alloc] initWithString:@"2x"];
+	if( !language )
+		language = [[NSString alloc] initWithString:@"en"];
+	if( musicVolume < 0 )
+		musicVolume = 192;
+	if( sfxVolume < 0 )
+		sfxVolume = 192;
+	if( speechVolume < 0 )
+		speechVolume = 192;
 	
 	saveIntoHome = ![filemanager fileExistsAtPath:
 			[NSString stringWithFormat:@"%@/../Contents/Resources/saves/.dontdeletethis",
@@ -167,22 +181,21 @@
 	mainBundle = [NSBundle mainBundle];
 	oldprefs = [NSDictionary dictionaryWithContentsOfFile:
 			[NSString stringWithFormat:@"%@/../Contents/Info.plist", [mainBundle bundlePath]]];
-	prefs = [NSMutableDictionary dictionaryWithCapacity:12];
-	[prefs addEntriesFromDictionary: oldprefs];
+	prefs = [NSMutableDictionary dictionaryWithDictionary:oldprefs];
 	filemanager = [NSFileManager defaultManager];
 	
-	[prefs setObject:gameName forKey:@"CFBundleDisplayName"];
-	[prefs setObject:gameID forKey:@"CFBundleName"];
+	[prefs setObject:(gameName ? gameName : @"") forKey:@"CFBundleDisplayName"];
+	[prefs setObject:(gameID ? gameID : @"") forKey:@"CFBundleName"];
 	[prefs setObject:[NSString stringWithFormat:@"com.dotalux.scummwrapper.%@", gameID]
 			forKey:@"CFBundleIdentifier"];
 	[prefs setObject:[NSNumber numberWithBool:fullScreenMode] forKey:@"SVWFullScreen"];
 	[prefs setObject:[NSNumber numberWithBool:aspectRatioCorrection] forKey:@"SVWAspectRatio"];
-	[prefs setObject:gfxMode forKey:@"SVWGFXMode"];
+	[prefs setObject:(gfxMode ? gfxMode : @"") forKey:@"SVWGFXMode"];
 	[prefs setObject:[NSNumber numberWithBool:enableSubtitles] forKey:@"SVWEnableSubtitles"];
-	[prefs setObject:language forKey:@"SVWLanguage"];
-	[prefs setObject:musicVolume forKey:@"SVWMusicVolume"];
-	[prefs setObject:sfxVolume forKey:@"SVWSFXVolume"];
-	[prefs setObject:speechVolume forKey:@"SVWSpeechVolume"];
+	[prefs setObject:(language ? language : @"") forKey:@"SVWLanguage"];
+	[prefs setObject:[NSNumber numberWithInt:musicVolume] forKey:@"SVWMusicVolume"];
+	[prefs setObject:[NSNumber numberWithInt:sfxVolume] forKey:@"SVWSFXVolume"];
+	[prefs setObject:[NSNumber numberWithInt:speechVolume] forKey:@"SVWSpeechVolume"];
 	
 	if( saveIntoHome ) {
 		[filemanager removeItemAtPath:[NSString stringWithFormat:@"%@/../Contents/Resources/saves",
@@ -205,7 +218,7 @@
 	[prefs writeToFile:[NSString stringWithFormat:@"%@/../Contents/Info.plist", [mainBundle bundlePath]]
 			atomically: YES];
 	
-	if( iconChanged && [gameIconWell filePath] != nil ) {
+	if( iconChanged && [gameIconWell filePath] ) {
 		[filemanager removeItemAtPath:[NSString stringWithFormat:@"%@/../Contents/Resources/old.icns",
 				[mainBundle bundlePath]] error:nil];
 		[filemanager moveItemAtPath:[NSString stringWithFormat:@"%@/../Contents/Resources/game.icns",
@@ -220,18 +233,18 @@
 }
 
 - (void) setGUI {
-	[gameNameLine setStringValue:gameName];
-	[gameIDLine setStringValue:gameID];
+	[gameNameLine setStringValue:(gameName ? gameName : @"")];
+	[gameIDLine setStringValue:(gameID ? gameID : @"")];
 	[savePathRadio selectCellWithTag:(saveIntoHome ? 1 : 0)];
-	[fullScreenModeCheck setState:[[NSNumber numberWithBool:fullScreenMode] integerValue]];
-	[aspectRatioCheck setState:[[NSNumber numberWithBool:aspectRatioCorrection] integerValue]];
-	[gfxModeLine setStringValue:gfxMode];
-	[enableSubtitlesCheck setState:[[NSNumber numberWithBool:enableSubtitles] integerValue]];
-	[languageLine setStringValue:language];
-	[musicVolumeSlider setIntegerValue:[musicVolume integerValue]];
-	[sfxVolumeSlider setIntegerValue:[sfxVolume integerValue]];
-	[speechVolumeSlider setIntegerValue:[speechVolume integerValue]];
-	if( gameIcon != nil ) {
+	[fullScreenModeCheck setState:(fullScreenMode ? NSOnState : NSOffState)];
+	[aspectRatioCheck setState:(aspectRatioCorrection ? NSOnState : NSOffState)];
+	[gfxModeLine setStringValue:(gfxMode ? gfxMode : @"")];
+	[enableSubtitlesCheck setState:(enableSubtitles ? NSOnState : NSOffState)];
+	[languageLine setStringValue:(language ? language : @"")];
+	[musicVolumeSlider setIntValue:musicVolume];
+	[sfxVolumeSlider setIntValue:sfxVolume];
+	[speechVolumeSlider setIntValue:speechVolume];
+	if( gameIcon ) {
 		[gameIconWell setImage:gameIcon];
 		[gameIconWell setFilePath:[NSString stringWithFormat:@"%@/../Contents/Resources/game.icns",
 				[[NSBundle mainBundle] bundlePath]]];
@@ -300,17 +313,17 @@
 }
 
 - (IBAction) editMusicVolume: (id)sender {
-	musicVolume = [[NSNumber alloc] initWithInteger:[sender intValue]];
+	musicVolume = [sender intValue];
 	[[NSApp mainWindow] setDocumentEdited:YES];
 }
 
 - (IBAction) editSFXVolume: (id)sender {
-	sfxVolume = [[NSNumber alloc] initWithInteger:[sender intValue]];
+	sfxVolume = [sender intValue];
 	[[NSApp mainWindow] setDocumentEdited:YES];
 }
 
 - (IBAction) editSpeechVolume: (id)sender {
-	speechVolume = [[NSNumber alloc] initWithInteger:[sender intValue]];
+	speechVolume = [sender intValue];
 	[[NSApp mainWindow] setDocumentEdited:YES];
 }
 
@@ -324,10 +337,9 @@
 
 - (IBAction) editIcon: (id)sender {
 	[[NSApp mainWindow] setDocumentEdited:YES];
-	if( gameIcon != nil )
-		[gameIcon autorelease];
+	[gameIcon release];
 	gameIcon = [[gameIconWell image] copy];
-	if( gameIcon != nil )
+	if( gameIcon )
 		iconChanged = YES;
 }
 

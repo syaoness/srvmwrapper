@@ -19,9 +19,9 @@
 	NSString *gfxMode;
 	BOOL enableSubtitles;
 	NSString *language;
-	NSNumber *musicVolume;
-	NSNumber *sfxVolume;
-	NSNumber *speechVolume;
+	int musicVolume;
+	int sfxVolume;
+	int speechVolume;
 	BOOL iconChanged;
 	NSImage *gameIcon;
 	
@@ -39,17 +39,10 @@
 	IBOutlet SVWDropImageView *gameIconWell;
 }
 
-- (id) init;
-- (void) dealloc;
-- (void) awakeFromNib;
-
 - (void) loadData;
 - (void) saveData;
 
 - (void) setGUI;
-
-- (IBAction)revertToSaved: (id)sender;
-- (IBAction)save: (id)sender;
 
 - (IBAction) editGameName: (id)sender;
 - (IBAction) editGameID: (id)sender;

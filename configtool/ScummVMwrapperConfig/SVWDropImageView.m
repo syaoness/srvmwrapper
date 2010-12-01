@@ -35,12 +35,9 @@
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender {
-	NSPasteboard *pboard;
-	NSArray *files;
-	NSString *filepath;
-	
-	pboard = [sender draggingPasteboard];
-	filepath = nil;
+	NSPasteboard *pboard = [sender draggingPasteboard];
+	NSArray *files = nil;
+	NSString *filepath = nil;
 	
 	//a list of types that we can accept
 //	NSString *desiredType = [paste availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]];
@@ -52,8 +49,8 @@
 			filepath = [[files objectAtIndex:0] copy];
 			NSURL *fileURL = [NSURL fileURLWithPath: filepath];
 			NSWorkspace *ws = [NSWorkspace sharedWorkspace];
-			NSString *appName;
-			NSString *fileType;
+			NSString *appName = nil;
+			NSString *fileType = nil;
 			if( [ws getInfoForFile:[fileURL path] application:&appName type:&fileType] ) {
 				if( [fileType compare:@"icns"] == NSOrderedSame ) {
 					[_filePath release];
@@ -132,12 +129,12 @@
 }
 
 - (void)mouseDown:(NSEvent *)theEvent {
-	if( _filePath == nil )
+	if( !_filePath )
 		return;
-	NSImage *dragImage;
+	NSImage *dragImage = nil;
 	NSPoint dragPosition;
-	NSArray *fileList;
-	NSPasteboard *pboard;
+	NSArray *fileList = nil;
+	NSPasteboard *pboard = nil;
 	
 	// write data to the pasteboard
 	fileList = [NSArray arrayWithObjects:[self filePath], nil];
