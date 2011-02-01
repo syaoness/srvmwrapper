@@ -11,56 +11,51 @@
 
 @implementation SVWDropImageView
 
+#pragma mark Properties
+@synthesize filePath;
+
+#pragma mark Object creation, initialization, destruction
 - (id)init {
-	_filePath = nil;
+	filePath = nil;
 	return [super init];
-}
-
-
-// useful for image views set up explicitly
-- (void)setFilePath:(NSString *)path {
-	_filePath = [path copy];
 }
 
 - (void)dealloc {
 //	[self unregisterDraggedTypes];
-	[_filePath release];
-	_filePath = nil;
+	[filePath release];
+	filePath = nil;
 	[super dealloc];
 }
 
-// return the file path we have retained
-- (NSString *)filePath {
-	return _filePath;
-}
-
+#pragma mark Events
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender {
 	NSPasteboard *pboard = [sender draggingPasteboard];
 	NSArray *files = nil;
-	NSString *filepath = nil;
+	NSString *thePath = nil;
 	
 	//a list of types that we can accept
 //	NSString *desiredType = [paste availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]];
 //	NSData *carriedData = [paste dataForType:desiredType];
 	
-	if( [pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]] ) {
-		files = [pboard propertyListForType:NSFilenamesPboardType];
-		if( [files count] > 0 ) {
-			filepath = [[files objectAtIndex:0] copy];
-			NSURL *fileURL = [NSURL fileURLWithPath: filepath];
-			NSWorkspace *ws = [NSWorkspace sharedWorkspace];
-			NSString *appName = nil;
-			NSString *fileType = nil;
-			if( [ws getInfoForFile:[fileURL path] application:&appName type:&fileType] ) {
-				if( [fileType compare:@"icns"] == NSOrderedSame ) {
-					[_filePath release];
-					_filePath = [filepath copy];
-					return [super performDragOperation:sender];
-				}
-			}
-		}
-	}
-	return NO;
+	if( ![pboard availableTypeFromArray:[NSArray arrayWithObject:NSFilenamesPboardType]] )
+		return NO;
+	
+	files = [pboard propertyListForType:NSFilenamesPboardType];
+	if( [files count] <= 0 )
+		return NO;
+
+	thePath = [files objectAtIndex:0];
+	NSString *appName = nil;
+	NSString *fileType = nil;
+
+	if( ![[NSWorkspace sharedWorkspace] getInfoForFile:[NSURL fileURLWithPath: thePath] application:&appName
+			type:&fileType] )
+		return NO;
+	if( ![fileType isEqualToString:@"icns"] )
+		return NO;
+
+	[self setFilePath:thePath];
+	return [super performDragOperation:sender];
 	
 /*
 	if( carriedData == nil ) {
@@ -125,11 +120,12 @@
 }*/
 
 - (NSUInteger)draggingSourceOperationMaskForLocal:(BOOL)isLocal {
+#pragma unused (isLocal)
 	return NSDragOperationCopy;
 }
 
 - (void)mouseDown:(NSEvent *)theEvent {
-	if( !_filePath )
+	if( !filePath )
 		return;
 	NSImage *dragImage = nil;
 	NSPoint dragPosition;

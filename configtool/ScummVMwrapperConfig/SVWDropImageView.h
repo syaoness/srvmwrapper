@@ -10,14 +10,14 @@
 
 
 @interface SVWDropImageView : NSImageView {
-//	NSImage *_myImage;
-	NSString *_filePath;
+//	NSImage *myImage;
+	NSString *filePath;
 }
 
-- (void)setFilePath:(NSString *)path;
-- (NSString *)filePath;
 //- (void)concludeDragOperation:(id<NSDraggingInfo>)sender;
 - (NSUInteger)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
 - (void)mouseDown:(NSEvent *)theEvent;
+
+@property (copy) NSString *filePath;
 
 @end

@@ -11,6 +11,7 @@
 		16864B4E126531EE00132103 /* scummvm.icns in Resources */ = {isa = PBXBuildFile; fileRef = 16864B4D126531EE00132103 /* scummvm.icns */; };
 		16864B5E1265369500132103 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16864B5D1265369500132103 /* AppController.m */; };
 		168AEEF81266276100BC3F18 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 168AEEF61266276100BC3F18 /* Credits.rtf */; };
+		16F7D19F12B122B3002AD0C7 /* SVWSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7D19E12B122B3002AD0C7 /* SVWSettings.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -28,6 +29,8 @@
 		16864B5C1265369500132103 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		16864B5D1265369500132103 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		168AEEF71266276100BC3F18 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		16F7D19D12B122B3002AD0C7 /* SVWSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWSettings.h; sourceTree = "<group>"; };
+		16F7D19E12B122B3002AD0C7 /* SVWSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWSettings.m; sourceTree = "<group>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScummVMwrapperConfigAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScummVMwrapperConfigAppDelegate.m; sourceTree = "<group>"; };
@@ -60,6 +63,8 @@
 				16090FED1265EDA300487973 /* SVWDropImageView.m */,
 				256AC3D80F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m */,
+				16F7D19D12B122B3002AD0C7 /* SVWSettings.h */,
+				16F7D19E12B122B3002AD0C7 /* SVWSettings.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -200,6 +205,7 @@
 				256AC3DA0F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m in Sources */,
 				16864B5E1265369500132103 /* AppController.m in Sources */,
 				16090FEE1265EDA300487973 /* SVWDropImageView.m in Sources */,
+				16F7D19F12B122B3002AD0C7 /* SVWSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,7 +277,20 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -284,7 +303,21 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;

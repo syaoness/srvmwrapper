@@ -8,22 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SVWDropImageView.h"
-
+#import "SVWSettings.h"
 
 @interface AppController : NSObject {
-	NSString *gameName;
-	NSString *gameID;
-	BOOL saveIntoHome;
-	BOOL fullScreenMode;
-	BOOL aspectRatioCorrection;
-	NSString *gfxMode;
-	BOOL enableSubtitles;
-	NSString *language;
-	int musicVolume;
-	int sfxVolume;
-	int speechVolume;
-	BOOL iconChanged;
-	NSImage *gameIcon;
+	SVWSettings *settings;
 	
 	IBOutlet NSTextField *gameNameLine;
 	IBOutlet NSComboBox *gameIDLine;
@@ -39,22 +27,21 @@
 	IBOutlet SVWDropImageView *gameIconWell;
 }
 
-- (void) loadData;
-- (void) saveData;
+- (void)loadData;
+- (void)saveData;
+- (void)setGUI;
 
-- (void) setGUI;
-
-- (IBAction) editGameName: (id)sender;
-- (IBAction) editGameID: (id)sender;
-- (IBAction) editSavePath: (id)sender;
-- (IBAction) editFullScreenMode: (id)sender;
-- (IBAction) editAspectRatioCorrection: (id)sender;
-- (IBAction) editGFXMode: (id)sender;
-- (IBAction) editSubtitlesMode: (id)sender;
-- (IBAction) editLanguage: (id)sender;
-- (IBAction) editMusicVolume: (id)sender;
-- (IBAction) editSFXVolume: (id)sender;
-- (IBAction) editSpeechVolume: (id)sender;
-- (IBAction) editIcon: (id)sender;
+- (IBAction)editGameName:(id)sender;
+- (IBAction)editGameID:(id)sender;
+- (IBAction)editSavePath:(id)sender;
+- (IBAction)editFullScreenMode:(id)sender;
+- (IBAction)editAspectRatioCorrection:(id)sender;
+- (IBAction)editGFXMode:(id)sender;
+- (IBAction)editSubtitlesMode:(id)sender;
+- (IBAction)editLanguage:(id)sender;
+- (IBAction)editMusicVolume:(id)sender;
+- (IBAction)editSFXVolume:(id)sender;
+- (IBAction)editSpeechVolume:(id)sender;
+- (IBAction)editIcon:(id)sender;
 
 @end
