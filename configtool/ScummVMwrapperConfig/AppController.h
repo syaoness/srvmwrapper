@@ -12,6 +12,9 @@
 
 @interface AppController : NSObject {
 	SVWSettings *settings;
+	NSArray *listGameIDs;
+	NSArray *listGFXModes;
+	NSArray *listLanguages;
 	
 	IBOutlet NSTextField *gameNameLine;
 	IBOutlet NSComboBox *gameIDLine;
@@ -43,5 +46,8 @@
 - (IBAction)editSFXVolume:(id)sender;
 - (IBAction)editSpeechVolume:(id)sender;
 - (IBAction)editIcon:(id)sender;
+
+- (IBAction)revertToSaved: (id)sender;
+- (IBAction)save: (id)sender;
 
 @end

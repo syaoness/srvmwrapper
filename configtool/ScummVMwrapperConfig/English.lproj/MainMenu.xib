@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1060</int>
-		<string key="IBDocument.SystemVersion">10H574</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
+		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">804</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -730,128 +730,11 @@
 								<reference key="NSTextColor" ref="773252497"/>
 								<int key="NSVisibleItemCount">5</int>
 								<bool key="NSHasVerticalScroller">YES</bool>
-								<object class="NSMutableArray" key="NSPopUpListData">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>activity</string>
-									<string>agi</string>
-									<string>airport</string>
-									<string>arttime</string>
-									<string>atlantis</string>
-									<string>balloon</string>
-									<string>baseball</string>
-									<string>baseball2001</string>
-									<string>Baseball2003</string>
-									<string>basketball</string>
-									<string>Blues123Time</string>
-									<string>BluesABCTime</string>
-									<string>BluesBirthday</string>
-									<string>BluesTreasureHun</string>
-									<string>bra</string>
-									<string>brstorm</string>
-									<string>catalog</string>
-									<string>chase</string>
-									<string>cine</string>
-									<string>comi</string>
-									<string>cruise</string>
-									<string>dig</string>
-									<string>dimp</string>
-									<string>dog</string>
-									<string>draci</string>
-									<string>drascula</string>
-									<string>elvira1</string>
-									<string>elvira2</string>
-									<string>farm</string>
-									<string>fbear</string>
-									<string>fbpack</string>
-									<string>feeble</string>
-									<string>football</string>
-									<string>football2002</string>
-									<string>freddi</string>
-									<string>freddi2</string>
-									<string>freddi3</string>
-									<string>freddi4</string>
-									<string>freddicove</string>
-									<string>FreddisFunShop</string>
-									<string>ft</string>
-									<string>funpack</string>
-									<string>gob</string>
-									<string>groovie</string>
-									<string>indy3</string>
-									<string>jumble</string>
-									<string>jungle</string>
-									<string>kyra1</string>
-									<string>kyra2</string>
-									<string>kyra3</string>
-									<string>loom</string>
-									<string>lost</string>
-									<string>lure</string>
-									<string>made</string>
-									<string>maniac</string>
-									<string>maze</string>
-									<string>monkey</string>
-									<string>monkey2</string>
-									<string>moonbase</string>
-									<string>mustard</string>
-									<string>nippon</string>
-									<string>pajama</string>
-									<string>pajama2</string>
-									<string>pajama3</string>
-									<string>parallaction</string>
-									<string>pass</string>
-									<string>pjgames</string>
-									<string>pn</string>
-									<string>puttcircus</string>
-									<string>puttmoon</string>
-									<string>puttputt</string>
-									<string>puttrace</string>
-									<string>PuttsFunShop</string>
-									<string>putttime</string>
-									<string>puttzoo</string>
-									<string>puzzle</string>
-									<string>queen</string>
-									<string>readtime</string>
-									<string>saga</string>
-									<string>samnmax</string>
-									<string>SamsFunShop</string>
-									<string>sci</string>
-									<string>simon1</string>
-									<string>simon2</string>
-									<string>sky</string>
-									<string>soccer</string>
-									<string>Soccer2004</string>
-									<string>SoccerMLS</string>
-									<string>socks</string>
-									<string>spyfox</string>
-									<string>spyfox2</string>
-									<string>spyozon</string>
-									<string>swampy</string>
-									<string>sword1</string>
-									<string>sword1demo</string>
-									<string>sword1mac</string>
-									<string>sword1macdemo</string>
-									<string>sword1psx</string>
-									<string>sword1psxdemo</string>
-									<string>sword2</string>
-									<string>sword2alt</string>
-									<string>sword2demo</string>
-									<string>sword2psx</string>
-									<string>sword2psxdemo</string>
-									<string>teenagent</string>
-									<string>tentacle</string>
-									<string>thinker1</string>
-									<string>thinkerk</string>
-									<string>tinsel</string>
-									<string>touche</string>
-									<string>tucker</string>
-									<string>water</string>
-									<string>waxworks</string>
-									<string>zak</string>
-								</object>
 								<reference key="NSDelegate" ref="122953261"/>
 								<object class="NSComboTableView" key="NSTableView" id="246658459">
 									<reference key="NSNextResponder"/>
 									<int key="NSvFlags">274</int>
-									<string key="NSFrameSize">{13, 2394}</string>
+									<string key="NSFrameSize">{15, 0}</string>
 									<reference key="NSSuperview"/>
 									<reference key="NSWindow"/>
 									<bool key="NSEnabled">YES</bool>
@@ -859,7 +742,7 @@
 										<bool key="EncodedWithXMLCoder">YES</bool>
 										<object class="NSTableColumn">
 											<integer value="0" key="NSIdentifier"/>
-											<double key="NSWidth">10</double>
+											<double key="NSWidth">12</double>
 											<double key="NSMinWidth">10</double>
 											<double key="NSMaxWidth">1000</double>
 											<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -910,7 +793,7 @@
 									</object>
 									<double key="NSRowHeight">19</double>
 									<string key="NSAction">tableViewAction:</string>
-									<int key="NSTvFlags">-765427712</int>
+									<int key="NSTvFlags">-767524864</int>
 									<reference key="NSDelegate" ref="471062341"/>
 									<reference key="NSDataSource" ref="471062341"/>
 									<reference key="NSTarget" ref="471062341"/>
@@ -1320,21 +1203,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<reference key="NSTextColor" ref="773252497"/>
 								<int key="NSVisibleItemCount">5</int>
 								<bool key="NSHasVerticalScroller">YES</bool>
-								<object class="NSMutableArray" key="NSPopUpListData">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>1x</string>
-									<string>2x</string>
-									<string>3x</string>
-									<string>2xsai</string>
-									<string>super2xsai</string>
-									<string>supereagle</string>
-									<string>advmame2x</string>
-									<string>advmame3x</string>
-									<string>hq2x</string>
-									<string>hq3x</string>
-									<string>tv2x</string>
-									<string>dotmatrix</string>
-								</object>
 								<reference key="NSDelegate" ref="334868160"/>
 								<object class="NSComboTableView" key="NSTableView" id="478902237">
 									<reference key="NSNextResponder"/>
@@ -1470,23 +1338,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<reference key="NSTextColor" ref="773252497"/>
 								<int key="NSVisibleItemCount">5</int>
 								<bool key="NSHasVerticalScroller">YES</bool>
-								<object class="NSMutableArray" key="NSPopUpListData">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>en</string>
-									<string>de</string>
-									<string>fr</string>
-									<string>it</string>
-									<string>pt</string>
-									<string>es</string>
-									<string>jp</string>
-									<string>zh</string>
-									<string>kr</string>
-									<string>se</string>
-									<string>gb</string>
-									<string>hb</string>
-									<string>ru</string>
-									<string>cz</string>
-								</object>
 								<reference key="NSDelegate" ref="995516667"/>
 								<object class="NSComboTableView" key="NSTableView" id="172686238">
 									<reference key="NSNextResponder"/>
@@ -3228,7 +3079,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABC1gAAw4oAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDCQAAw8eAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3304,7 +3155,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDAgAAw0YAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDCQAAw3gAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3379,7 +3230,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">724</int>
+			<int key="maxID">727</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
