@@ -1,18 +1,42 @@
-//
-//  SVWSettings.m
-//  ScummVMwrapperConfig
-//
-//  Created by Syaoran on 2010-12-09.
-//  Copyright 2010 dotalux.com. All rights reserved.
-//
+/*******************************************************************************************************************
+ *                                     ScummVMwrapper :: SVWconfig                                                 *
+ *******************************************************************************************************************
+ * File:             SVWSettings.m                                                                                 *
+ * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ *******************************************************************************************************************
+ * $Id::                                                                     $: SVN Info                           *
+ * $Date::                                                                   $: Last modification                  *
+ * $Author::                                                                 $: Last modification author           *
+ * $Revision::                                                               $: SVN Revision                       *
+ *******************************************************************************************************************/
 
 #import "SVWSettings.h"
 
+/*******************************************************************************************************************/
+#pragma mark Constants
+NSString * const kCFBundleDisplayName = @"CFBundleDisplayName";
+NSString * const kCFBundleName = @"CFBundleName";
+NSString * const kCFBundleIdentifier = @"CFBundleIdentifier";
+NSString * const kSVWFullScreen = @"SVWFullScreen";
+NSString * const kSVWAspectRatio = @"SVWAspectRatio";
+NSString * const kSVWGFXMode = @"SVWGFXMode";
+NSString * const kSVWEnableSubtitles = @"SVWEnableSubtitles";
+NSString * const kSVWLanguage = @"SVWLanguage";
+NSString * const kSVWMusicVolume = @"SVWMusicVolume";
+NSString * const kSVWSFXVolume = @"SVWSFXVolume";
+NSString * const kSVWSpeechVolume = @"SVWSpeechVolume";
 
+NSString * const kGameIcns = @"%@/game.icns";
+NSString * const kOldIcns = @"%@/old.icns";
+NSString * const kSavesDir = @"%@/saves";
+NSString * const kSavesPlaceholder = @"%@/saves/.dontdeletethis";
+NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
+
+/*******************************************************************************************************************/
 @implementation SVWSettings
 
+/*******************************************************************************************************************/
 #pragma mark Properties
-
 @synthesize gameName;
 @synthesize gameID;
 @synthesize saveIntoHome;
@@ -28,8 +52,8 @@
 @synthesize gameIcon;
 @synthesize gameIconPath;
 
+/*******************************************************************************************************************/
 #pragma mark Object creation, initialization, desctruction
-
 - (id) init {
 	self = [super init];
 	
@@ -65,17 +89,13 @@
 	[super dealloc];
 }
 
+/*******************************************************************************************************************/
 #pragma mark Load and Save
-
 - (void) loadData {
-	NSBundle *mainBundle;
-	NSDictionary *prefs;
-	NSFileManager *filemanager;
-	
-	mainBundle = [NSBundle mainBundle];
-	prefs = [NSDictionary dictionaryWithContentsOfFile:
-		 [NSString stringWithFormat:@"%@/../Contents/Info.plist", [mainBundle bundlePath]]];
-	filemanager = [NSFileManager defaultManager];
+	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+			stringByDeletingLastPathComponent]];
+	NSDictionary *prefs = [NSDictionary dictionaryWithDictionary:[wrapperBundle infoDictionary]];
+	NSFileManager *filemanager = [NSFileManager defaultManager];
 	
 	[self setGameName:nil];
 	[self setGameID:nil];
@@ -90,16 +110,16 @@
 	[self setGameIcon:nil];
 	[self setGameIconPath:nil];
 	if( prefs ) {
-		[self setGameName:[prefs objectForKey:@"CFBundleDisplayName"]];
-		[self setGameID:[prefs objectForKey:@"CFBundleName"]];
-		[self setFullScreenMode:[[prefs valueForKey:@"SVWFullScreen"] boolValue]];
-		[self setAspectRatioCorrection:[[prefs valueForKey:@"SVWAspectRatio"] boolValue]];
-		[self setGfxMode:[prefs objectForKey:@"SVWGFXMode"]];
-		[self setEnableSubtitles:[[prefs valueForKey:@"SVWEnableSubtitles"] boolValue]];
-		[self setGameLanguage:[prefs objectForKey:@"SVWLanguage"]];
-		[self setMusicVolume:[[prefs valueForKey:@"SVWMusicVolume"] intValue]];
-		[self setSfxVolume:[[prefs valueForKey:@"SVWSFXVolume"] intValue]];
-		[self setSpeechVolume:[[prefs valueForKey:@"SVWSpeechVolume"] intValue]];
+		[self setGameName:[prefs objectForKey:kCFBundleDisplayName]];
+		[self setGameID:[prefs objectForKey:kCFBundleName]];
+		[self setFullScreenMode:[[prefs valueForKey:kSVWFullScreen] boolValue]];
+		[self setAspectRatioCorrection:[[prefs valueForKey:kSVWAspectRatio] boolValue]];
+		[self setGfxMode:[prefs objectForKey:kSVWGFXMode]];
+		[self setEnableSubtitles:[[prefs valueForKey:kSVWEnableSubtitles] boolValue]];
+		[self setGameLanguage:[prefs objectForKey:kSVWLanguage]];
+		[self setMusicVolume:[[prefs valueForKey:kSVWMusicVolume] intValue]];
+		[self setSfxVolume:[[prefs valueForKey:kSVWSFXVolume] intValue]];
+		[self setSpeechVolume:[[prefs valueForKey:kSVWSpeechVolume] intValue]];
 	}
 	// FIXME: Move error checking and defaults to the setters
 	if( !prefs || ![self gfxMode] )
@@ -113,74 +133,59 @@
 	if( !prefs || [self speechVolume] < 0 )
 		[self setSpeechVolume:192];
 	
-	[self setSaveIntoHome:![filemanager fileExistsAtPath:
-			[NSString stringWithFormat:@"%@/../Contents/Resources/saves/.dontdeletethis",
-			[mainBundle bundlePath]]]];
-	[self setGameIcon:[[[NSImage alloc] initWithContentsOfFile:
-			[NSString stringWithFormat:@"%@/../Contents/Resources/game.icns", [mainBundle bundlePath]]]
-			autorelease]];
-	
+	[self setSaveIntoHome:![filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder,
+			[wrapperBundle resourcePath]]]];
+	[self setGameIcon:[[[NSImage alloc] initWithContentsOfFile:[NSString stringWithFormat:kGameIcns,
+			[wrapperBundle resourcePath]]] autorelease]];
 	[self setIconChanged:NO];
 }
 
 - (void) saveData {
-	NSBundle *mainBundle;
-	NSDictionary *oldprefs;
-	NSMutableDictionary *prefs;
-	NSFileManager *filemanager;
+	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+			stringByDeletingLastPathComponent]];
+	NSMutableDictionary *prefs = [NSMutableDictionary dictionaryWithDictionary:[wrapperBundle infoDictionary]];
+	NSFileManager *filemanager = [NSFileManager defaultManager];
 	
-	mainBundle = [NSBundle mainBundle];
-	oldprefs = [NSDictionary dictionaryWithContentsOfFile:
-		    [NSString stringWithFormat:@"%@/../Contents/Info.plist", [mainBundle bundlePath]]];
-	prefs = [NSMutableDictionary dictionaryWithDictionary:oldprefs];
-	filemanager = [NSFileManager defaultManager];
-	
-	[prefs setObject:(gameName ? gameName : @"") forKey:@"CFBundleDisplayName"];
-	[prefs setObject:(gameID ? gameID : @"") forKey:@"CFBundleName"];
-	[prefs setObject:[NSString stringWithFormat:@"com.dotalux.scummwrapper.%@", gameID]
-		  forKey:@"CFBundleIdentifier"];
-	[prefs setObject:[NSNumber numberWithBool:fullScreenMode] forKey:@"SVWFullScreen"];
-	[prefs setObject:[NSNumber numberWithBool:aspectRatioCorrection] forKey:@"SVWAspectRatio"];
-	[prefs setObject:(gfxMode ? gfxMode : @"") forKey:@"SVWGFXMode"];
-	[prefs setObject:[NSNumber numberWithBool:enableSubtitles] forKey:@"SVWEnableSubtitles"];
-	[prefs setObject:(gameLanguage ? gameLanguage : @"") forKey:@"SVWLanguage"];
-	[prefs setObject:[NSNumber numberWithInt:musicVolume] forKey:@"SVWMusicVolume"];
-	[prefs setObject:[NSNumber numberWithInt:sfxVolume] forKey:@"SVWSFXVolume"];
-	[prefs setObject:[NSNumber numberWithInt:speechVolume] forKey:@"SVWSpeechVolume"];
+	// TODO: Handle defaults in getters
+	[prefs setObject:(gameName ? gameName : @"") forKey:kCFBundleDisplayName];
+	[prefs setObject:(gameID ? gameID : @"") forKey:kCFBundleName];
+	[prefs setObject:[NSString stringWithFormat:@"com.dotalux.scummwrapper.%@", gameID] forKey:kCFBundleIdentifier];
+	[prefs setObject:[NSNumber numberWithBool:fullScreenMode] forKey:kSVWFullScreen];
+	[prefs setObject:[NSNumber numberWithBool:aspectRatioCorrection] forKey:kSVWAspectRatio];
+	[prefs setObject:(gfxMode ? gfxMode : @"") forKey:kSVWGFXMode];
+	[prefs setObject:[NSNumber numberWithBool:enableSubtitles] forKey:kSVWEnableSubtitles];
+	[prefs setObject:(gameLanguage ? gameLanguage : @"") forKey:kSVWLanguage];
+	[prefs setObject:[NSNumber numberWithInt:musicVolume] forKey:kSVWMusicVolume];
+	[prefs setObject:[NSNumber numberWithInt:sfxVolume] forKey:kSVWSFXVolume];
+	[prefs setObject:[NSNumber numberWithInt:speechVolume] forKey:kSVWSpeechVolume];
 	
 	if( saveIntoHome ) {
-		[filemanager removeItemAtPath:[NSString stringWithFormat:@"%@/../Contents/Resources/saves",
-					       [mainBundle bundlePath]] error:nil];
+		[filemanager removeItemAtPath:[NSString stringWithFormat:kSavesDir, [wrapperBundle resourcePath]]
+				error:nil];
 	} else {
-		if( ![filemanager fileExistsAtPath:
-		      [NSString stringWithFormat:@"%@/../Contents/Resources/saves/.dontdeletethis",
-		       [mainBundle bundlePath]]] ) {
-			      [filemanager removeItemAtPath:
-			       [NSString stringWithFormat:@"%@/../Contents/Resources/saves",
-				[mainBundle bundlePath]] error:nil];
-		      }
-		[filemanager createDirectoryAtPath:[NSString stringWithFormat:@"%@/../Contents/Resources/saves",
-						    [mainBundle bundlePath]] withIntermediateDirectories:NO attributes:nil error:nil];
-		[filemanager createFileAtPath:
-		 [NSString stringWithFormat:@"%@/../Contents/Resources/saves/.dontdeletethis",
-		  [mainBundle bundlePath]] contents:nil attributes:nil];
+		if( ![filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder, [wrapperBundle
+				resourcePath]]] ) {
+			[filemanager removeItemAtPath:[NSString stringWithFormat:kSavesDir, [wrapperBundle
+					resourcePath]] error:nil];
+		}
+		[filemanager createDirectoryAtPath:[NSString stringWithFormat:kSavesDir, [wrapperBundle resourcePath]]
+				withIntermediateDirectories:NO attributes:nil error:nil];
+		[filemanager createFileAtPath:[NSString stringWithFormat:kSavesPlaceholder, [wrapperBundle
+				resourcePath]] contents:nil attributes:nil];
 	}
 	
-	[prefs writeToFile:[NSString stringWithFormat:@"%@/../Contents/Info.plist", [mainBundle bundlePath]]
-		atomically: YES];
+	[prefs writeToFile:[NSString stringWithFormat:kInfoPlistPath, [wrapperBundle bundlePath]] atomically: YES];
 	
 	if( iconChanged && [self gameIconPath] ) {
-		[filemanager removeItemAtPath:[NSString stringWithFormat:@"%@/../Contents/Resources/old.icns",
-					       [mainBundle bundlePath]] error:nil];
-		[filemanager moveItemAtPath:[NSString stringWithFormat:@"%@/../Contents/Resources/game.icns",
-					     [mainBundle bundlePath]] toPath:
-		 [NSString stringWithFormat:@"%@/../Contents/Resources/old.icns",
-		  [mainBundle bundlePath]] error:nil];
-		[filemanager copyItemAtPath:[self gameIconPath]
-				     toPath:[NSString stringWithFormat:@"%@/../Contents/Resources/game.icns",
-					     [mainBundle bundlePath]] error:nil];
+		[filemanager removeItemAtPath:[NSString stringWithFormat:kOldIcns, [wrapperBundle resourcePath]]
+				error:nil];
+		[filemanager moveItemAtPath:[NSString stringWithFormat:kGameIcns, [wrapperBundle resourcePath]] toPath:
+				[NSString stringWithFormat:kOldIcns, [wrapperBundle resourcePath]] error:nil];
+		[filemanager copyItemAtPath:[self gameIconPath] toPath:[NSString stringWithFormat:kGameIcns,
+				[wrapperBundle resourcePath]] error:nil];
 	}
 	[[NSApp mainWindow] setDocumentEdited:NO];
 }
 
+/*******************************************************************************************************************/
 @end

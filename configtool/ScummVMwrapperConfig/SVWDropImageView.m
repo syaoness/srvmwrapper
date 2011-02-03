@@ -1,19 +1,25 @@
-//
-//  SVWDropImageView.m
-//  ScummVMwrapperConfig
-//
-//  Created by Syaoran on 2010-10-13.
-//  Copyright 2010 dotalux.com. All rights reserved.
-//
+/*******************************************************************************************************************
+ *                                     ScummVMwrapper :: SVWconfig                                                 *
+ *******************************************************************************************************************
+ * File:             SVWDropImageView.m                                                                            *
+ * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ *******************************************************************************************************************
+ * $Id::                                                                     $: SVN Info                           *
+ * $Date::                                                                   $: Last modification                  *
+ * $Author::                                                                 $: Last modification author           *
+ * $Revision::                                                               $: SVN Revision                       *
+ *******************************************************************************************************************/
 
 #import "SVWDropImageView.h"
 
-
+/*******************************************************************************************************************/
 @implementation SVWDropImageView
 
+/*******************************************************************************************************************/
 #pragma mark Properties
 @synthesize filePath;
 
+/*******************************************************************************************************************/
 #pragma mark Object creation, initialization, destruction
 - (id)init {
 	filePath = nil;
@@ -27,6 +33,7 @@
 	[super dealloc];
 }
 
+/*******************************************************************************************************************/
 #pragma mark Events
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender {
 	NSPasteboard *pboard = [sender draggingPasteboard];
@@ -57,7 +64,7 @@
 	[self setFilePath:thePath];
 	return [super performDragOperation:sender];
 	
-/*
+#if 0
 	if( carriedData == nil ) {
  		// the operation failed for some reason
 //		NSRunAlertPanel(@"Paste Error", @"Sorry, but the paste operation failed", nil, nil, nil);
@@ -81,9 +88,8 @@
 			
 			if( newImage == nil ) {
 				// we failed for some reason
-//				NSRunAlertPanel(@"File Reading Error",
-//						[NSString stringWithFormat:@"Sorry, but I failed to open the file at \"%@\"", path],
-//						nil, nil, nil);
+//				NSRunAlertPanel(@"File Reading Error", [NSString stringWithFormat:
+//						@"Sorry, but I failed to open the file at \"%@\"", path], nil, nil, nil);
 				return NO;
 			} else {
 				// newImage is now a new valid image
@@ -96,13 +102,14 @@
 			return NO;
 		}
 	}
-	[self setNeedsDisplay:YES];    //redraw us with the new image
+	[self setNeedsDisplay:YES]; //redraw us with the new image
 	return YES;
-*/
+#endif // 0
 
 }
 
-/*// at the end of a drag operation (of an image into this image view) we interrogate the dragging pasteboard
+#if 0
+// at the end of a drag operation (of an image into this image view) we interrogate the dragging pasteboard
 // and pull out the filename of the image being dragged
 - (void)concludeDragOperation:(id<NSDraggingInfo>)sender {
 	NSPasteboard *pboard;
@@ -117,7 +124,8 @@
 			_filePath = [[files objectAtIndex:0] copy];
 	}
 	[super concludeDragOperation:sender];
-}*/
+}
+#endif // 0
 
 - (NSUInteger)draggingSourceOperationMaskForLocal:(BOOL)isLocal {
 #pragma unused (isLocal)
@@ -142,10 +150,12 @@
 	dragPosition = [self convertPoint:[theEvent locationInWindow] fromView:nil];
 	dragPosition.x -= 16;
 	dragPosition.y -= 16;
-	[self dragImage:dragImage at:dragPosition offset:NSZeroSize event:theEvent pasteboard:pboard source:self slideBack:YES];
+	[self dragImage:dragImage at:dragPosition offset:NSZeroSize event:theEvent pasteboard:pboard source:self
+			slideBack:YES];
 }
 
-/*- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender {
+#if 0
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender {
 	if( (NSDragOperationGeneric & [sender draggingSourceOperationMask]) == NSDragOperationGeneric ) {
 		// this means that the sender is offering the type of operation we want
 		// return that we want the NSDragOperationGeneric operation that they are offering
@@ -159,6 +169,8 @@
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender {
 	return YES;
-}*/
+}
+#endif // 0
 
+/*******************************************************************************************************************/
 @end

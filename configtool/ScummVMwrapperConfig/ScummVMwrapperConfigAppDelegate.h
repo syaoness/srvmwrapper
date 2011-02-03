@@ -1,10 +1,14 @@
-//
-//  ScummVMwrapperConfigAppDelegate.h
-//  ScummVMwrapperConfig
-//
-//  Created by Syaoran on 2010-10-12.
-//  Copyright 2010 dotalux.com. All rights reserved.
-//
+/*******************************************************************************************************************
+ *                                     ScummVMwrapper :: SVWconfig                                                 *
+ *******************************************************************************************************************
+ * File:             ScummVMwrapperConfigAppDelegate.h                                                             *
+ * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ *******************************************************************************************************************
+ * $Id::                                                                     $: SVN Info                           *
+ * $Date::                                                                   $: Last modification                  *
+ * $Author::                                                                 $: Last modification author           *
+ * $Revision::                                                               $: SVN Revision                       *
+ *******************************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
 

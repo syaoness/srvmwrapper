@@ -1,16 +1,21 @@
-//
-//  AppController.m
-//  ScummVMwrapperConfig
-//
-//  Created by Syaoran on 2010-10-13.
-//  Copyright 2010 dotalux.com. All rights reserved.
-//
+/*******************************************************************************************************************
+ *                                     ScummVMwrapper :: SVWconfig                                                 *
+ *******************************************************************************************************************
+ * File:             AppController.m                                                                               *
+ * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ *******************************************************************************************************************
+ * $Id::                                                                     $: SVN Info                           *
+ * $Date::                                                                   $: Last modification                  *
+ * $Author::                                                                 $: Last modification author           *
+ * $Revision::                                                               $: SVN Revision                       *
+ *******************************************************************************************************************/
 
 #import "AppController.h"
 
-
+/*******************************************************************************************************************/
 @implementation AppController
 
+/*******************************************************************************************************************/
 #pragma mark Init and Dealloc
 - (id) init {
 	self = [super init];
@@ -182,6 +187,7 @@
 	[NSApp setDelegate:self];
 }
 
+/*******************************************************************************************************************/
 #pragma mark Events
 - (void) savePathAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(int*)contextInfo {
 #pragma unused (alert, contextInfo)
@@ -249,6 +255,7 @@
 	}
 }
 
+/*******************************************************************************************************************/
 #pragma mark Load and Save
 // TODO: Why do we have duplicated code, again >.<
 - (void)loadData {
@@ -276,6 +283,7 @@
 	[self setGUI];
 }
 
+/*******************************************************************************************************************/
 #pragma mark GUI
 - (void) setGUI {
 	[gameNameLine setStringValue:([settings gameName] ? [settings gameName] : @"")];
@@ -291,8 +299,8 @@
 	[speechVolumeSlider setIntValue:[settings speechVolume]];
 	if( [settings gameIcon] ) {
 		[gameIconWell setImage:[settings gameIcon]];
-		[gameIconWell setFilePath:[NSString stringWithFormat:@"%@/../Contents/Resources/game.icns",
-				[[NSBundle mainBundle] bundlePath]]];
+		[gameIconWell setFilePath:[NSString stringWithFormat:@"%@/game.icns", [[NSBundle bundleWithPath:
+				[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]] resourcePath]]];
 	}
 }
 
@@ -368,4 +376,5 @@
 	[[NSApp mainWindow] setDocumentEdited:YES];
 }
 
+/*******************************************************************************************************************/
 @end
