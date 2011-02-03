@@ -16,9 +16,6 @@
 
 @interface AppController : NSObject {
 	SVWSettings *settings;
-	NSArray *listGameIDs;
-	NSArray *listGFXModes;
-	NSArray *listLanguages;
 	
 	IBOutlet NSTextField *gameNameLine;
 	IBOutlet NSComboBox *gameIDLine;
