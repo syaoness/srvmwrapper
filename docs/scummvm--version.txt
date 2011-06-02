@@ -1,0 +1,2 @@
+ScummVM 1.2.0 (Oct 11 2010 10:00:36)
+Features compiled in: Vorbis FLAC MP3 SEQ RGB zLib 

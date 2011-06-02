@@ -1,0 +1,67 @@
+ScummVM - Graphical Adventure Game Interpreter
+Usage: scummvm [OPTIONS]... [GAME]
+  -v, --version            Display ScummVM version information and exit
+  -h, --help               Display a brief help text and exit
+  -z, --list-games         Display list of supported games and exit
+  -t, --list-targets       Display list of configured targets and exit
+  --list-saves=TARGET      Display a list of savegames for the game (TARGET) specified
+
+  -c, --config=CONFIG      Use alternate configuration file
+  -p, --path=PATH          Path to where the game is installed
+  -x, --save-slot[=NUM]    Save game slot to load (default: autosave)
+  -f, --fullscreen         Force full-screen mode
+  -F, --no-fullscreen      Force windowed mode
+  -g, --gfx-mode=MODE      Select graphics scaler (1x,2x,3x,2xsai,super2xsai,
+                           supereagle,advmame2x,advmame3x,hq2x,hq3x,tv2x,
+                           dotmatrix)
+  --gui-theme=THEME        Select GUI theme
+  --themepath=PATH         Path to where GUI themes are stored
+  --list-themes            Display list of all usable GUI themes
+  -e, --music-driver=MODE  Select music driver (see README for details)
+  -q, --language=LANG      Select language (en,de,fr,it,pt,es,jp,zh,kr,se,gb,
+                           hb,ru,cz)
+  -m, --music-volume=NUM   Set the music volume, 0-255 (default: 192)
+  -s, --sfx-volume=NUM     Set the sfx volume, 0-255 (default: 192)
+  -r, --speech-volume=NUM  Set the speech volume, 0-255 (default: 192)
+  --midi-gain=NUM          Set the gain for MIDI playback, 0-1000 (default:
+                           100) (only supported by some MIDI drivers)
+  -n, --subtitles          Enable subtitles (use with games that have voice)
+  -b, --boot-param=NUM     Pass number to the boot script (boot param)
+  -d, --debuglevel=NUM     Set debug verbosity level
+  --debugflags=FLAGS       Enable engine specific debug flags
+                           (separated by commas)
+  -u, --dump-scripts       Enable script dumping if a directory called 'dumps'
+                           exists in the current directory
+
+  --cdrom=NUM              CD drive to play CD audio from (default: 0 = first
+                           drive)
+  --joystick[=NUM]         Enable joystick input (default: 0 = first joystick)
+  --platform=WORD          Specify platform of game (allowed values: 2gs, 3do,
+                           acorn, amiga, atari, c64, fmtowns, nes, mac, pc, pc98,
+                           pce, segacd, wii, windows)
+  --savepath=PATH          Path to where savegames are stored
+  --extrapath=PATH         Extra path to additional game data
+  --soundfont=FILE         Select the SoundFont for MIDI playback (only
+                           supported by some MIDI drivers)
+  --multi-midi             Enable combination AdLib and native MIDI
+  --native-mt32            True Roland MT-32 (disable GM emulation)
+  --enable-gs              Enable Roland GS mode for MIDI playback
+  --output-rate=RATE       Select output sample rate in Hz (e.g. 22050)
+  --opl-driver=DRIVER      Select AdLib (OPL) emulator (db, mame)
+  --aspect-ratio           Enable aspect ratio correction
+  --render-mode=MODE       Enable additional render modes (cga, ega, hercGreen,
+                           hercAmber, amiga)
+
+  --alt-intro              Use alternative intro for CD versions of Beneath a
+                           Steel Sky and Flight of the Amazon Queen
+  --copy-protection        Enable copy protection in SCUMM games, when
+                           ScummVM disables it by default.
+  --talkspeed=NUM          Set talk speed for games (default: 60)
+  --demo-mode              Start demo mode of Maniac Mansion or The 7th Guest
+  --tempo=NUM              Set music tempo (in percent, 50-200) for SCUMM games
+                           (default: 100)
+  --dimuse-tempo=NUM       Set internal Digital iMuse tempo (10 - 100) per second
+                           (default: 10)
+
+The meaning of boolean long options can be inverted by prefixing them with
+"no-", e.g. "--no-aspect-ratio".
