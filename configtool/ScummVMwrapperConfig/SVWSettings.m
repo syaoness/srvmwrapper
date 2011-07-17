@@ -106,6 +106,9 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 			@"gob",			// Gob engine game
 			@"groovie",		// Groovie engine game
 			@"indy3",		// Indiana Jones and the Last Crusade
+			@"hugo1",		// Hugo 1: Hugo's House of Horrors
+			@"hugo2",		// Hugo 2: Whodunit?
+			@"hugo3",		// Hugo 3: Jungle of Doom
 			@"jumble",		// Jumble
 			@"jungle",		// Let's Explore the Jungle with Buzzy
 			@"kyra1",		// The Legend of Kyrandia
@@ -117,6 +120,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 			@"made",		// MADE engine game
 			@"maniac",		// Maniac Mansion
 			@"maze",		// Freddi Fish and Luther's Maze Madness
+			@"mohawk",		// Mohawk Game
 			@"monkey",		// The Secret of Monkey Island
 			@"monkey2",		// Monkey Island 2: LeChuck's Revenge
 			@"moonbase",		// Moonbase Commander
@@ -170,6 +174,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 			@"thinker1",		// Big Thinkers First Grade
 			@"thinkerk",		// Big Thinkers Kindergarten
 			@"tinsel",		// Tinsel engine game
+			@"toon",		// Toonstruck
 			@"touche",		// Touche: The Adventures of the Fifth Musketeer
 			@"tucker",		// Bud Tucker in Double Trouble
 			@"water",		// Freddi Fish and Luther's Water Worries

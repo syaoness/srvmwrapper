@@ -87,11 +87,15 @@ draci                Draci Historie
 drascula             Drascula: The Vampire Strikes Back
 gob                  Gob engine game
 groovie              Groovie engine game
+hugo1                Hugo 1: Hugo's House of Horrors
+hugo2                Hugo 2: Whodunit?
+hugo3                Hugo 3: Jungle of Doom
 kyra1                The Legend of Kyrandia
 kyra2                The Legend of Kyrandia: The Hand of Fate
 kyra3                The Legend of Kyrandia: Malcolm's Revenge
 lure                 Lure of the Temptress
 made                 MADE engine game
+mohawk               Mohawk Game
 parallaction         Parallaction engine game
 nippon               Nippon Safes Inc.
 bra                  The Big Red Adventure
@@ -112,5 +116,6 @@ sword2psxdemo        Broken Sword II: The Smoking Mirror (PlayStation/Demo)
 sword2demo           Broken Sword II: The Smoking Mirror (Demo)
 teenagent            Teen Agent
 tinsel               Tinsel engine game
+toon                 Toonstruck
 touche               Touche: The Adventures of the Fifth Musketeer
 tucker               Bud Tucker in Double Trouble
