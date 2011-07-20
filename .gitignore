@@ -1,0 +1,13 @@
+# Generic files
+.DS_Store
+.*.swp
+
+# XCode files
+*.mode1v3
+*.pbxuser
+*.xcuserdatad
+
+# Specific exclude paths
+/build/ScummVMwrapper.app
+/configtool/ScummVMwrapperConfig/build
+

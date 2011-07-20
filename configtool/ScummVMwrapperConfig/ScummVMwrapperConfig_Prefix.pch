@@ -4,11 +4,6 @@
  * File:             ScummVMWraperConfig_Prefix.pch                                                                *
  * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
  *******************************************************************************************************************
- * $Id::                                                                     $: SVN Info                           *
- * $Date::                                                                   $: Last modification                  *
- * $Author::                                                                 $: Last modification author           *
- * $Revision::                                                               $: SVN Revision                       *
- *******************************************************************************************************************
  * Prefix header for all source files of the 'ScummVMwrapperConfig' target in the 'ScummVMwrapperConfig' project   *
  *******************************************************************************************************************/
 
