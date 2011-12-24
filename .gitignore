@@ -10,4 +10,5 @@
 # Specific exclude paths
 /build/ScummVMwrapper.app
 /configtool/ScummVMwrapperConfig/build
+/configtool/ScummVMwrapperConfig/DerivedData
 

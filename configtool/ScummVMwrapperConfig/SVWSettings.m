@@ -34,7 +34,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 #pragma mark Properties
 @synthesize gameName;
 @synthesize gameID;
-@synthesize saveIntoHome;
+
 @synthesize fullScreenMode;
 @synthesize aspectRatioCorrectionEnabled;
 @synthesize gfxMode;
@@ -43,9 +43,12 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 @synthesize musicVolume;
 @synthesize sfxVolume;
 @synthesize speechVolume;
+
+@synthesize saveIntoHome;
 @synthesize iconChanged;
 @synthesize gameIcon;
 @synthesize gameIconPath;
+@synthesize edited;
 
 @synthesize allGameIDs;
 @synthesize allGFXModes;
@@ -55,6 +58,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 #pragma mark Object creation, initialization, desctruction
 - (id) init {
 	self = [super init];
+	edited = NO;
 	allGameIDs = [[NSArray alloc] initWithObjects:
 			@"activity",		// Putt-Putt & Fatty Bear's Activity Pack
 			@"agi",			// Sierra AGI game
@@ -207,6 +211,17 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 			@"cz",
 			nil];
 	if( self ) {
+		gameName = [[NSString alloc] initWithString:@""];
+		gameID = [[NSString alloc] initWithString:@""];
+		fullScreenMode = NO;
+		aspectRatioCorrectionEnabled = NO;
+		gfxMode = [[NSString alloc] initWithString:[allGFXModes objectAtIndex:1]];
+		subtitlesEnabled = YES;
+		gameLanguage = [[NSString alloc] initWithString:@""];
+		musicVolume = 192;
+		sfxVolume = 192;
+		speechVolume = 192;
+		
 		[self loadData];
 	}
 	
@@ -220,6 +235,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 	[gameID release];
 	[gfxMode release];
 	[gameLanguage release];
+
 	[gameIcon release];
 	
 	[allGameIDs release];
@@ -273,9 +289,9 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 	[prefs setObject:[self gfxMode] forKey:kSVWGFXMode];
 	[prefs setObject:[NSNumber numberWithBool:[self isSubtitlesEnabled]] forKey:kSVWEnableSubtitles];
 	[prefs setObject:[self gameLanguage] forKey:kSVWLanguage];
-	[prefs setObject:[NSNumber numberWithInt:[self musicVolume]] forKey:kSVWMusicVolume];
-	[prefs setObject:[NSNumber numberWithInt:[self sfxVolume]] forKey:kSVWSFXVolume];
-	[prefs setObject:[NSNumber numberWithInt:[self speechVolume]] forKey:kSVWSpeechVolume];
+	[prefs setObject:[NSNumber numberWithUnsignedInteger:[self musicVolume]] forKey:kSVWMusicVolume];
+	[prefs setObject:[NSNumber numberWithUnsignedInteger:[self sfxVolume]] forKey:kSVWSFXVolume];
+	[prefs setObject:[NSNumber numberWithUnsignedInteger:[self speechVolume]] forKey:kSVWSpeechVolume];
 	
 	if( [self isSaveIntoHome] ) {
 		[filemanager removeItemAtPath:[NSString stringWithFormat:kSavesDir, [wrapperBundle resourcePath]]
@@ -308,125 +324,33 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 /*******************************************************************************************************************/
 #pragma mark Setters and Getters
 - (void)resetDefaultValues {
-	gameName = nil;
-	gameID = nil;
+	[self setGameName:@""];
+	[self setGameID:@""];
+
+	[self setFullScreenMode:NO];
+	[self setAspectRatioCorrectionEnabled:NO];
+	[self setGfxMode:[NSString stringWithString:[[self allGFXModes] objectAtIndex:1]]];
+	[self setSubtitlesEnabled:YES];
+	[self setGameLanguage:@""];
+	[self setMusicVolume:192];
+	[self setSfxVolume:192];
+	[self setSpeechVolume:192];
+
 	saveIntoHome = YES;
-	fullScreenMode = NO;
-	aspectRatioCorrectionEnabled = NO;
-	gfxMode = nil;
-	subtitlesEnabled = YES;
-	gameLanguage = nil;
-	musicVolume = -1;
-	sfxVolume = -1;
 	speechVolume = -1;
 	iconChanged = NO;
 	gameIcon = nil;
 	gameIconPath = nil;
 }
 
-/** (copy) NSString *gameName */
-- (NSString *)gameName {
-	if( !gameName )
-		return [NSString stringWithString:@""];
-	return [[gameName copy] autorelease];
-}
-
-/** (copy) NSString *gameID */
-- (NSString *)gameID {
-	if( !gameID )
-		return [NSString stringWithString:@""];
-	return [[gameID copy] autorelease];
-}
-
 /** (assign) BOOL saveIntoHome */
 
-/** (assign) BOOL fullScreenMode */
 
-/** (assign) BOOL aspectRatioCorrectionEnabled */
-
-/** (copy) NSString *gfxMode */
-- (void)setGfxMode:(NSString *)newValue {
-	if( gfxMode )
-		[gfxMode release];
-	for( NSString *eachItem in [self allGFXModes] ) {
-		if( [eachItem isEqualToString:newValue] ) {
-			gfxMode = [newValue copy];
-			return;
-		}
-	}
-	gfxMode = nil;
-}
-
-- (NSString *)gfxMode {
-	if( !gfxMode )
-		return [NSString stringWithString:@"2x"];
-	return [[gfxMode copy] autorelease];
-}
-
-/** (assign) BOOL subtitlesEnabled */
-
-/** (copy) NSString *gameLanguage */
-- (void)setGameLanguage:(NSString *)newValue {
-	if( gameLanguage )
-		[gameLanguage release];
-	for( NSString *eachItem in [self allGameLanguages] ) {
-		if( [eachItem isEqualToString:newValue] ) {
-			gameLanguage = [newValue copy];
-			return;
-		}
-	}
-	gameLanguage = nil;
-}
-
-- (NSString *)gameLanguage {
-	if( !gameLanguage )
-		return [NSString stringWithString:@"en"];
-	return [[gameLanguage copy] autorelease];
-}
-
-/** (assign) int musicVolume */
-- (void) setMusicVolume:(int)newValue {
-	if( newValue < 0 || newValue > 255 ) {
-		musicVolume = -1;
+- (void)setValue:(id)value forKey:(NSString *)key {
+	if ([self valueForKey:key] == value)
 		return;
-	}
-	musicVolume = newValue;
-}
-
-- (int)musicVolume {
-	if( musicVolume < 0 || musicVolume > 255 )
-		return 192;
-	return musicVolume;
-}
-
-/** (assign) int sfxVolume */
-- (void) setSfxVolume:(int)newValue {
-	if( newValue < 0 || newValue > 255 ) {
-		sfxVolume = -1;
-		return;
-	}
-	sfxVolume = newValue;
-}
-
-- (int)sfxVolume {
-	if( sfxVolume < 0 || sfxVolume > 255 )
-		return 192;
-	return sfxVolume;
-}
-
-/** (assign) int speechVolume */
-- (void) setSpeechVolume:(int)newValue {
-	if( newValue < 0 || newValue > 255 ) {
-		speechVolume = -1;
-		return;
-	}
-	speechVolume = newValue;
-}
-
-- (int)speechVolume {
-	if( speechVolume < 0 || speechVolume > 255 )
-		return 192;
-	return speechVolume;
+	[super setValue:value forKey:key];
+	[self setEdited:YES];
 }
 
 /** (assign) BOOL iconChanged */

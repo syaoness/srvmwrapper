@@ -11,15 +11,17 @@
 @interface SVWSettings : NSObject {
 	NSString *gameName;
 	NSString *gameID;
-	BOOL saveIntoHome;
+
 	BOOL fullScreenMode;
 	BOOL aspectRatioCorrectionEnabled;
 	NSString *gfxMode;
 	BOOL subtitlesEnabled;
 	NSString *gameLanguage;
-	int musicVolume;
-	int sfxVolume;
-	int speechVolume;
+	NSUInteger musicVolume;
+	NSUInteger sfxVolume;
+	NSUInteger speechVolume;
+
+	BOOL saveIntoHome;
 	BOOL iconChanged;
 	NSImage *gameIcon;
 	NSString *gameIconPath;
@@ -27,6 +29,7 @@
 	NSArray *allGameIDs;
 	NSArray *allGFXModes;
 	NSArray *allGameLanguages;
+	BOOL edited;
 }
 
 - (void)loadData;
@@ -34,20 +37,23 @@
 
 - (void)resetDefaultValues;
 
-@property (copy) NSString *gameName;
-@property (copy) NSString *gameID;
-@property (assign, getter=isSaveIntoHome) BOOL saveIntoHome;
+@property (retain) NSString *gameName;
+@property (retain) NSString *gameID;
+
 @property (assign, getter=isFullScreenMode) BOOL fullScreenMode;
 @property (assign, getter=isAspectRatioCorrectionEnabled) BOOL aspectRatioCorrectionEnabled;
-@property (copy) NSString *gfxMode;
+@property (retain) NSString *gfxMode;
 @property (assign, getter=isSubtitlesEnabled) BOOL subtitlesEnabled;
-@property (copy) NSString *gameLanguage;
-@property (assign) int musicVolume;
-@property (assign) int sfxVolume;
-@property (assign) int speechVolume;
+@property (retain) NSString *gameLanguage;
+@property (assign) NSUInteger musicVolume;
+@property (assign) NSUInteger sfxVolume;
+@property (assign) NSUInteger speechVolume;
+
+@property (assign, getter=isSaveIntoHome) BOOL saveIntoHome;
 @property (assign, getter=isIconChanged) BOOL iconChanged;
 @property (copy) NSImage *gameIcon;
 @property (copy) NSString *gameIconPath;
+@property (assign, getter=isEdited) BOOL edited;
 
 @property (nonatomic, readonly) NSArray *allGameIDs;
 @property (nonatomic, readonly) NSArray *allGFXModes;

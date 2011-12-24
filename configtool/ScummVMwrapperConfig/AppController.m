@@ -10,30 +10,31 @@
 /*******************************************************************************************************************/
 @implementation AppController
 
+NSString * const kEditedObserver = @"EditedObserver";
+
 /*******************************************************************************************************************/
 #pragma mark Init and Dealloc
 - (id) init {
 	self = [super init];
 	if( self ) {
-		settings = [[SVWSettings alloc] init];
-		[self loadData];
+//		settings = [[SVWSettings alloc] init];
+//		[self loadData];
 	}
 	return self;
 }
 
 - (void) dealloc {
 	[self saveData];
-	[settings release];
+//	[settings release];
 
 	[super dealloc];
 }
 
 - (void) awakeFromNib {
-	[gameIDLine addItemsWithObjectValues:[settings allGameIDs]];
-	[gfxModeLine addItemsWithObjectValues:[settings allGFXModes]];
-	[languageLine addItemsWithObjectValues:[settings allGameLanguages]];
 	[self setGUI];
 	[NSApp setDelegate:self];
+	[settings setEdited:NO];
+	[settings addObserver:self forKeyPath:@"edited" options:0 context:kEditedObserver];
 }
 
 /*******************************************************************************************************************/
@@ -136,32 +137,12 @@
 /*******************************************************************************************************************/
 #pragma mark GUI
 - (void) setGUI {
-	[gameNameLine setStringValue:([settings gameName] ? [settings gameName] : @"")];
-	[gameIDLine setStringValue:([settings gameID] ? [settings gameID] : @"")];
 	[savePathRadio selectCellWithTag:([settings isSaveIntoHome] ? 1 : 0)];
-	[fullScreenModeCheck setState:([settings isFullScreenMode] ? NSOnState : NSOffState)];
-	[aspectRatioCheck setState:([settings isAspectRatioCorrectionEnabled] ? NSOnState : NSOffState)];
-	[gfxModeLine setStringValue:([settings gfxMode] ? [settings gfxMode] : @"")];
-	[enableSubtitlesCheck setState:([settings isSubtitlesEnabled] ? NSOnState : NSOffState)];
-	[languageLine setStringValue:([settings gameLanguage] ? [settings gameLanguage] : @"")];
-	[musicVolumeSlider setIntValue:[settings musicVolume]];
-	[sfxVolumeSlider setIntValue:[settings sfxVolume]];
-	[speechVolumeSlider setIntValue:[settings speechVolume]];
 	if( [settings gameIcon] ) {
 		[gameIconWell setImage:[settings gameIcon]];
 		[gameIconWell setFilePath:[NSString stringWithFormat:@"%@/game.icns", [[NSBundle bundleWithPath:
 				[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]] resourcePath]]];
 	}
-}
-
-- (IBAction) editGameName: (id)sender {
-	[settings setGameName:[sender stringValue]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
-- (IBAction) editGameID: (id)sender {
-	[settings setGameID:[sender stringValue]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
 }
 
 - (IBAction) editSavePath: (id)sender {
@@ -176,46 +157,6 @@
 			didEndSelector:@selector(savePathAlertDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
-- (IBAction) editFullScreenMode: (id)sender {
-	[settings setFullScreenMode:[sender state]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
-- (IBAction) editAspectRatioCorrection: (id)sender {
-	[settings setAspectRatioCorrectionEnabled:[sender state]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
-- (IBAction) editGFXMode: (id)sender {
-	[settings setGfxMode:[sender stringValue]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
-- (IBAction) editSubtitlesMode: (id)sender {
-	[settings setSubtitlesEnabled:[sender state]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
-- (IBAction) editLanguage: (id)sender {
-	[settings setGameLanguage:[sender stringValue]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
-- (IBAction) editMusicVolume: (id)sender {
-	[settings setMusicVolume:[sender intValue]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
-- (IBAction) editSFXVolume: (id)sender {
-	[settings setSfxVolume:[sender intValue]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
-- (IBAction) editSpeechVolume: (id)sender {
-	[settings setSpeechVolume:[sender intValue]];
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
 - (IBAction) editIcon: (id)sender {
 #pragma unused (sender)
 	[settings setGameIcon:[gameIconWell image]];
@@ -224,6 +165,19 @@
 		[settings setIconChanged:YES];
 	}
 	[[NSApp mainWindow] setDocumentEdited:YES];
+}
+
+- (IBAction)runGame: (id)sender {
+	NSLog(@"%@", [[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Contents/MacOS/scumm_w"]);
+	[NSTask launchedTaskWithLaunchPath:[[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Contents/MacOS/scumm_w"] arguments:[NSArray array]];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+	if (context == kEditedObserver) {
+		[[NSApp mainWindow] setDocumentEdited:[settings isEdited]];
+	} else {
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
 }
 
 /*******************************************************************************************************************/
