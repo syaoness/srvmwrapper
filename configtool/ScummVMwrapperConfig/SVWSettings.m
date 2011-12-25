@@ -10,47 +10,66 @@
 /*******************************************************************************************************************/
 #pragma mark Constants
 NSString * const kCFBundleDisplayName = @"CFBundleDisplayName";
-NSString * const kCFBundleName = @"CFBundleName";
-NSString * const kCFBundleIdentifier = @"CFBundleIdentifier";
-NSString * const kSVWFullScreen = @"SVWFullScreen";
-NSString * const kSVWAspectRatio = @"SVWAspectRatio";
-NSString * const kSVWGFXMode = @"SVWGFXMode";
-NSString * const kSVWEnableSubtitles = @"SVWEnableSubtitles";
-NSString * const kSVWLanguage = @"SVWLanguage";
-NSString * const kSVWMusicVolume = @"SVWMusicVolume";
-NSString * const kSVWSFXVolume = @"SVWSFXVolume";
-NSString * const kSVWSpeechVolume = @"SVWSpeechVolume";
+NSString * const kCFBundleName        = @"CFBundleName";
+NSString * const kCFBundleIdentifier  = @"CFBundleIdentifier";
+NSString * const kSVWFullScreen       = @"SVWFullScreen";
+NSString * const kSVWAspectRatio      = @"SVWAspectRatio";
+NSString * const kSVWGFXMode          = @"SVWGFXMode";
+NSString * const kSVWEnableSubtitles  = @"SVWEnableSubtitles";
+NSString * const kSVWLanguage         = @"SVWLanguage";
+NSString * const kSVWMusicVolume      = @"SVWMusicVolume";
+NSString * const kSVWSFXVolume        = @"SVWSFXVolume";
+NSString * const kSVWSpeechVolume     = @"SVWSpeechVolume";
 
-NSString * const kGameIcns = @"%@/game.icns";
-NSString * const kOldIcns = @"%@/old.icns";
-NSString * const kSavesDir = @"%@/saves";
-NSString * const kSavesPlaceholder = @"%@/saves/.dontdeletethis";
-NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
+NSString * const kGameIcns            = @"%@/game.icns";
+NSString * const kOldIcns             = @"%@/old.icns";
+NSString * const kSavesDir            = @"%@/saves";
+NSString * const kSavesPlaceholder    = @"%@/saves/.dontdeletethis";
+NSString * const kInfoPlistPath       = @"%@/Contents/Info.plist";
+
+NSUInteger const kSaveGameLocationLibrary = 1;
+NSUInteger const kSaveGameLocationBundle  = 0;
+
+NSUInteger const engineTypeScummVM        = 0;
+NSUInteger const engineTypeResidual       = 1;
 
 /*******************************************************************************************************************/
 @implementation SVWSettings
 
 /*******************************************************************************************************************/
 #pragma mark Properties
-@synthesize gameName;
-@synthesize gameID;
-
-@synthesize fullScreenMode;
-@synthesize aspectRatioCorrectionEnabled;
-@synthesize gfxMode;
-@synthesize subtitlesEnabled;
-@synthesize gameLanguage;
-@synthesize musicVolume;
-@synthesize sfxVolume;
-@synthesize speechVolume;
-@synthesize gameIconPath;
-
-@synthesize saveIntoHome;
+@synthesize engineType;
 @synthesize edited;
-
 @synthesize allGameIDs;
 @synthesize allGFXModes;
 @synthesize allGameLanguages;
+
+#pragma mark Common
+@synthesize gameName;
+@synthesize gameID;
+@synthesize saveGameLocation;
+@synthesize fullScreenMode;
+@synthesize gameLanguage;
+@synthesize gameIconPath;
+@synthesize subtitlesEnabled;
+@synthesize extraArguments;
+@synthesize musicVolume;
+@synthesize sfxVolume;
+@synthesize speechVolume;
+
+#pragma mark ScummVM
+@synthesize aspectRatioCorrectionEnabled;
+@synthesize gfxMode;
+
+#pragma mark Residual
+@synthesize sw3DRenderer;
+@synthesize fpsCounterEnabled;
+@synthesize speechEnabled;
+
+#pragma mark Version Info
+@synthesize wrapperVersion;
+@synthesize scummVMVersion;
+@synthesize residualVersion;
 
 /*******************************************************************************************************************/
 #pragma mark Object creation, initialization, desctruction
@@ -211,6 +230,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 	if( self ) {
 		gameName = [[NSString alloc] initWithString:@""];
 		gameID = [[NSString alloc] initWithString:@""];
+		saveGameLocation = kSaveGameLocationLibrary;
 		fullScreenMode = NO;
 		aspectRatioCorrectionEnabled = NO;
 		gfxMode = [[NSString alloc] initWithString:[allGFXModes objectAtIndex:1]];
@@ -265,8 +285,12 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 		[self setSpeechVolume:[[prefs valueForKey:kSVWSpeechVolume] intValue]];
 	}
 	
-	[self setSaveIntoHome:![filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder,
-			[wrapperBundle resourcePath]]]];
+	if (([filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder,
+					    [wrapperBundle resourcePath]]]))
+		[self setSaveGameLocation:kSaveGameLocationBundle];
+	else
+		[self setSaveGameLocation:kSaveGameLocationLibrary];
+	
 	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
 }
 
@@ -289,7 +313,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 	[prefs setObject:[NSNumber numberWithUnsignedInteger:[self sfxVolume]] forKey:kSVWSFXVolume];
 	[prefs setObject:[NSNumber numberWithUnsignedInteger:[self speechVolume]] forKey:kSVWSpeechVolume];
 	
-	if( [self isSaveIntoHome] ) {
+	if( [self saveGameLocation] == kSaveGameLocationLibrary ) {
 		[filemanager removeItemAtPath:[NSString stringWithFormat:kSavesDir, [wrapperBundle resourcePath]]
 				error:nil];
 	} else {
@@ -321,7 +345,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 - (void)resetDefaultValues {
 	[self setGameName:@""];
 	[self setGameID:@""];
-
+	[self setSaveGameLocation:kSaveGameLocationLibrary];
 	[self setFullScreenMode:NO];
 	[self setAspectRatioCorrectionEnabled:NO];
 	[self setGfxMode:[NSString stringWithString:[[self allGFXModes] objectAtIndex:1]]];
@@ -331,8 +355,6 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 	[self setSfxVolume:192];
 	[self setSpeechVolume:192];
 	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
-
-	saveIntoHome = YES;
 }
 
 /** (assign) BOOL saveIntoHome */

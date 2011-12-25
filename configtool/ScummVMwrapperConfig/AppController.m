@@ -29,7 +29,6 @@ NSString * const kEditedObserver = @"EditedObserver";
 }
 
 - (void) awakeFromNib {
-	[self setGUI];
 	[NSApp setDelegate:self];
 	[settings setEdited:NO];
 	[settings addObserver:self forKeyPath:@"edited" options:0 context:kEditedObserver];
@@ -123,24 +122,19 @@ NSString * const kEditedObserver = @"EditedObserver";
 - (IBAction)revertToSaved: (id)sender {
 #pragma unused (sender)
 	[self loadData];
-	[self setGUI];
 }
 
 - (IBAction)save: (id)sender {
 #pragma unused (sender)
 	[self saveData];
 	[self loadData];
-	[self setGUI];
 }
 
 /*******************************************************************************************************************/
 #pragma mark GUI
-- (void) setGUI {
-	[savePathRadio selectCellWithTag:([settings isSaveIntoHome] ? 1 : 0)];
-}
-
 - (IBAction) editSavePath: (id)sender {
 #pragma unused (sender)
+	// FIXME
 	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 	[alert addButtonWithTitle:@"OK"];
 	[alert addButtonWithTitle:@"Cancel"];

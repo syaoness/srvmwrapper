@@ -18,7 +18,6 @@
 
 - (void)loadData;
 - (void)saveData;
-- (void)setGUI;
 
 - (IBAction)revertToSaved: (id)sender;
 - (IBAction)save: (id)sender;
