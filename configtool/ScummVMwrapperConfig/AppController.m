@@ -17,7 +17,6 @@ NSString * const kEditedObserver = @"EditedObserver";
 - (id) init {
 	self = [super init];
 	if( self ) {
-//		settings = [[SVWSettings alloc] init];
 //		[self loadData];
 	}
 	return self;
@@ -25,7 +24,6 @@ NSString * const kEditedObserver = @"EditedObserver";
 
 - (void) dealloc {
 	[self saveData];
-//	[settings release];
 
 	[super dealloc];
 }
@@ -35,6 +33,7 @@ NSString * const kEditedObserver = @"EditedObserver";
 	[NSApp setDelegate:self];
 	[settings setEdited:NO];
 	[settings addObserver:self forKeyPath:@"edited" options:0 context:kEditedObserver];
+	[gameIconWell bind:@"filePath" toObject:settings withKeyPath:@"gameIconPath" options:nil];
 }
 
 /*******************************************************************************************************************/
@@ -138,11 +137,6 @@ NSString * const kEditedObserver = @"EditedObserver";
 #pragma mark GUI
 - (void) setGUI {
 	[savePathRadio selectCellWithTag:([settings isSaveIntoHome] ? 1 : 0)];
-	if( [settings gameIcon] ) {
-		[gameIconWell setImage:[settings gameIcon]];
-		[gameIconWell setFilePath:[NSString stringWithFormat:@"%@/game.icns", [[NSBundle bundleWithPath:
-				[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]] resourcePath]]];
-	}
 }
 
 - (IBAction) editSavePath: (id)sender {
@@ -157,17 +151,8 @@ NSString * const kEditedObserver = @"EditedObserver";
 			didEndSelector:@selector(savePathAlertDidEnd:returnCode:contextInfo:) contextInfo:nil];
 }
 
-- (IBAction) editIcon: (id)sender {
-#pragma unused (sender)
-	[settings setGameIcon:[gameIconWell image]];
-	if( [settings gameIcon] ) {
-		[settings setGameIconPath:[gameIconWell filePath]];
-		[settings setIconChanged:YES];
-	}
-	[[NSApp mainWindow] setDocumentEdited:YES];
-}
-
 - (IBAction)runGame: (id)sender {
+#pragma unused (sender)
 	NSLog(@"%@", [[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Contents/MacOS/scumm_w"]);
 	[NSTask launchedTaskWithLaunchPath:[[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Contents/MacOS/scumm_w"] arguments:[NSArray array]];
 }

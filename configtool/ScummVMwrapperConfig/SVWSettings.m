@@ -43,11 +43,9 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 @synthesize musicVolume;
 @synthesize sfxVolume;
 @synthesize speechVolume;
+@synthesize gameIconPath;
 
 @synthesize saveIntoHome;
-@synthesize iconChanged;
-@synthesize gameIcon;
-@synthesize gameIconPath;
 @synthesize edited;
 
 @synthesize allGameIDs;
@@ -221,6 +219,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 		musicVolume = 192;
 		sfxVolume = 192;
 		speechVolume = 192;
+		gameIconPath = [[NSString alloc] initWithString:[[self class] defaultIconPath]];
 		
 		[self loadData];
 	}
@@ -235,9 +234,8 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 	[gameID release];
 	[gfxMode release];
 	[gameLanguage release];
+	[gameIconPath release];
 
-	[gameIcon release];
-	
 	[allGameIDs release];
 	[allGFXModes release];
 	[allGameLanguages release];
@@ -269,9 +267,7 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 	
 	[self setSaveIntoHome:![filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder,
 			[wrapperBundle resourcePath]]]];
-	[self setGameIcon:[[[NSImage alloc] initWithContentsOfFile:[NSString stringWithFormat:kGameIcns,
-			[wrapperBundle resourcePath]]] autorelease]];
-	[self setIconChanged:NO];
+	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
 }
 
 - (void) saveData {
@@ -310,13 +306,12 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 	
 	[prefs writeToFile:[NSString stringWithFormat:kInfoPlistPath, [wrapperBundle bundlePath]] atomically: YES];
 	
-	if( [self isIconChanged] && [self gameIconPath] ) {
+	if( [[self gameIconPath] isEqualToString:[[self class] defaultIconPath]] ) {
 		[filemanager removeItemAtPath:[NSString stringWithFormat:kOldIcns, [wrapperBundle resourcePath]]
 				error:nil];
-		[filemanager moveItemAtPath:[NSString stringWithFormat:kGameIcns, [wrapperBundle resourcePath]] toPath:
+		[filemanager moveItemAtPath:[[self class] defaultIconPath] toPath:
 				[NSString stringWithFormat:kOldIcns, [wrapperBundle resourcePath]] error:nil];
-		[filemanager copyItemAtPath:[self gameIconPath] toPath:[NSString stringWithFormat:kGameIcns,
-				[wrapperBundle resourcePath]] error:nil];
+		[filemanager copyItemAtPath:[self gameIconPath] toPath:[[self class] defaultIconPath] error:nil];
 	}
 	[[NSApp mainWindow] setDocumentEdited:NO];
 }
@@ -335,12 +330,9 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 	[self setMusicVolume:192];
 	[self setSfxVolume:192];
 	[self setSpeechVolume:192];
+	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
 
 	saveIntoHome = YES;
-	speechVolume = -1;
-	iconChanged = NO;
-	gameIcon = nil;
-	gameIconPath = nil;
 }
 
 /** (assign) BOOL saveIntoHome */
@@ -358,6 +350,12 @@ NSString * const kInfoPlistPath = @"%@/Contents/Info.plist";
 /** (retain) NSImage *gameIcon */
 
 /** (copy) NSString *gameIconPath */
+
++ (NSString *)defaultIconPath {
+	return [NSString stringWithFormat:kGameIcns,
+		[[NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+					   stringByDeletingLastPathComponent]] resourcePath]];
+}
 
 /*******************************************************************************************************************/
 @end

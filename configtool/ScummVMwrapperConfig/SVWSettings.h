@@ -20,12 +20,10 @@
 	NSUInteger musicVolume;
 	NSUInteger sfxVolume;
 	NSUInteger speechVolume;
-
-	BOOL saveIntoHome;
-	BOOL iconChanged;
-	NSImage *gameIcon;
 	NSString *gameIconPath;
 
+	BOOL saveIntoHome;
+	
 	NSArray *allGameIDs;
 	NSArray *allGFXModes;
 	NSArray *allGameLanguages;
@@ -36,6 +34,8 @@
 - (void)saveData;
 
 - (void)resetDefaultValues;
+
++ (NSString *)defaultIconPath;
 
 @property (retain) NSString *gameName;
 @property (retain) NSString *gameID;
@@ -48,11 +48,10 @@
 @property (assign) NSUInteger musicVolume;
 @property (assign) NSUInteger sfxVolume;
 @property (assign) NSUInteger speechVolume;
+@property (copy) NSString *gameIconPath;
 
 @property (assign, getter=isSaveIntoHome) BOOL saveIntoHome;
-@property (assign, getter=isIconChanged) BOOL iconChanged;
-@property (copy) NSImage *gameIcon;
-@property (copy) NSString *gameIconPath;
+
 @property (assign, getter=isEdited) BOOL edited;
 
 @property (nonatomic, readonly) NSArray *allGameIDs;

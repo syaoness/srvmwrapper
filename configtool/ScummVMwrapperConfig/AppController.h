@@ -20,9 +20,6 @@
 - (void)saveData;
 - (void)setGUI;
 
-- (IBAction)editSavePath:(id)sender;
-- (IBAction)editIcon:(id)sender;
-
 - (IBAction)revertToSaved: (id)sender;
 - (IBAction)save: (id)sender;
 
