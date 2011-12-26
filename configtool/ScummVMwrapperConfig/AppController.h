@@ -10,11 +10,15 @@
 #import "SVWSettings.h"
 
 #pragma mark Interface
-@interface AppController : NSObject {
+@interface AppController : NSObject <NSComboBoxDataSource> {
 	IBOutlet SVWSettings *settings;
 	
 	IBOutlet SVWDropImageView *gameIconWell;
 	IBOutlet NSImageView *exclamationMarkImageView;
+	
+	IBOutlet NSComboBox *gameIDComboBox;
+	IBOutlet NSComboBox *gfxModeComboBox;
+	IBOutlet NSComboBox *gameLanguageComboBox;
 }
 
 #pragma mark Methods

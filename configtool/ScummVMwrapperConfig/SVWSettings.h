@@ -15,6 +15,8 @@ extern NSUInteger const kSaveGameLocationBundle;
 @interface SVWSettings : NSObject {
 	NSUInteger engineType;
 	BOOL edited;
+	NSArray *allScummGameIDs;
+	NSArray *allResidualGameIDs;
 	NSArray *allGameIDs;
 	NSArray *allGFXModes;
 	NSArray *allGameLanguages;
@@ -61,7 +63,9 @@ extern NSUInteger const kSaveGameLocationBundle;
 #pragma mark Properties
 @property (assign) NSUInteger engineType;
 @property (assign, getter=isEdited) BOOL edited;
-@property (nonatomic, readonly) NSArray *allGameIDs;
+@property (nonatomic, readonly) NSArray *allScummGameIDs;
+@property (nonatomic, readonly) NSArray *allResidualGameIDs;
+@property (retain) NSArray *allGameIDs;
 @property (nonatomic, readonly) NSArray *allGFXModes;
 @property (nonatomic, readonly) NSArray *allGameLanguages;
 

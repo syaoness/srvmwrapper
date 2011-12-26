@@ -18,23 +18,18 @@ NSString * const kSaveGameObserver = @"SaveGameObserver";
 #pragma mark Init and Dealloc
 - (id)init {
 	self = [super init];
-	if (self) {
-//		[self loadData];
-	}
 	return self;
 }
 
 - (void)dealloc {
-	[self saveData];
-
 	[super dealloc];
 }
 
 - (void)awakeFromNib {
 	[NSApp setDelegate:self];
-	[settings setEdited:NO];
 	[exclamationMarkImageView setImage:[[NSWorkspace sharedWorkspace]
 					    iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)]];
+	[self loadData];
 	[settings addObserver:self forKeyPath:@"edited" options:0 context:kEditedObserver];
 	[gameIconWell bind:@"filePath" toObject:settings withKeyPath:@"gameIconPath" options:nil];
 	[settings addObserver:self forKeyPath:@"saveGameLocation" options:0 context:kSaveGameObserver];
@@ -45,11 +40,11 @@ NSString * const kSaveGameObserver = @"SaveGameObserver";
 #pragma unused (alert, contextInfo)
 	if (returnCode == NSAlertSecondButtonReturn) {
 		[NSApp replyToApplicationShouldTerminate: NO];
-	} else {
-		if (returnCode == NSAlertFirstButtonReturn)
-			[self saveData];
-		[NSApp replyToApplicationShouldTerminate: YES];
+		return;
+	} else if (returnCode == NSAlertFirstButtonReturn) {
+		[self saveData];
 	}
+	[NSApp replyToApplicationShouldTerminate: YES];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
@@ -117,14 +112,12 @@ NSString * const kSaveGameObserver = @"SaveGameObserver";
 #pragma mark Load and Save
 - (void)loadData {
 	[settings loadData];
-	[[NSApp mainWindow] setDocumentEdited:NO];
 }
 
 - (void)saveData {
 	if (![[NSApp mainWindow] isDocumentEdited])
 		return;
 	[settings saveData];
-	[[NSApp mainWindow] setDocumentEdited:NO];
 }
 
 - (IBAction)revertToSaved: (id)sender {
@@ -146,6 +139,33 @@ NSString * const kSaveGameObserver = @"SaveGameObserver";
 	[NSTask launchedTaskWithLaunchPath:[[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]
 					    stringByAppendingPathComponent:@"Contents/MacOS/scumm_w"]
 				 arguments:[NSArray array]];
+}
+
+#pragma mark NSComboBoxDataSource
+- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index {
+	if (aComboBox == gameIDComboBox) {
+		NSLog(@"gameID (%ld)", index);
+		return [[settings allGameIDs] objectAtIndex:index];
+	} else if (aComboBox == gameLanguageComboBox) {
+		NSLog(@"gameLang (%ld)", index);
+		return [[settings allGameLanguages] objectAtIndex:index];
+	} else if (aComboBox == gfxModeComboBox) {
+		NSLog(@"GFX (%ld)", index);
+		return [[settings allGFXModes] objectAtIndex:index];
+	}
+	NSLog(@"WTF (%ld)", index);
+	return nil;
+}
+
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox {
+	if (aComboBox == gameIDComboBox) {
+		return [[settings allGameIDs] count];
+	} else if (aComboBox == gameLanguageComboBox) {
+		return [[settings allGameLanguages] count];
+	} else if (aComboBox == gfxModeComboBox) {
+		return [[settings allGFXModes] count];
+	}
+	return 0;
 }
 
 @end

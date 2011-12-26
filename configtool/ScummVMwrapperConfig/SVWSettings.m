@@ -8,29 +8,34 @@
 #import "SVWSettings.h"
 
 #pragma mark Constants
-NSString * const kCFBundleDisplayName = @"CFBundleDisplayName";
-NSString * const kCFBundleName        = @"CFBundleName";
-NSString * const kCFBundleIdentifier  = @"CFBundleIdentifier";
-NSString * const kSVWFullScreen       = @"SVWFullScreen";
-NSString * const kSVWAspectRatio      = @"SVWAspectRatio";
-NSString * const kSVWGFXMode          = @"SVWGFXMode";
-NSString * const kSVWEnableSubtitles  = @"SVWEnableSubtitles";
-NSString * const kSVWLanguage         = @"SVWLanguage";
-NSString * const kSVWMusicVolume      = @"SVWMusicVolume";
-NSString * const kSVWSFXVolume        = @"SVWSFXVolume";
-NSString * const kSVWSpeechVolume     = @"SVWSpeechVolume";
+NSString * const kCFBundleDisplayName   = @"CFBundleDisplayName";
+NSString * const kCFBundleName          = @"CFBundleName";
+NSString * const kCFBundleIdentifier    = @"CFBundleIdentifier";
+NSString * const kSVWFullScreen         = @"SVWFullScreen";
+NSString * const kSVWAspectRatio        = @"SVWAspectRatio";
+NSString * const kSVWGFXMode            = @"SVWGFXMode";
+NSString * const kSVWEnableSubtitles    = @"SVWEnableSubtitles";
+NSString * const kSVWLanguage           = @"SVWLanguage";
+NSString * const kSVWMusicVolume        = @"SVWMusicVolume";
+NSString * const kSVWSFXVolume          = @"SVWSFXVolume";
+NSString * const kSVWSpeechVolume       = @"SVWSpeechVolume";
+NSString * const kSVWEngineType         = @"SVWEngineType";
+NSString * const kSVWExtraArguments     = @"SVWExtraArguments";
+NSString * const kSVWEnableSw3DRenderer = @"SVWEnableSw3DRenderer";
+NSString * const kSVWEnableFpsCounter   = @"SVWEnableFpsCounter";
+NSString * const kSVWEnableSpeech       = @"SVWEnableSpeech";
 
-NSString * const kGameIcns            = @"%@/game.icns";
-NSString * const kOldIcns             = @"%@/old.icns";
-NSString * const kSavesDir            = @"%@/saves";
-NSString * const kSavesPlaceholder    = @"%@/saves/.dontdeletethis";
-NSString * const kInfoPlistPath       = @"%@/Contents/Info.plist";
+NSString * const kGameIcns              = @"%@/game.icns";
+NSString * const kOldIcns               = @"%@/old.icns";
+NSString * const kSavesDir              = @"%@/saves";
+NSString * const kSavesPlaceholder      = @"%@/saves/.dontdeletethis";
+NSString * const kInfoPlistPath         = @"%@/Contents/Info.plist";
 
 NSUInteger const kSaveGameLocationLibrary = 1;
 NSUInteger const kSaveGameLocationBundle  = 0;
 
-NSUInteger const engineTypeScummVM        = 0;
-NSUInteger const engineTypeResidual       = 1;
+NSUInteger const kEngineTypeScummVM       = 0;
+NSUInteger const kEngineTypeResidual      = 1;
 
 #pragma mark Implementation
 @implementation SVWSettings
@@ -39,6 +44,8 @@ NSUInteger const engineTypeResidual       = 1;
 #pragma mark Properties
 @synthesize engineType;
 @synthesize edited;
+@synthesize allScummGameIDs;
+@synthesize allResidualGameIDs;
 @synthesize allGameIDs;
 @synthesize allGFXModes;
 @synthesize allGameLanguages;
@@ -77,7 +84,7 @@ NSUInteger const engineTypeResidual       = 1;
 - (id)init {
 	self = [super init];
 	edited = NO;
-	allGameIDs = [[NSArray alloc] initWithObjects:
+	allScummGameIDs = [[NSArray alloc] initWithObjects:
 			@"activity",		// Putt-Putt & Fatty Bear's Activity Pack
 			@"agi",			// Sierra AGI game
 			@"airport",		// Let's Explore the Airport with Buzzy
@@ -198,6 +205,11 @@ NSUInteger const engineTypeResidual       = 1;
 			@"waxworks",		// Waxworks
 			@"zak",			// Zak McKracken and the Alien Mindbenders
 			nil];
+	allResidualGameIDs = [[NSArray alloc] initWithObjects:
+			@"grim",		// Grim Fandango
+			nil];
+	allGameIDs = [allScummGameIDs retain];
+
 	allGFXModes = [[NSArray alloc] initWithObjects:
 			@"1x",
 			@"2x",
@@ -229,6 +241,7 @@ NSUInteger const engineTypeResidual       = 1;
 			@"cz",
 			nil];
 	if (self) {
+		engineType = kEngineTypeScummVM;
 		gameName = [[NSString alloc] initWithString:@""];
 		gameID = [[NSString alloc] initWithString:@""];
 		saveGameLocation = kSaveGameLocationLibrary;
@@ -243,6 +256,13 @@ NSUInteger const engineTypeResidual       = 1;
 		sfxVolume = 192;
 		speechVolume = 192;
 		gameIconPath = [[NSString alloc] initWithString:[[self class] defaultIconPath]];
+		extraArguments = [[NSString alloc] initWithString:@""];
+		sw3DRenderer = NO;
+		fpsCounterEnabled = NO;
+		speechEnabled = YES;
+		wrapperVersion = [[NSString alloc] initWithString:@""];
+		scummVMVersion = [[NSString alloc] initWithString:@""];
+		residualVersion = [[NSString alloc] initWithString:@""];
 		
 		[self loadData];
 	}
@@ -257,10 +277,17 @@ NSUInteger const engineTypeResidual       = 1;
 	[gfxMode release];
 	[gameLanguage release];
 	[gameIconPath release];
+	[extraArguments release];
 
 	[allGameIDs release];
+	[allScummGameIDs release];
+	[allResidualGameIDs release];
 	[allGFXModes release];
 	[allGameLanguages release];
+	
+	[wrapperVersion release];
+	[scummVMVersion release];
+	[residualVersion release];
 	
 	[super dealloc];
 }
@@ -273,7 +300,9 @@ NSUInteger const engineTypeResidual       = 1;
 	NSFileManager *filemanager = [NSFileManager defaultManager];
 	
 	[self resetDefaultValues];
+
 	if (prefs) {
+		[self setEngineType:[[prefs objectForKey:kSVWEngineType] unsignedIntegerValue]];
 		[self setGameName:[prefs objectForKey:kCFBundleDisplayName]];
 		[self setGameID:[prefs objectForKey:kCFBundleName]];
 		[self setFullScreenMode:[[prefs valueForKey:kSVWFullScreen] boolValue]];
@@ -281,9 +310,13 @@ NSUInteger const engineTypeResidual       = 1;
 		[self setGfxMode:[prefs objectForKey:kSVWGFXMode]];
 		[self setSubtitlesEnabled:[[prefs valueForKey:kSVWEnableSubtitles] boolValue]];
 		[self setGameLanguage:[prefs objectForKey:kSVWLanguage]];
-		[self setMusicVolume:[[prefs valueForKey:kSVWMusicVolume] intValue]];
-		[self setSfxVolume:[[prefs valueForKey:kSVWSFXVolume] intValue]];
-		[self setSpeechVolume:[[prefs valueForKey:kSVWSpeechVolume] intValue]];
+		[self setMusicVolume:[[prefs valueForKey:kSVWMusicVolume] unsignedIntegerValue]];
+		[self setSfxVolume:[[prefs valueForKey:kSVWSFXVolume] unsignedIntegerValue]];
+		[self setSpeechVolume:[[prefs valueForKey:kSVWSpeechVolume] unsignedIntegerValue]];
+		[self setExtraArguments:[prefs valueForKey:kSVWExtraArguments]];
+		[self setSw3DRenderer:[[prefs valueForKey:kSVWEnableSw3DRenderer] boolValue]];
+		[self setFpsCounterEnabled:[[prefs valueForKey:kSVWEnableFpsCounter] boolValue]];
+		[self setSpeechEnabled:[[prefs valueForKey:kSVWEnableSpeech] boolValue]];
 	}
 	
 	if (([filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder,
@@ -295,6 +328,7 @@ NSUInteger const engineTypeResidual       = 1;
 	[self setSaveGameLocationEdited:NO];
 	
 	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
+	[self setEdited:NO];
 }
 
 - (void)saveData {
@@ -345,6 +379,12 @@ NSUInteger const engineTypeResidual       = 1;
 
 #pragma mark Setters and Getters
 - (void)resetDefaultValues {
+	// TODO
+//	NSString *wrapperVersion;
+//	NSString *scummVMVersion;
+//	NSString *residualVersion;
+
+	[self setEngineType:kEngineTypeScummVM];
 	[self setGameName:@""];
 	[self setGameID:@""];
 	[self setSaveGameLocation:kSaveGameLocationLibrary];
@@ -359,9 +399,15 @@ NSUInteger const engineTypeResidual       = 1;
 	[self setSfxVolume:192];
 	[self setSpeechVolume:192];
 	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
+	[self setSw3DRenderer:NO];
+	[self setFpsCounterEnabled:NO];
+	[self setSpeechEnabled:YES];
+	[self setExtraArguments:[NSString stringWithString:@""]];
+//	[self setEdited:NO];
 }
 
 - (void)setValue:(id)value forKey:(NSString *)key {
+	// TODO: Switch allGameIDs depending on the current engine
 	if ([self valueForKey:key] == value)
 		return;
 	[super setValue:value forKey:key];
