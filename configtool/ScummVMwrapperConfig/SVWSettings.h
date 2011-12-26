@@ -7,6 +7,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSUInteger const kSaveGameLocationLibrary;
+extern NSUInteger const kSaveGameLocationBundle;
 
 @interface SVWSettings : NSObject {
 	NSUInteger engineType;
@@ -19,6 +21,8 @@
 	NSString *gameName;
 	NSString *gameID;
 	NSUInteger saveGameLocation;
+	NSUInteger saveGameLocationOriginal;
+	BOOL saveGameLocationEdited;
 	BOOL fullScreenMode;
 	NSString *gameLanguage;
 	NSString *gameIconPath;
@@ -62,6 +66,8 @@
 @property (retain) NSString *gameName;
 @property (retain) NSString *gameID;
 @property (assign) NSUInteger saveGameLocation;
+@property (assign) NSUInteger saveGameLocationOriginal;
+@property (assign) BOOL saveGameLocationEdited;
 @property (assign, getter=isFullScreenMode) BOOL fullScreenMode;
 @property (retain) NSString *gameLanguage;
 @property (copy) NSString *gameIconPath;

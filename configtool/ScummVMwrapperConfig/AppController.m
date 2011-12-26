@@ -10,7 +10,8 @@
 /*******************************************************************************************************************/
 @implementation AppController
 
-NSString * const kEditedObserver = @"EditedObserver";
+NSString * const kEditedObserver   = @"EditedObserver";
+NSString * const kSaveGameObserver = @"SaveGameObserver";
 
 /*******************************************************************************************************************/
 #pragma mark Init and Dealloc
@@ -31,21 +32,15 @@ NSString * const kEditedObserver = @"EditedObserver";
 - (void) awakeFromNib {
 	[NSApp setDelegate:self];
 	[settings setEdited:NO];
+	[exclamationMarkImageView setImage:[[NSWorkspace sharedWorkspace]
+					    iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)]];
 	[settings addObserver:self forKeyPath:@"edited" options:0 context:kEditedObserver];
 	[gameIconWell bind:@"filePath" toObject:settings withKeyPath:@"gameIconPath" options:nil];
+	[settings addObserver:self forKeyPath:@"saveGameLocation" options:0 context:kSaveGameObserver];
 }
 
 /*******************************************************************************************************************/
 #pragma mark Events
-- (void) savePathAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(int*)contextInfo {
-#pragma unused (alert, contextInfo)
-	if( returnCode == NSAlertFirstButtonReturn ) {
-		[settings setSaveIntoHome:([[savePathRadio selectedCell] tag] == 1)];
-		[[NSApp mainWindow] setDocumentEdited:YES];
-	} else
-		[savePathRadio selectCellWithTag:([settings isSaveIntoHome] ? 1 : 0)];
-}
-
 - (void) saveAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(int*)contextInfo {
 #pragma unused (alert, contextInfo)
 	if( returnCode == NSAlertSecondButtonReturn ) {
@@ -132,19 +127,6 @@ NSString * const kEditedObserver = @"EditedObserver";
 
 /*******************************************************************************************************************/
 #pragma mark GUI
-- (IBAction) editSavePath: (id)sender {
-#pragma unused (sender)
-	// FIXME
-	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-	[alert addButtonWithTitle:@"OK"];
-	[alert addButtonWithTitle:@"Cancel"];
-	[alert setMessageText:@"Edit the Save Game Path settings?"];
-	[alert setInformativeText:@"All the Save Games will be lost.  Make sure you have a backup."];
-	[alert setAlertStyle:NSWarningAlertStyle];
-	[alert beginSheetModalForWindow:[NSApp mainWindow] modalDelegate:self
-			didEndSelector:@selector(savePathAlertDidEnd:returnCode:contextInfo:) contextInfo:nil];
-}
-
 - (IBAction)runGame: (id)sender {
 #pragma unused (sender)
 	NSLog(@"%@", [[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Contents/MacOS/scumm_w"]);
@@ -154,6 +136,11 @@ NSString * const kEditedObserver = @"EditedObserver";
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if (context == kEditedObserver) {
 		[[NSApp mainWindow] setDocumentEdited:[settings isEdited]];
+	} else if (context == kSaveGameObserver) {
+		if ([settings saveGameLocation] != [settings saveGameLocationOriginal])
+			[settings setSaveGameLocationEdited:YES];
+		else
+			[settings setSaveGameLocationEdited:NO];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}

@@ -12,8 +12,8 @@
 @interface AppController : NSObject {
 	IBOutlet SVWSettings *settings;
 	
-	IBOutlet NSMatrix *savePathRadio;
 	IBOutlet SVWDropImageView *gameIconWell;
+	IBOutlet NSImageView *exclamationMarkImageView;
 }
 
 - (void)loadData;

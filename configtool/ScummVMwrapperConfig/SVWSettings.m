@@ -48,6 +48,8 @@ NSUInteger const engineTypeResidual       = 1;
 @synthesize gameName;
 @synthesize gameID;
 @synthesize saveGameLocation;
+@synthesize saveGameLocationOriginal;
+@synthesize saveGameLocationEdited;
 @synthesize fullScreenMode;
 @synthesize gameLanguage;
 @synthesize gameIconPath;
@@ -231,6 +233,8 @@ NSUInteger const engineTypeResidual       = 1;
 		gameName = [[NSString alloc] initWithString:@""];
 		gameID = [[NSString alloc] initWithString:@""];
 		saveGameLocation = kSaveGameLocationLibrary;
+		saveGameLocationOriginal = kSaveGameLocationLibrary;
+		saveGameLocationEdited = NO;
 		fullScreenMode = NO;
 		aspectRatioCorrectionEnabled = NO;
 		gfxMode = [[NSString alloc] initWithString:[allGFXModes objectAtIndex:1]];
@@ -290,6 +294,8 @@ NSUInteger const engineTypeResidual       = 1;
 		[self setSaveGameLocation:kSaveGameLocationBundle];
 	else
 		[self setSaveGameLocation:kSaveGameLocationLibrary];
+	[self setSaveGameLocationOriginal:[self saveGameLocation]];
+	[self setSaveGameLocationEdited:NO];
 	
 	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
 }
@@ -346,6 +352,8 @@ NSUInteger const engineTypeResidual       = 1;
 	[self setGameName:@""];
 	[self setGameID:@""];
 	[self setSaveGameLocation:kSaveGameLocationLibrary];
+	[self setSaveGameLocationOriginal:kSaveGameLocationLibrary];
+	[self setSaveGameLocationEdited:NO];
 	[self setFullScreenMode:NO];
 	[self setAspectRatioCorrectionEnabled:NO];
 	[self setGfxMode:[NSString stringWithString:[[self allGFXModes] objectAtIndex:1]]];
@@ -357,21 +365,12 @@ NSUInteger const engineTypeResidual       = 1;
 	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
 }
 
-/** (assign) BOOL saveIntoHome */
-
-
 - (void)setValue:(id)value forKey:(NSString *)key {
 	if ([self valueForKey:key] == value)
 		return;
 	[super setValue:value forKey:key];
 	[self setEdited:YES];
 }
-
-/** (assign) BOOL iconChanged */
-
-/** (retain) NSImage *gameIcon */
-
-/** (copy) NSString *gameIconPath */
 
 + (NSString *)defaultIconPath {
 	return [NSString stringWithFormat:kGameIcns,
