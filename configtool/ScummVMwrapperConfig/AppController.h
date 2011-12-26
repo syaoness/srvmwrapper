@@ -9,6 +9,7 @@
 #import "SVWDropImageView.h"
 #import "SVWSettings.h"
 
+#pragma mark Interface
 @interface AppController : NSObject {
 	IBOutlet SVWSettings *settings;
 	
@@ -16,9 +17,11 @@
 	IBOutlet NSImageView *exclamationMarkImageView;
 }
 
+#pragma mark Methods
 - (void)loadData;
 - (void)saveData;
 
+#pragma mark IBActions
 - (IBAction)revertToSaved: (id)sender;
 - (IBAction)save: (id)sender;
 

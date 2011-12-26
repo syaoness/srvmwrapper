@@ -7,9 +7,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+#pragma mark Constants
 extern NSUInteger const kSaveGameLocationLibrary;
 extern NSUInteger const kSaveGameLocationBundle;
 
+#pragma mark Interface
 @interface SVWSettings : NSObject {
 	NSUInteger engineType;
 	BOOL edited;
@@ -45,9 +47,9 @@ extern NSUInteger const kSaveGameLocationBundle;
 	NSString *wrapperVersion;
 	NSString *scummVMVersion;
 	NSString *residualVersion;
-
 }
 
+#pragma mark Methods
 - (void)loadData;
 - (void)saveData;
 
@@ -55,6 +57,7 @@ extern NSUInteger const kSaveGameLocationBundle;
 
 + (NSString *)defaultIconPath;
 
+#pragma mark -
 #pragma mark Properties
 @property (assign) NSUInteger engineType;
 @property (assign, getter=isEdited) BOOL edited;

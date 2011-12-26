@@ -7,13 +7,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-
+#pragma mark Interface
 @interface SVWDropImageView : NSImageView {
 	NSString *filePath;
 }
 
+#pragma mark Methods
 - (NSUInteger)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
 
+#pragma mark Properties
 @property (retain) NSString *filePath;
 
 @end

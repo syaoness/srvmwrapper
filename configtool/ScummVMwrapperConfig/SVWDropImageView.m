@@ -7,10 +7,9 @@
 
 #import "SVWDropImageView.h"
 
-/*******************************************************************************************************************/
+#pragma mark Implementation
 @implementation SVWDropImageView
 
-/*******************************************************************************************************************/
 #pragma mark Properties
 - (NSString *)filePath {
 	return filePath;
@@ -34,7 +33,6 @@
 	}
 }
 
-/*******************************************************************************************************************/
 #pragma mark Object creation, initialization, destruction
 - (id)init {
 	self = [super init];
@@ -50,9 +48,6 @@
 	[super dealloc];
 }
 
-// TODO: Save icon if it's != kDefaultIconPath
-
-/*******************************************************************************************************************/
 #pragma mark NSDraggingDestination Protocol
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender {
 	NSPasteboard *pboard = [sender draggingPasteboard];
@@ -63,24 +58,24 @@
 	
 	NSData *carriedData = [pboard dataForType:desiredType];
 	
-	if( carriedData == nil )
+	if (carriedData == nil)
 		return NO;
 	
-	if ( ![desiredType isEqualToString:NSFilenamesPboardType] )
+	if (![desiredType isEqualToString:NSFilenamesPboardType])
 		return NO;
 	
 	NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
 
-	if( [files count] <= 0 )
+	if ([files count] <= 0)
 		return NO;
 	
 	NSString *path = [files objectAtIndex:0];
 
 	NSString *appName = nil;
 	NSString *fileType = nil;
-	if( ![[NSWorkspace sharedWorkspace] getInfoForFile:path application:&appName type:&fileType] )
+	if (![[NSWorkspace sharedWorkspace] getInfoForFile:path application:&appName type:&fileType])
 		return NO;
-	if( ![fileType isEqualToString:@"icns"] )
+	if (![fileType isEqualToString:@"icns"])
 		return NO;
 
 	[self setFilePath:path];
@@ -102,7 +97,7 @@
 }
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender {
-	if( (NSDragOperationGeneric & [sender draggingSourceOperationMask]) == NSDragOperationGeneric )
+	if ((NSDragOperationGeneric & [sender draggingSourceOperationMask]) == NSDragOperationGeneric)
 		return NSDragOperationCopy;
 	return NSDragOperationNone;
 }
@@ -114,5 +109,4 @@
 	return YES;
 }
 
-/*******************************************************************************************************************/
 @end

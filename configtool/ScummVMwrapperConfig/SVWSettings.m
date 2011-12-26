@@ -7,7 +7,6 @@
 
 #import "SVWSettings.h"
 
-/*******************************************************************************************************************/
 #pragma mark Constants
 NSString * const kCFBundleDisplayName = @"CFBundleDisplayName";
 NSString * const kCFBundleName        = @"CFBundleName";
@@ -33,10 +32,10 @@ NSUInteger const kSaveGameLocationBundle  = 0;
 NSUInteger const engineTypeScummVM        = 0;
 NSUInteger const engineTypeResidual       = 1;
 
-/*******************************************************************************************************************/
+#pragma mark Implementation
 @implementation SVWSettings
 
-/*******************************************************************************************************************/
+#pragma mark -
 #pragma mark Properties
 @synthesize engineType;
 @synthesize edited;
@@ -73,9 +72,9 @@ NSUInteger const engineTypeResidual       = 1;
 @synthesize scummVMVersion;
 @synthesize residualVersion;
 
-/*******************************************************************************************************************/
+#pragma mark -
 #pragma mark Object creation, initialization, desctruction
-- (id) init {
+- (id)init {
 	self = [super init];
 	edited = NO;
 	allGameIDs = [[NSArray alloc] initWithObjects:
@@ -229,7 +228,7 @@ NSUInteger const engineTypeResidual       = 1;
 			@"ru",
 			@"cz",
 			nil];
-	if( self ) {
+	if (self) {
 		gameName = [[NSString alloc] initWithString:@""];
 		gameID = [[NSString alloc] initWithString:@""];
 		saveGameLocation = kSaveGameLocationLibrary;
@@ -247,11 +246,10 @@ NSUInteger const engineTypeResidual       = 1;
 		
 		[self loadData];
 	}
-	
 	return self;
 }
 
-- (void) dealloc {
+- (void)dealloc {
 	[self saveData];
 	
 	[gameName release];
@@ -267,16 +265,15 @@ NSUInteger const engineTypeResidual       = 1;
 	[super dealloc];
 }
 
-/*******************************************************************************************************************/
 #pragma mark Load and Save
-- (void) loadData {
+- (void)loadData {
 	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 			stringByDeletingLastPathComponent]];
 	NSDictionary *prefs = [NSDictionary dictionaryWithDictionary:[wrapperBundle infoDictionary]];
 	NSFileManager *filemanager = [NSFileManager defaultManager];
 	
 	[self resetDefaultValues];
-	if( prefs ) {
+	if (prefs) {
 		[self setGameName:[prefs objectForKey:kCFBundleDisplayName]];
 		[self setGameID:[prefs objectForKey:kCFBundleName]];
 		[self setFullScreenMode:[[prefs valueForKey:kSVWFullScreen] boolValue]];
@@ -300,7 +297,7 @@ NSUInteger const engineTypeResidual       = 1;
 	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
 }
 
-- (void) saveData {
+- (void)saveData {
 	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 			stringByDeletingLastPathComponent]];
 	NSMutableDictionary *prefs = [NSMutableDictionary dictionaryWithDictionary:[wrapperBundle infoDictionary]];
@@ -319,12 +316,12 @@ NSUInteger const engineTypeResidual       = 1;
 	[prefs setObject:[NSNumber numberWithUnsignedInteger:[self sfxVolume]] forKey:kSVWSFXVolume];
 	[prefs setObject:[NSNumber numberWithUnsignedInteger:[self speechVolume]] forKey:kSVWSpeechVolume];
 	
-	if( [self saveGameLocation] == kSaveGameLocationLibrary ) {
+	if ([self saveGameLocation] == kSaveGameLocationLibrary) {
 		[filemanager removeItemAtPath:[NSString stringWithFormat:kSavesDir, [wrapperBundle resourcePath]]
 				error:nil];
 	} else {
-		if( ![filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder, [wrapperBundle
-				resourcePath]]] ) {
+		if (![filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder, [wrapperBundle
+				resourcePath]]]) {
 			[filemanager removeItemAtPath:[NSString stringWithFormat:kSavesDir, [wrapperBundle
 					resourcePath]] error:nil];
 		}
@@ -336,7 +333,7 @@ NSUInteger const engineTypeResidual       = 1;
 	
 	[prefs writeToFile:[NSString stringWithFormat:kInfoPlistPath, [wrapperBundle bundlePath]] atomically: YES];
 	
-	if( [[self gameIconPath] isEqualToString:[[self class] defaultIconPath]] ) {
+	if ([[self gameIconPath] isEqualToString:[[self class] defaultIconPath]]) {
 		[filemanager removeItemAtPath:[NSString stringWithFormat:kOldIcns, [wrapperBundle resourcePath]]
 				error:nil];
 		[filemanager moveItemAtPath:[[self class] defaultIconPath] toPath:
@@ -346,7 +343,6 @@ NSUInteger const engineTypeResidual       = 1;
 	[[NSApp mainWindow] setDocumentEdited:NO];
 }
 
-/*******************************************************************************************************************/
 #pragma mark Setters and Getters
 - (void)resetDefaultValues {
 	[self setGameName:@""];
@@ -372,11 +368,11 @@ NSUInteger const engineTypeResidual       = 1;
 	[self setEdited:YES];
 }
 
+#pragma mark Class methods
 + (NSString *)defaultIconPath {
 	return [NSString stringWithFormat:kGameIcns,
 		[[NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 					   stringByDeletingLastPathComponent]] resourcePath]];
 }
 
-/*******************************************************************************************************************/
 @end

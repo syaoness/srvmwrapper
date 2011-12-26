@@ -7,10 +7,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+#pragma mark Interface
 @interface ScummVMwrapperConfigAppDelegate : NSObject <NSApplicationDelegate> {
 	NSWindow *window;
 }
 
+#pragma mark Properties
 @property (assign) IBOutlet NSWindow *window;
 
 @end
