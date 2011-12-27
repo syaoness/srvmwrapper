@@ -19,6 +19,7 @@
 		1626D4FB14AA24C200A07013 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 1626D4F614AA24C200A07013 /* zip.c */; };
 		1626D4FD14AA277D00A07013 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1626D4FC14AA277D00A07013 /* libz.dylib */; };
 		1626D50014AA285A00A07013 /* ZipFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1626D4FF14AA285A00A07013 /* ZipFile.m */; };
+		1626D50314AA337F00A07013 /* CocoaCryptoHashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1626D50214AA337F00A07013 /* CocoaCryptoHashing.m */; };
 		16864B4E126531EE00132103 /* scummvm.icns in Resources */ = {isa = PBXBuildFile; fileRef = 16864B4D126531EE00132103 /* scummvm.icns */; };
 		16864B5E1265369500132103 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16864B5D1265369500132103 /* AppController.m */; };
 		168AEEF81266276100BC3F18 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 168AEEF61266276100BC3F18 /* Credits.rtf */; };
@@ -66,6 +67,8 @@
 		1626D4FC14AA277D00A07013 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		1626D4FE14AA285A00A07013 /* ZipFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipFile.h; sourceTree = "<group>"; };
 		1626D4FF14AA285A00A07013 /* ZipFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipFile.m; sourceTree = "<group>"; };
+		1626D50114AA337F00A07013 /* CocoaCryptoHashing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaCryptoHashing.h; sourceTree = "<group>"; };
+		1626D50214AA337F00A07013 /* CocoaCryptoHashing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaCryptoHashing.m; sourceTree = "<group>"; };
 		16864B4D126531EE00132103 /* scummvm.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = scummvm.icns; sourceTree = "<group>"; };
 		16864B5C1265369500132103 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		16864B5D1265369500132103 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
@@ -171,6 +174,8 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1626D50114AA337F00A07013 /* CocoaCryptoHashing.h */,
+				1626D50214AA337F00A07013 /* CocoaCryptoHashing.m */,
 				1626D4FE14AA285A00A07013 /* ZipFile.h */,
 				1626D4FF14AA285A00A07013 /* ZipFile.m */,
 				1626D4EE14AA24C200A07013 /* minizip */,
@@ -283,6 +288,7 @@
 				1626D4FA14AA24C200A07013 /* unzip.c in Sources */,
 				1626D4FB14AA24C200A07013 /* zip.c in Sources */,
 				1626D50014AA285A00A07013 /* ZipFile.m in Sources */,
+				1626D50314AA337F00A07013 /* CocoaCryptoHashing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +340,7 @@
 				INFOPLIST_FILE = "ScummVMwrapperConfig-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = "-lcrypto";
 				PRODUCT_NAME = ScummVMwrapperConfig;
 			};
 			name = Debug;
@@ -353,6 +360,7 @@
 				INFOPLIST_FILE = "ScummVMwrapperConfig-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = "-lcrypto";
 				PRODUCT_NAME = ScummVMwrapperConfig;
 			};
 			name = Release;

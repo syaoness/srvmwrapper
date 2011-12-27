@@ -7,6 +7,7 @@
 
 #import "SVWWrapperUpdater.h"
 #import "ZipFile.h"
+#import "CocoaCryptoHashing.h"
 
 @implementation SVWWrapperUpdater
 
@@ -81,8 +82,10 @@ NSUInteger const kMaxFileLength       = 1000*1000*50; // 50MB
 	if (!exists || isDir) {
 		return YES;
 	}
-	// TODO: check if file digest doesn't match and return YES
-	return NO;
+	NSString *digest = [[NSFileHandle fileHandleForReadingAtPath:[self destinationFilename:filename]] md5HexHash];
+	if (digest == nil)
+		return YES;
+	return ![[digest uppercaseString] isEqualToString:[fileinfo uppercaseString]ca];
 }
 
 - (BOOL)update {
