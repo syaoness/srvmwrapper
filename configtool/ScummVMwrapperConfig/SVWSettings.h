@@ -10,6 +10,7 @@
 #pragma mark Constants
 extern NSUInteger const kSaveGameLocationLibrary;
 extern NSUInteger const kSaveGameLocationBundle;
+extern NSString * const kCFBundleShortVersionString;
 
 #pragma mark Interface
 @interface SVWSettings : NSObject {
@@ -20,6 +21,7 @@ extern NSUInteger const kSaveGameLocationBundle;
 	NSArray *allGameIDs;
 	NSArray *allGFXModes;
 	NSArray *allGameLanguages;
+	NSImage *engineIcon;
 	
 	/// Common
 	NSString *gameName;
@@ -44,11 +46,6 @@ extern NSUInteger const kSaveGameLocationBundle;
 	BOOL sw3DRenderer;
 	BOOL fpsCounterEnabled;
 	BOOL speechEnabled;
-		
-	/// Version info
-	NSString *wrapperVersion;
-	NSString *scummVMVersion;
-	NSString *residualVersion;
 }
 
 #pragma mark Methods
@@ -68,6 +65,7 @@ extern NSUInteger const kSaveGameLocationBundle;
 @property (retain) NSArray *allGameIDs;
 @property (nonatomic, readonly) NSArray *allGFXModes;
 @property (nonatomic, readonly) NSArray *allGameLanguages;
+@property (retain) NSImage *engineIcon;
 
 #pragma mark Common
 @property (retain) NSString *gameName;
@@ -92,10 +90,5 @@ extern NSUInteger const kSaveGameLocationBundle;
 @property (assign, getter=isSw3DRenderer) BOOL sw3DRenderer;
 @property (assign, getter=isFpsCounterEnabled) BOOL fpsCounterEnabled;
 @property (assign, getter=isSpeechEnabled) BOOL speechEnabled;
-
-#pragma mark Version Info
-@property (retain, readonly) NSString *wrapperVersion;
-@property (retain, readonly) NSString *scummVMVersion;
-@property (retain, readonly) NSString *residualVersion;
 
 @end

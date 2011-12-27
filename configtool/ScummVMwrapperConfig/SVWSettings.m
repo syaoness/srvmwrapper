@@ -8,34 +8,37 @@
 #import "SVWSettings.h"
 
 #pragma mark Constants
-NSString * const kCFBundleDisplayName   = @"CFBundleDisplayName";
-NSString * const kCFBundleName          = @"CFBundleName";
-NSString * const kCFBundleIdentifier    = @"CFBundleIdentifier";
-NSString * const kSVWFullScreen         = @"SVWFullScreen";
-NSString * const kSVWAspectRatio        = @"SVWAspectRatio";
-NSString * const kSVWGFXMode            = @"SVWGFXMode";
-NSString * const kSVWEnableSubtitles    = @"SVWEnableSubtitles";
-NSString * const kSVWLanguage           = @"SVWLanguage";
-NSString * const kSVWMusicVolume        = @"SVWMusicVolume";
-NSString * const kSVWSFXVolume          = @"SVWSFXVolume";
-NSString * const kSVWSpeechVolume       = @"SVWSpeechVolume";
-NSString * const kSVWEngineType         = @"SVWEngineType";
-NSString * const kSVWExtraArguments     = @"SVWExtraArguments";
-NSString * const kSVWEnableSw3DRenderer = @"SVWEnableSw3DRenderer";
-NSString * const kSVWEnableFpsCounter   = @"SVWEnableFpsCounter";
-NSString * const kSVWEnableSpeech       = @"SVWEnableSpeech";
+NSString * const kCFBundleDisplayName        = @"CFBundleDisplayName";
+NSString * const kCFBundleName               = @"CFBundleName";
+NSString * const kCFBundleShortVersionString = @"CFBundleShortVersionString";
+NSString * const kCFBundleIdentifier         = @"CFBundleIdentifier";
+NSString * const kSVWFullScreen              = @"SVWFullScreen";
+NSString * const kSVWAspectRatio             = @"SVWAspectRatio";
+NSString * const kSVWGFXMode                 = @"SVWGFXMode";
+NSString * const kSVWEnableSubtitles         = @"SVWEnableSubtitles";
+NSString * const kSVWLanguage                = @"SVWLanguage";
+NSString * const kSVWMusicVolume             = @"SVWMusicVolume";
+NSString * const kSVWSFXVolume               = @"SVWSFXVolume";
+NSString * const kSVWSpeechVolume            = @"SVWSpeechVolume";
+NSString * const kSVWEngineType              = @"SVWEngineType";
+NSString * const kSVWExtraArguments          = @"SVWExtraArguments";
+NSString * const kSVWEnableSw3DRenderer      = @"SVWEnableSw3DRenderer";
+NSString * const kSVWEnableFpsCounter        = @"SVWEnableFpsCounter";
+NSString * const kSVWEnableSpeech            = @"SVWEnableSpeech";
 
-NSString * const kGameIcns              = @"%@/game.icns";
-NSString * const kOldIcns               = @"%@/old.icns";
-NSString * const kSavesDir              = @"%@/saves";
-NSString * const kSavesPlaceholder      = @"%@/saves/.dontdeletethis";
-NSString * const kInfoPlistPath         = @"%@/Contents/Info.plist";
+NSString * const kGameIcns                   = @"%@/game.icns";
+NSString * const kOldIcns                    = @"%@/old.icns";
+NSString * const kSavesDir                   = @"%@/saves";
+NSString * const kSavesPlaceholder           = @"%@/saves/.dontdeletethis";
+NSString * const kInfoPlistPath              = @"%@/Contents/Info.plist";
+NSString * const kScummVMIcon                = @"scummvm.icns";
+NSString * const kResidualIcon               = @"residual.icns";
 
-NSUInteger const kSaveGameLocationLibrary = 1;
-NSUInteger const kSaveGameLocationBundle  = 0;
+NSUInteger const kSaveGameLocationLibrary    = 1;
+NSUInteger const kSaveGameLocationBundle     = 0;
 
-NSUInteger const kEngineTypeScummVM       = 0;
-NSUInteger const kEngineTypeResidual      = 1;
+NSUInteger const kEngineTypeScummVM          = 0;
+NSUInteger const kEngineTypeResidual         = 1;
 
 #pragma mark Implementation
 @implementation SVWSettings
@@ -49,6 +52,7 @@ NSUInteger const kEngineTypeResidual      = 1;
 @synthesize allGameIDs;
 @synthesize allGFXModes;
 @synthesize allGameLanguages;
+@synthesize engineIcon;
 
 #pragma mark Common
 @synthesize gameName;
@@ -74,16 +78,12 @@ NSUInteger const kEngineTypeResidual      = 1;
 @synthesize fpsCounterEnabled;
 @synthesize speechEnabled;
 
-#pragma mark Version Info
-@synthesize wrapperVersion;
-@synthesize scummVMVersion;
-@synthesize residualVersion;
-
 #pragma mark -
 #pragma mark Object creation, initialization, desctruction
 - (id)init {
 	self = [super init];
 	edited = NO;
+	engineIcon = [[NSImage imageNamed:@"scummvm.icns"] retain];
 	allScummGameIDs = [[NSArray alloc] initWithObjects:
 			@"activity",		// Putt-Putt & Fatty Bear's Activity Pack
 			@"agi",			// Sierra AGI game
@@ -260,9 +260,6 @@ NSUInteger const kEngineTypeResidual      = 1;
 		sw3DRenderer = NO;
 		fpsCounterEnabled = NO;
 		speechEnabled = YES;
-		wrapperVersion = [[NSString alloc] initWithString:@""];
-		scummVMVersion = [[NSString alloc] initWithString:@""];
-		residualVersion = [[NSString alloc] initWithString:@""];
 		
 		[self loadData];
 	}
@@ -284,10 +281,6 @@ NSUInteger const kEngineTypeResidual      = 1;
 	[allResidualGameIDs release];
 	[allGFXModes release];
 	[allGameLanguages release];
-	
-	[wrapperVersion release];
-	[scummVMVersion release];
-	[residualVersion release];
 	
 	[super dealloc];
 }

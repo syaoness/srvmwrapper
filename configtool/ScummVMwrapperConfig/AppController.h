@@ -19,16 +19,28 @@
 	IBOutlet NSComboBox *gameIDComboBox;
 	IBOutlet NSComboBox *gfxModeComboBox;
 	IBOutlet NSComboBox *gameLanguageComboBox;
+
+	NSString *wrapperVersion;
+	NSString *scummVMVersion;
+	NSString *residualVersion;
 }
 
 #pragma mark Methods
 - (void)loadData;
 - (void)saveData;
 
+- (NSString *)scummVMVersionFromExe;
+- (NSString *)residualVersionFromExe;
+
 #pragma mark IBActions
 - (IBAction)revertToSaved: (id)sender;
 - (IBAction)save: (id)sender;
 
 - (IBAction)runGame: (id)sender;
+
+#pragma mark Properties
+@property (retain) NSString *wrapperVersion;
+@property (retain) NSString *scummVMVersion;
+@property (retain) NSString *residualVersion;
 
 @end

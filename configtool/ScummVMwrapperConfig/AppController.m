@@ -14,14 +14,32 @@
 NSString * const kEditedObserver   = @"EditedObserver";
 NSString * const kSaveGameObserver = @"SaveGameObserver";
 
+NSString * const kScummVMExe       = @"scummvm";
+NSString * const kResidualExe      = @"residual";
+NSString * const kVersionArgument  = @"--version";
+
+#pragma mark Properties
+@synthesize wrapperVersion;
+@synthesize scummVMVersion;
+@synthesize residualVersion;
+
 #pragma mark -
 #pragma mark Init and Dealloc
 - (id)init {
 	self = [super init];
+	if (self) {
+		wrapperVersion = [[NSString alloc] initWithString:@""];
+		scummVMVersion = [[NSString alloc] initWithString:@""];
+		residualVersion = [[NSString alloc] initWithString:@""];
+	}
 	return self;
 }
 
 - (void)dealloc {
+	[wrapperVersion release];
+	[scummVMVersion release];
+	[residualVersion release];
+
 	[super dealloc];
 }
 
@@ -29,6 +47,14 @@ NSString * const kSaveGameObserver = @"SaveGameObserver";
 	[NSApp setDelegate:self];
 	[exclamationMarkImageView setImage:[[NSWorkspace sharedWorkspace]
 					    iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)]];
+	
+	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+							    stringByDeletingLastPathComponent]];
+	[self setWrapperVersion:[wrapperBundle objectForInfoDictionaryKey:kCFBundleShortVersionString]];
+	
+	[self setScummVMVersion:[self scummVMVersionFromExe]];
+	[self setResidualVersion:[self residualVersionFromExe]];
+
 	[self loadData];
 	[settings addObserver:self forKeyPath:@"edited" options:0 context:kEditedObserver];
 	[gameIconWell bind:@"filePath" toObject:settings withKeyPath:@"gameIconPath" options:nil];
@@ -120,6 +146,58 @@ NSString * const kSaveGameObserver = @"SaveGameObserver";
 	[settings saveData];
 }
 
+- (NSString *)scummVMVersionFromExe {
+	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+							    stringByDeletingLastPathComponent]];
+	if (wrapperBundle == nil)
+		return @"";
+	NSString *executablePath = [wrapperBundle pathForAuxiliaryExecutable:kScummVMExe];
+	if (executablePath == nil)
+		return @"";
+	NSTask *task = [[NSTask alloc] init];
+	[task setLaunchPath:executablePath];
+	[task setArguments:[NSArray arrayWithObjects:kVersionArgument, nil]];
+	NSPipe *pipe = [NSPipe pipe];
+	[task setStandardOutput: pipe];
+	NSFileHandle *file = [pipe fileHandleForReading];
+	[task launch];
+	NSData *data = [file readDataToEndOfFile];
+	NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	[task autorelease];
+	if (string == nil)
+		return @"";
+	string = [[string componentsSeparatedByString:@" "] objectAtIndex:1];
+	if (string == nil)
+		return @"";
+	return string;
+}
+
+- (NSString *)residualVersionFromExe {
+	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+							    stringByDeletingLastPathComponent]];
+	if (wrapperBundle == nil)
+		return @"";
+	NSString *executablePath = [wrapperBundle pathForAuxiliaryExecutable:kResidualExe];
+	if (executablePath == nil)
+		return @"";
+	NSTask *task = [[NSTask alloc] init];
+	[task setLaunchPath:executablePath];
+	[task setArguments:[NSArray arrayWithObjects:kVersionArgument, nil]];
+	NSPipe *pipe = [NSPipe pipe];
+	[task setStandardOutput: pipe];
+	NSFileHandle *file = [pipe fileHandleForReading];
+	[task launch];
+	NSData *data = [file readDataToEndOfFile];
+	NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	[task autorelease];
+	if (string == nil)
+		return @"";
+	string = [[string componentsSeparatedByString:@" "] objectAtIndex:1];
+	if (string == nil)
+		return @"";
+	return string;
+}
+
 - (IBAction)revertToSaved: (id)sender {
 #pragma unused (sender)
 	[self loadData];
@@ -144,16 +222,12 @@ NSString * const kSaveGameObserver = @"SaveGameObserver";
 #pragma mark NSComboBoxDataSource
 - (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index {
 	if (aComboBox == gameIDComboBox) {
-		NSLog(@"gameID (%ld)", index);
 		return [[settings allGameIDs] objectAtIndex:index];
 	} else if (aComboBox == gameLanguageComboBox) {
-		NSLog(@"gameLang (%ld)", index);
 		return [[settings allGameLanguages] objectAtIndex:index];
 	} else if (aComboBox == gfxModeComboBox) {
-		NSLog(@"GFX (%ld)", index);
 		return [[settings allGFXModes] objectAtIndex:index];
 	}
-	NSLog(@"WTF (%ld)", index);
 	return nil;
 }
 
