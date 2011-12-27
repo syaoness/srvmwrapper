@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>Files</key>
+	<dict>
+		<key>ScummVMwrapperConfig.app</key>
+		<string>Ignore</string>
+		<key>Contents</key>
+		<string>Dir</string>
+		<key>Contents/Resources</key>
+		<string>Dir</string>
+		<key>Contents/Resources/game.icns</key>
+		<string>Ignore</string>
+		<key>Contents/Resources/old.icns</key>
+		<string>Ignore</string>
+		<key>Contents/Resources/game</key>
+		<string>Ignore</string>
+		<key>Contents/Resources/saves</key>
+		<string>Ignore</string>
+		<key>Contents/Resources/ReadMe.txt</key>
+		<string>FIXME</string>
+		<key>Contents/Resources/GameIDs.txt</key>
+		<string>FIXME</string>
+		<key>Contents/MacOS</key>
+		<string>Dir</string>
+		<key>Contents/MacOS/scummvm</key>
+		<string>FIXME</string>
+		<key>Contents/MacOS/residual</key>
+		<string>FIXME</string>
+		<key>Contents/MacOS/scumm_w</key>
+		<string>FIXME</string>
+		<key>Contents/Info.plist</key>
+		<string>Ignore</string>
+	</dict>
+</dict>
 </plist>

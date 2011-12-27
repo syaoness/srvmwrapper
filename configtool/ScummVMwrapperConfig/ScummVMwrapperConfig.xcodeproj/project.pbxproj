@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		16090FEE1265EDA300487973 /* SVWDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16090FED1265EDA300487973 /* SVWDropImageView.m */; };
+		1626D4E114A9E82100A07013 /* WrapperDesc.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1626D4E014A9E82100A07013 /* WrapperDesc.plist */; };
+		1626D4E314A9EB0500A07013 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1626D4E214A9EB0500A07013 /* Sparkle.framework */; };
+		1626D4E514A9EB4400A07013 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1626D4E214A9EB0500A07013 /* Sparkle.framework */; };
+		1626D4E714A9EC8600A07013 /* SVW_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1626D4E614A9EC8600A07013 /* SVW_dsa_pub.pem */; };
+		1626D4EA14AA179400A07013 /* SVWWrapperUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 1626D4E914AA179400A07013 /* SVWWrapperUpdater.m */; };
 		16864B4E126531EE00132103 /* scummvm.icns in Resources */ = {isa = PBXBuildFile; fileRef = 16864B4D126531EE00132103 /* scummvm.icns */; };
 		16864B5E1265369500132103 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16864B5D1265369500132103 /* AppController.m */; };
 		168AEEF81266276100BC3F18 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 168AEEF61266276100BC3F18 /* Credits.rtf */; };
@@ -19,12 +24,30 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1626D4E414A9EB2C00A07013 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1626D4E514A9EB4400A07013 /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		16090FEC1265EDA300487973 /* SVWDropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWDropImageView.h; sourceTree = "<group>"; };
 		16090FED1265EDA300487973 /* SVWDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWDropImageView.m; sourceTree = "<group>"; };
+		1626D4E014A9E82100A07013 /* WrapperDesc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WrapperDesc.plist; sourceTree = "<group>"; };
+		1626D4E214A9EB0500A07013 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		1626D4E614A9EC8600A07013 /* SVW_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SVW_dsa_pub.pem; sourceTree = "<group>"; };
+		1626D4E814AA179400A07013 /* SVWWrapperUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWWrapperUpdater.h; sourceTree = "<group>"; };
+		1626D4E914AA179400A07013 /* SVWWrapperUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWWrapperUpdater.m; sourceTree = "<group>"; };
 		16864B4D126531EE00132103 /* scummvm.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = scummvm.icns; sourceTree = "<group>"; };
 		16864B5C1265369500132103 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		16864B5D1265369500132103 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
@@ -48,6 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				1626D4E314A9EB0500A07013 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +89,8 @@
 				256AC3D90F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m */,
 				16F7D19D12B122B3002AD0C7 /* SVWSettings.h */,
 				16F7D19E12B122B3002AD0C7 /* SVWSettings.m */,
+				1626D4E814AA179400A07013 /* SVWWrapperUpdater.h */,
+				1626D4E914AA179400A07013 /* SVWWrapperUpdater.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -119,11 +145,13 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1626D4E614A9EC8600A07013 /* SVW_dsa_pub.pem */,
 				168AEEF61266276100BC3F18 /* Credits.rtf */,
 				16864B4D126531EE00132103 /* scummvm.icns */,
 				8D1107310486CEB800E47090 /* ScummVMwrapperConfig-Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				1626D4E014A9E82100A07013 /* WrapperDesc.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -131,6 +159,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1626D4E214A9EB0500A07013 /* Sparkle.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -147,6 +176,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				1626D4E414A9EB2C00A07013 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -191,6 +221,8 @@
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				16864B4E126531EE00132103 /* scummvm.icns in Resources */,
 				168AEEF81266276100BC3F18 /* Credits.rtf in Resources */,
+				1626D4E114A9E82100A07013 /* WrapperDesc.plist in Resources */,
+				1626D4E714A9EC8600A07013 /* SVW_dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +238,7 @@
 				16864B5E1265369500132103 /* AppController.m in Sources */,
 				16090FEE1265EDA300487973 /* SVWDropImageView.m in Sources */,
 				16F7D19F12B122B3002AD0C7 /* SVWSettings.m in Sources */,
+				1626D4EA14AA179400A07013 /* SVWWrapperUpdater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +277,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -261,6 +298,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ScummVMwrapperConfig_Prefix.pch;
 				INFOPLIST_FILE = "ScummVMwrapperConfig-Info.plist";
