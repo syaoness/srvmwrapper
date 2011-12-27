@@ -6,6 +6,7 @@
  *******************************************************************************************************************/
 
 #import "SVWWrapperUpdater.h"
+#import "ZipFile.h"
 
 @implementation SVWWrapperUpdater
 
@@ -17,6 +18,8 @@ NSString * const kFileListKey         = @"Files";
 NSString * const kWrapperDescFilename = @"WrapperDesc";
 NSString * const kWrapperDataFilename = @"WrapperData.zip";
 
+NSUInteger const kMaxFileLength       = 1000*1000*50; // 50MB
+
 - (id)init {
 	self = [super init];
 	if (self) {
@@ -25,12 +28,22 @@ NSString * const kWrapperDataFilename = @"WrapperData.zip";
 		if (wrapperDesc == nil) {
 			wrapperDesc = [[NSDictionary alloc] init];
 		}
+		updateArchive = [[ZipFile alloc] initWithFileAtPath:
+				 [[NSBundle mainBundle] pathForResource:kWrapperDataFilename ofType:nil]];
+		if (![updateArchive open]) {
+			[updateArchive release];
+			updateArchive = nil;
+		}
 	}
 	return self;
 }
 
 - (void)dealloc {
 	[wrapperDesc release];
+	if (updateArchive != nil) {
+		[updateArchive close];
+		[updateArchive release];
+	}
 	[super dealloc];
 }
 
@@ -39,14 +52,14 @@ NSString * const kWrapperDataFilename = @"WrapperData.zip";
 	if (fileList == nil || ![fileList isKindOfClass:[NSDictionary class]] || [fileList count] < 1)
 		return NO;
 
-	if ([[NSBundle mainBundle] pathForResource:kWrapperDataFilename ofType:nil] == nil)
+	if (updateArchive == nil)
 		return NO;
 	
 	for (NSString *eachFilename in [fileList allKeys]) {
 		id eachEntry = [fileList objectForKey:eachFilename];
 		if (eachEntry == nil || ![eachEntry isKindOfClass:[NSString class]])
 			continue;
-		if ([self checkForUpdatesFile:eachFilename withInfo:(NSString *)eachEntry])
+		if ([self checkForUpdatesFile:[self sanitizeFilename:eachFilename] withInfo:(NSString *)eachEntry])
 			return YES;
 	}
 	return NO;
@@ -56,16 +69,18 @@ NSString * const kWrapperDataFilename = @"WrapperData.zip";
 #pragma unused (filename)
 	if ([fileinfo isEqualToString:kFileIgnore])
 		return NO;
+	NSFileManager *fm = [NSFileManager defaultManager];
+	BOOL isDir;
+	BOOL exists = [fm fileExistsAtPath:[self destinationFilename:filename] isDirectory:&isDir];
 	if ([fileinfo isEqualToString:kFileDelete]) {
-		// TODO: Check if file exists and return YES
-		return NO;
+		return exists;
 	}
 	if ([fileinfo isEqualToString:kFileDirectory]) {
-		// TODO: Check if dir is missing and return YES
-		return NO;
+		return !(exists && isDir);
 	}
-	// TODO: check if file is missing and return YES
-	
+	if (!exists || isDir) {
+		return YES;
+	}
 	// TODO: check if file digest doesn't match and return YES
 	return NO;
 }
@@ -76,7 +91,7 @@ NSString * const kWrapperDataFilename = @"WrapperData.zip";
 		id eachEntry = [fileList objectForKey:eachFilename];
 		if (eachEntry == nil || ![eachEntry isKindOfClass:[NSString class]])
 			continue;
-		if (![self updateFile:eachFilename withInfo:(NSString *)eachEntry])
+		if (![self updateFile:[self sanitizeFilename:eachFilename] withInfo:(NSString *)eachEntry])
 			return NO;
 	}
 	return YES;
@@ -87,16 +102,29 @@ NSString * const kWrapperDataFilename = @"WrapperData.zip";
 	if (![self checkForUpdatesFile:filename withInfo:fileinfo])
 		return YES;
 
+	NSFileManager *fm = [NSFileManager defaultManager];
 	if ([fileinfo isEqualToString:kFileDelete]) {
-		// TODO: Check if file exists and delete it, return success state
-		return YES;
+		return [fm removeItemAtPath:[self destinationFilename:filename] error:NULL];
 	}
+	// If file exists, it's either the wrong type or its digest doesn't match.  Let's delete it first.
+	if ([fm fileExistsAtPath:[self destinationFilename:filename]]
+	    && ![fm removeItemAtPath:[self destinationFilename:filename] error:NULL])
+		return NO;
 	if ([fileinfo isEqualToString:kFileDirectory]) {
-		// TODO: Check if dir is missing and create it, return success state
-		return YES;
+		return [fm createDirectoryAtPath:[self destinationFilename:filename] withIntermediateDirectories:YES
+				      attributes:nil error:NULL];
 	}
-	// TODO: extract file and overwrite, return success state
-	return YES;
+	NSData *fileData = [updateArchive readWithFileName:filename maxLength:kMaxFileLength];
+	return [fileData writeToFile:[self destinationFilename:filename] atomically:YES];
+}
+
+- (NSString *)sanitizeFilename:(NSString *)filename {
+	return [filename stringByReplacingOccurrencesOfString:@"../" withString:@""];
+}
+
+- (NSString *)destinationFilename:(NSString *)filename {
+	return [[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]
+		stringByAppendingPathComponent:[self sanitizeFilename:filename]];
 }
 
 @end
