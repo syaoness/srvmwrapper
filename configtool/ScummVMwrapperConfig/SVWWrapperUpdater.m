@@ -85,7 +85,7 @@ NSUInteger const kMaxFileLength       = 1000*1000*50; // 50MB
 	NSString *digest = [[NSFileHandle fileHandleForReadingAtPath:[self destinationFilename:filename]] md5HexHash];
 	if (digest == nil)
 		return YES;
-	return ![[digest uppercaseString] isEqualToString:[fileinfo uppercaseString]ca];
+	return ![[digest uppercaseString] isEqualToString:[fileinfo uppercaseString]];
 }
 
 - (BOOL)update {

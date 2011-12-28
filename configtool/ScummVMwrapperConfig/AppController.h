@@ -20,13 +20,17 @@
 	IBOutlet NSComboBox *gfxModeComboBox;
 	IBOutlet NSComboBox *gameLanguageComboBox;
 
+	NSString *configToolVersion;
 	NSString *wrapperVersion;
 	NSString *scummVMVersion;
 	NSString *residualVersion;
+	
+	BOOL updateAvailable;
+	BOOL insideWrapper;
 }
 
 #pragma mark Methods
-- (void)loadData;
+- (BOOL)loadData;
 - (void)saveData;
 
 - (NSString *)scummVMVersionFromExe;
@@ -39,8 +43,11 @@
 - (IBAction)runGame: (id)sender;
 
 #pragma mark Properties
+@property (retain) NSString *configToolVersion;
 @property (retain) NSString *wrapperVersion;
 @property (retain) NSString *scummVMVersion;
 @property (retain) NSString *residualVersion;
+@property (assign, getter=isUpdateAvailable) BOOL updateAvailable;
+@property (assign, getter=isInsideWrapper) BOOL insideWrapper;
 
 @end

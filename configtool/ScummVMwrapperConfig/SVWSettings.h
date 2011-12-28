@@ -49,7 +49,7 @@ extern NSString * const kCFBundleShortVersionString;
 }
 
 #pragma mark Methods
-- (void)loadData;
+- (BOOL)loadData;
 - (void)saveData;
 
 - (void)resetDefaultValues;

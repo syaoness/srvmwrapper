@@ -286,7 +286,7 @@ NSUInteger const kEngineTypeResidual         = 1;
 }
 
 #pragma mark Load and Save
-- (void)loadData {
+- (BOOL)loadData {
 	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 			stringByDeletingLastPathComponent]];
 	NSDictionary *prefs = [NSDictionary dictionaryWithDictionary:[wrapperBundle infoDictionary]];
@@ -294,7 +294,7 @@ NSUInteger const kEngineTypeResidual         = 1;
 	
 	[self resetDefaultValues];
 
-	if (prefs) {
+	if (prefs != nil && [prefs objectForKey:kCFBundleName] != nil) {
 		[self setEngineType:[[prefs objectForKey:kSVWEngineType] unsignedIntegerValue]];
 		[self setGameName:[prefs objectForKey:kCFBundleDisplayName]];
 		[self setGameID:[prefs objectForKey:kCFBundleName]];
@@ -322,6 +322,7 @@ NSUInteger const kEngineTypeResidual         = 1;
 	
 	[self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
 	[self setEdited:NO];
+	return (prefs != nil && [prefs objectForKey:kCFBundleName] != nil);
 }
 
 - (void)saveData {
@@ -372,11 +373,6 @@ NSUInteger const kEngineTypeResidual         = 1;
 
 #pragma mark Setters and Getters
 - (void)resetDefaultValues {
-	// TODO
-//	NSString *wrapperVersion;
-//	NSString *scummVMVersion;
-//	NSString *residualVersion;
-
 	[self setEngineType:kEngineTypeScummVM];
 	[self setGameName:@""];
 	[self setGameID:@""];

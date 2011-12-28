@@ -19,23 +19,30 @@ NSString * const kResidualExe      = @"residual";
 NSString * const kVersionArgument  = @"--version";
 
 #pragma mark Properties
+@synthesize configToolVersion;
 @synthesize wrapperVersion;
 @synthesize scummVMVersion;
 @synthesize residualVersion;
+@synthesize updateAvailable;
+@synthesize insideWrapper;
 
 #pragma mark -
 #pragma mark Init and Dealloc
 - (id)init {
 	self = [super init];
 	if (self) {
+		configToolVersion = [[NSString alloc] initWithString:@""];
 		wrapperVersion = [[NSString alloc] initWithString:@""];
 		scummVMVersion = [[NSString alloc] initWithString:@""];
 		residualVersion = [[NSString alloc] initWithString:@""];
+		updateAvailable = NO;
+		insideWrapper = NO;
 	}
 	return self;
 }
 
 - (void)dealloc {
+	[configToolVersion release];
 	[wrapperVersion release];
 	[scummVMVersion release];
 	[residualVersion release];
@@ -48,6 +55,7 @@ NSString * const kVersionArgument  = @"--version";
 	[exclamationMarkImageView setImage:[[NSWorkspace sharedWorkspace]
 					    iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)]];
 	
+	[self setConfigToolVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:kCFBundleShortVersionString]];
 	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 							    stringByDeletingLastPathComponent]];
 	[self setWrapperVersion:[wrapperBundle objectForInfoDictionaryKey:kCFBundleShortVersionString]];
@@ -55,10 +63,12 @@ NSString * const kVersionArgument  = @"--version";
 	[self setScummVMVersion:[self scummVMVersionFromExe]];
 	[self setResidualVersion:[self residualVersionFromExe]];
 
-	[self loadData];
+	[self setInsideWrapper:[self loadData]];
 	[settings addObserver:self forKeyPath:@"edited" options:0 context:kEditedObserver];
 	[gameIconWell bind:@"filePath" toObject:settings withKeyPath:@"gameIconPath" options:nil];
 	[settings addObserver:self forKeyPath:@"saveGameLocation" options:0 context:kSaveGameObserver];
+	
+	// TODO: Check for updates if [self isInsideWrapper]
 }
 
 #pragma mark Notifications
@@ -76,6 +86,8 @@ NSString * const kVersionArgument  = @"--version";
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 #pragma unused (sender)
 	if (![[NSApp mainWindow] isDocumentEdited])
+		return NSTerminateNow;
+	if (![self isInsideWrapper])
 		return NSTerminateNow;
 	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 	[alert addButtonWithTitle:@"Save"];
@@ -102,6 +114,8 @@ NSString * const kVersionArgument  = @"--version";
 - (BOOL)windowShouldClose:(id)sender {
 #pragma unused (sender)
 	if (![[NSApp mainWindow] isDocumentEdited])
+		return YES;
+	if (![self isInsideWrapper])
 		return YES;
 	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 	[alert addButtonWithTitle:@"Save"];
@@ -136,17 +150,21 @@ NSString * const kVersionArgument  = @"--version";
 }
 
 #pragma mark Load and Save
-- (void)loadData {
-	[settings loadData];
+- (BOOL)loadData {
+	return [settings loadData];
 }
 
 - (void)saveData {
 	if (![[NSApp mainWindow] isDocumentEdited])
 		return;
+	if (![self isInsideWrapper])
+		return;
 	[settings saveData];
 }
 
 - (NSString *)scummVMVersionFromExe {
+	if (![self isInsideWrapper])
+		return @"";
 	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 							    stringByDeletingLastPathComponent]];
 	if (wrapperBundle == nil)
@@ -173,6 +191,8 @@ NSString * const kVersionArgument  = @"--version";
 }
 
 - (NSString *)residualVersionFromExe {
+	if (![self isInsideWrapper])
+		return @"";
 	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 							    stringByDeletingLastPathComponent]];
 	if (wrapperBundle == nil)
@@ -205,6 +225,8 @@ NSString * const kVersionArgument  = @"--version";
 
 - (IBAction)save: (id)sender {
 #pragma unused (sender)
+	if (![self isInsideWrapper])
+		return;
 	[self saveData];
 	[self loadData];
 }
@@ -212,6 +234,8 @@ NSString * const kVersionArgument  = @"--version";
 #pragma mark GUI actions
 - (IBAction)runGame: (id)sender {
 #pragma unused (sender)
+	if (![self isInsideWrapper])
+		return;
 	NSLog(@"%@", [[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]
 		      stringByAppendingPathComponent:@"Contents/MacOS/scumm_w"]);
 	[NSTask launchedTaskWithLaunchPath:[[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]
