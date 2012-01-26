@@ -91,13 +91,35 @@ NSString * const kVersionArgument  = @"--version";
 			[destinationPicker setNameFieldStringValue:@"MyWrapper.app"]; // FIXME: 10.6 only
 			[destinationPicker setPrompt:@"Create"];
 			[destinationPicker setTitle:@"Create a new wrapper"];
-			switch ([destinationPicker runModal]) {
-			case NSFileHandlingPanelOKButton:
-				[updateManager createBlankAtPath:[[destinationPicker URL] path]];
-				// TODO: Successfully created
-				break;
-			case NSFileHandlingPanelCancelButton:
-				break;
+			if ([destinationPicker runModal] == NSFileHandlingPanelOKButton) {
+				NSString *wrapperPath = [[destinationPicker URL] path];
+				if ([updateManager createBlankAtPath:wrapperPath]) {
+					NSAlert *doneAlert = [[[NSAlert alloc] init] autorelease];
+					[doneAlert addButtonWithTitle:@"Reveal in Finder"];
+					[doneAlert addButtonWithTitle:@"Quit"];
+					[doneAlert setMessageText:@"Your wrapper was successfully created."];
+					[doneAlert setInformativeText:[NSString
+								       stringWithFormat:@"Wrapper: %@\n\nIn:%@",
+								       [wrapperPath lastPathComponent],
+								       [wrapperPath stringByDeletingLastPathComponent]]];
+					[doneAlert setAlertStyle:NSInformationalAlertStyle];
+					if ([doneAlert runModal] == NSAlertFirstButtonReturn) {
+						[[NSWorkspace sharedWorkspace] selectFile:wrapperPath
+								 inFileViewerRootedAtPath:[wrapperPath
+									stringByDeletingLastPathComponent]];
+
+					}
+				} else {
+					NSAlert *doneAlert = [[[NSAlert alloc] init] autorelease];
+					[doneAlert addButtonWithTitle:@"Dismiss"];
+					[doneAlert setMessageText:@"Wrapper creation failed."];
+					[doneAlert setInformativeText:[NSString
+								       stringWithFormat:@"Wrapper: %@\n\nIn:%@",
+								       [wrapperPath lastPathComponent],
+								       [wrapperPath stringByDeletingLastPathComponent]]];
+					[doneAlert setAlertStyle:NSCriticalAlertStyle];
+				}
+				[NSApp terminate:self];
 			}
 		}
 	}

@@ -218,8 +218,6 @@ NSUInteger const kMaxFileLength       = 1000*1000*50; // 50MB
 		else
 			[fm createFileAtPath:fileDestination contents:fileData attributes:fileAttrs];
 	}
-
-	[[NSApplication sharedApplication] terminate:nil];
 	return YES;
 }
 
