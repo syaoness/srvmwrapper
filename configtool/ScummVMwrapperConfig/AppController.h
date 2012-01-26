@@ -8,9 +8,12 @@
 #import <Cocoa/Cocoa.h>
 #import "SVWDropImageView.h"
 #import "SVWSettings.h"
+#import "SVWWrapperUpdater.h"
 
 #pragma mark Interface
 @interface AppController : NSObject <NSComboBoxDataSource> {
+	SVWWrapperUpdater *updateManager;
+	
 	IBOutlet SVWSettings *settings;
 	
 	IBOutlet SVWDropImageView *gameIconWell;

@@ -23,6 +23,8 @@
 		16864B4E126531EE00132103 /* scummvm.icns in Resources */ = {isa = PBXBuildFile; fileRef = 16864B4D126531EE00132103 /* scummvm.icns */; };
 		16864B5E1265369500132103 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16864B5D1265369500132103 /* AppController.m */; };
 		168AEEF81266276100BC3F18 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 168AEEF61266276100BC3F18 /* Credits.rtf */; };
+		16ACB65914D0C22A00B2A5DB /* WrapperInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16ACB65814D0C22A00B2A5DB /* WrapperInfo.plist */; };
+		16ACB65B14D0CD6A00B2A5DB /* WrapperData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 16ACB65A14D0CD6A00B2A5DB /* WrapperData.zip */; };
 		16F7D19F12B122B3002AD0C7 /* SVWSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7D19E12B122B3002AD0C7 /* SVWSettings.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m */; };
@@ -73,6 +75,8 @@
 		16864B5C1265369500132103 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		16864B5D1265369500132103 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		168AEEF71266276100BC3F18 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		16ACB65814D0C22A00B2A5DB /* WrapperInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WrapperInfo.plist; sourceTree = "<group>"; };
+		16ACB65A14D0CD6A00B2A5DB /* WrapperData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = WrapperData.zip; sourceTree = "<group>"; };
 		16F7D19D12B122B3002AD0C7 /* SVWSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWSettings.h; sourceTree = "<group>"; };
 		16F7D19E12B122B3002AD0C7 /* SVWSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWSettings.m; sourceTree = "<group>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				1626D4E014A9E82100A07013 /* WrapperDesc.plist */,
+				16ACB65814D0C22A00B2A5DB /* WrapperInfo.plist */,
+				16ACB65A14D0CD6A00B2A5DB /* WrapperData.zip */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -267,6 +273,8 @@
 				168AEEF81266276100BC3F18 /* Credits.rtf in Resources */,
 				1626D4E114A9E82100A07013 /* WrapperDesc.plist in Resources */,
 				1626D4E714A9EC8600A07013 /* SVW_dsa_pub.pem in Resources */,
+				16ACB65914D0C22A00B2A5DB /* WrapperInfo.plist in Resources */,
+				16ACB65B14D0CD6A00B2A5DB /* WrapperData.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

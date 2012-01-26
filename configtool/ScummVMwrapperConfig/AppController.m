@@ -37,11 +37,13 @@ NSString * const kVersionArgument  = @"--version";
 		residualVersion = [[NSString alloc] initWithString:@""];
 		updateAvailable = NO;
 		insideWrapper = NO;
+		updateManager = [[SVWWrapperUpdater alloc] init];
 	}
 	return self;
 }
 
 - (void)dealloc {
+	[updateManager release];
 	[configToolVersion release];
 	[wrapperVersion release];
 	[scummVMVersion release];
@@ -60,15 +62,45 @@ NSString * const kVersionArgument  = @"--version";
 							    stringByDeletingLastPathComponent]];
 	[self setWrapperVersion:[wrapperBundle objectForInfoDictionaryKey:kCFBundleShortVersionString]];
 	
+	[self setInsideWrapper:[self loadData]];
+
 	[self setScummVMVersion:[self scummVMVersionFromExe]];
 	[self setResidualVersion:[self residualVersionFromExe]];
 
-	[self setInsideWrapper:[self loadData]];
 	[settings addObserver:self forKeyPath:@"edited" options:0 context:kEditedObserver];
 	[gameIconWell bind:@"filePath" toObject:settings withKeyPath:@"gameIconPath" options:nil];
 	[settings addObserver:self forKeyPath:@"saveGameLocation" options:0 context:kSaveGameObserver];
 	
-	// TODO: Check for updates if [self isInsideWrapper]
+	if ([self isInsideWrapper]) {
+		[self setUpdateAvailable:[updateManager checkForUpdates]];
+	} else {
+		// TODO: Offer a way to just check for updates
+		NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+		[alert addButtonWithTitle:@"Create"];
+		[alert addButtonWithTitle:@"Cancel"];
+		[alert setMessageText:@"Do you want to create a blank wrapper?"];
+		[alert setInformativeText:@"You need to create a wrapper in order to use this tool."];
+		[alert setAlertStyle:NSInformationalAlertStyle];
+		if ([alert runModal] == NSAlertFirstButtonReturn) {
+			NSSavePanel *destinationPicker = [NSSavePanel savePanel];
+			[destinationPicker setAllowedFileTypes:[NSArray arrayWithObject:@"app"]];
+			[destinationPicker setAllowsOtherFileTypes:NO];
+			[destinationPicker setCanCreateDirectories:YES];
+			[destinationPicker setMessage:@"Choose where to create the wrapper"];
+			[destinationPicker setNameFieldLabel:@"Wrapper name:"];
+			[destinationPicker setNameFieldStringValue:@"MyWrapper.app"]; // FIXME: 10.6 only
+			[destinationPicker setPrompt:@"Create"];
+			[destinationPicker setTitle:@"Create a new wrapper"];
+			switch ([destinationPicker runModal]) {
+			case NSFileHandlingPanelOKButton:
+				[updateManager createBlankAtPath:[[destinationPicker URL] path]];
+				// TODO: Successfully created
+				break;
+			case NSFileHandlingPanelCancelButton:
+				break;
+			}
+		}
+	}
 }
 
 #pragma mark Notifications

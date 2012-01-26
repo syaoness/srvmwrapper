@@ -5,33 +5,131 @@
 	<key>Files</key>
 	<dict>
 		<key>ScummVMwrapperConfig.app</key>
-		<string>Ignore</string>
+		<dict>
+			<key>Type</key>
+			<string>Self</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>509</integer>
+		</dict>
 		<key>Contents</key>
-		<string>Dir</string>
+		<dict>
+			<key>Type</key>
+			<string>Dir</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>509</integer>
+		</dict>
 		<key>Contents/Resources</key>
-		<string>Dir</string>
+		<dict>
+			<key>Type</key>
+			<string>Dir</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>509</integer>
+		</dict>
 		<key>Contents/Resources/game.icns</key>
-		<string>Ignore</string>
+		<dict>
+			<key>Type</key>
+			<string>Ignore</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>436</integer>
+		</dict>
 		<key>Contents/Resources/old.icns</key>
-		<string>Ignore</string>
+		<dict>
+			<key>Type</key>
+			<string>Ignore</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>436</integer>
+		</dict>
 		<key>Contents/Resources/game</key>
-		<string>Ignore</string>
+		<dict>
+			<key>Type</key>
+			<string>Dir</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>509</integer>
+		</dict>
 		<key>Contents/Resources/saves</key>
-		<string>Ignore</string>
+		<dict>
+			<key>Type</key>
+			<string>Ignore</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>509</integer>
+		</dict>
 		<key>Contents/Resources/ReadMe.txt</key>
-		<string>FIXME</string>
+		<dict>
+			<key>Type</key>
+			<string>File</string>
+			<key>Checksum</key>
+			<string>f7580f0cd90fb26af5e88815353b1a40</string>
+			<key>Permissions</key>
+			<integer>436</integer>
+		</dict>
 		<key>Contents/Resources/GameIDs.txt</key>
-		<string>FIXME</string>
+		<dict>
+			<key>Type</key>
+			<string>File</string>
+			<key>Checksum</key>
+			<string>eceea3a4abde33b17675af9fe680e05e</string>
+			<key>Permissions</key>
+			<integer>436</integer>
+		</dict>
 		<key>Contents/MacOS</key>
-		<string>Dir</string>
+		<dict>
+			<key>Type</key>
+			<string>Dir</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>509</integer>
+		</dict>
 		<key>Contents/MacOS/scummvm</key>
-		<string>FIXME</string>
+		<dict>
+			<key>Type</key>
+			<string>Ignore</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>509</integer>
+		</dict>
 		<key>Contents/MacOS/residual</key>
-		<string>FIXME</string>
+		<dict>
+			<key>Type</key>
+			<string>Ignore</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>509</integer>
+		</dict>
 		<key>Contents/MacOS/scumm_w</key>
-		<string>FIXME</string>
+		<dict>
+			<key>Type</key>
+			<string>File</string>
+			<key>Checksum</key>
+			<string>fa4fb36b6a51b5bc2bab2ff2b5332dcf</string>
+			<key>Permissions</key>
+			<integer>509</integer>
+		</dict>
 		<key>Contents/Info.plist</key>
-		<string>Ignore</string>
+		<dict>
+			<key>Type</key>
+			<string>Ignore</string>
+			<key>Checksum</key>
+			<string></string>
+			<key>Permissions</key>
+			<integer>436</integer>
+		</dict>
 	</dict>
 </dict>
 </plist>

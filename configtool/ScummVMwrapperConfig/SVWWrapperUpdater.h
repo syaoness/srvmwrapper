@@ -15,9 +15,11 @@
 }
 
 - (BOOL)checkForUpdates;
-- (BOOL)checkForUpdatesFile:(NSString *)filename withInfo:(NSString *)fileinfo;
-- (BOOL)updateFile:(NSString *)filename withInfo:(NSString *)fileinfo;
+- (BOOL)checkForUpdatesFile:(NSString *)filename withInfo:(NSDictionary *)fileinfo;
+- (BOOL)updateFile:(NSString *)filename withInfo:(NSDictionary *)fileinfo;
+- (BOOL)update;
 - (NSString *)sanitizeFilename:(NSString *)filename;
 - (NSString *)destinationFilename:(NSString *)filename;
+- (BOOL)createBlankAtPath:(NSString *)destination;
 
 @end
