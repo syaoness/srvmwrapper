@@ -25,6 +25,12 @@
 		168AEEF81266276100BC3F18 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 168AEEF61266276100BC3F18 /* Credits.rtf */; };
 		16ACB65914D0C22A00B2A5DB /* WrapperInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16ACB65814D0C22A00B2A5DB /* WrapperInfo.plist */; };
 		16ACB65B14D0CD6A00B2A5DB /* WrapperData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 16ACB65A14D0CD6A00B2A5DB /* WrapperData.zip */; };
+		16BDBC4314D2A10700193F7C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BDBC4214D2A10700193F7C /* Cocoa.framework */; };
+		16BDBC4914D2A10700193F7C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 16BDBC4714D2A10700193F7C /* InfoPlist.strings */; };
+		16BDBC4B14D2A10700193F7C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BDBC4A14D2A10700193F7C /* main.m */; };
+		16BDBC4F14D2A10700193F7C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 16BDBC4D14D2A10700193F7C /* Credits.rtf */; };
+		16BDBC5214D2A10700193F7C /* SVWAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BDBC5114D2A10700193F7C /* SVWAppDelegate.m */; };
+		16BDBC5514D2A10800193F7C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16BDBC5314D2A10800193F7C /* MainMenu.xib */; };
 		16F7D19F12B122B3002AD0C7 /* SVWSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7D19E12B122B3002AD0C7 /* SVWSettings.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m */; };
@@ -32,6 +38,16 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		16B7705314D2C8AA00598DF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 16BDBC3F14D2A10700193F7C;
+			remoteInfo = scumm_w;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1626D4E414A9EB2C00A07013 /* CopyFiles */ = {
@@ -77,8 +93,19 @@
 		168AEEF71266276100BC3F18 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		16ACB65814D0C22A00B2A5DB /* WrapperInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WrapperInfo.plist; sourceTree = "<group>"; };
 		16ACB65A14D0CD6A00B2A5DB /* WrapperData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = WrapperData.zip; sourceTree = "<group>"; };
+		16BDBC4014D2A10700193F7C /* scumm_w.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scumm_w.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		16BDBC4214D2A10700193F7C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		16BDBC4614D2A10700193F7C /* svwlauncher-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "svwlauncher-Info.plist"; sourceTree = "<group>"; };
+		16BDBC4814D2A10700193F7C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		16BDBC4A14D2A10700193F7C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		16BDBC4C14D2A10700193F7C /* svwlauncher-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "svwlauncher-Prefix.pch"; sourceTree = "<group>"; };
+		16BDBC4E14D2A10700193F7C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		16BDBC5014D2A10700193F7C /* SVWAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SVWAppDelegate.h; sourceTree = "<group>"; };
+		16BDBC5114D2A10700193F7C /* SVWAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SVWAppDelegate.m; sourceTree = "<group>"; };
+		16BDBC5414D2A10800193F7C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		16F7D19D12B122B3002AD0C7 /* SVWSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWSettings.h; sourceTree = "<group>"; };
 		16F7D19E12B122B3002AD0C7 /* SVWSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWSettings.m; sourceTree = "<group>"; };
+		16FE983E14D155C0001971A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScummVMwrapperConfigAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScummVMwrapperConfigAppDelegate.m; sourceTree = "<group>"; };
@@ -91,6 +118,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		16BDBC3D14D2A10700193F7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16BDBC4314D2A10700193F7C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072E0486CEB800E47090 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -155,10 +190,34 @@
 			path = minizip;
 			sourceTree = "<group>";
 		};
+		16BDBC4414D2A10700193F7C /* svwlauncher */ = {
+			isa = PBXGroup;
+			children = (
+				16BDBC5014D2A10700193F7C /* SVWAppDelegate.h */,
+				16BDBC5114D2A10700193F7C /* SVWAppDelegate.m */,
+				16BDBC5314D2A10800193F7C /* MainMenu.xib */,
+				16BDBC4514D2A10700193F7C /* Supporting Files */,
+			);
+			path = svwlauncher;
+			sourceTree = "<group>";
+		};
+		16BDBC4514D2A10700193F7C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				16BDBC4614D2A10700193F7C /* svwlauncher-Info.plist */,
+				16BDBC4714D2A10700193F7C /* InfoPlist.strings */,
+				16BDBC4A14D2A10700193F7C /* main.m */,
+				16BDBC4C14D2A10700193F7C /* svwlauncher-Prefix.pch */,
+				16BDBC4D14D2A10700193F7C /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				8D1107320486CEB800E47090 /* ScummVMwrapperConfig.app */,
+				16BDBC4014D2A10700193F7C /* scumm_w.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,6 +228,7 @@
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				16BDBC4414D2A10700193F7C /* svwlauncher */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -211,6 +271,8 @@
 				1626D4FC14AA277D00A07013 /* libz.dylib */,
 				1626D4E214A9EB0500A07013 /* Sparkle.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				16FE983E14D155C0001971A2 /* Foundation.framework */,
+				16BDBC4214D2A10700193F7C /* Cocoa.framework */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -219,10 +281,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		16BDBC3F14D2A10700193F7C /* scumm_w */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16BDBC5614D2A10800193F7C /* Build configuration list for PBXNativeTarget "scumm_w" */;
+			buildPhases = (
+				16BDBC3C14D2A10700193F7C /* Sources */,
+				16BDBC3D14D2A10700193F7C /* Frameworks */,
+				16BDBC3E14D2A10700193F7C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = scumm_w;
+			productName = svwlauncher;
+			productReference = 16BDBC4014D2A10700193F7C /* scumm_w.app */;
+			productType = "com.apple.product-type.application";
+		};
 		8D1107260486CEB800E47090 /* ScummVMwrapperConfig */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "ScummVMwrapperConfig" */;
 			buildPhases = (
+				16B7705614D2C8DB00598DF3 /* ShellScript */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
@@ -231,6 +311,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				16B7705414D2C8AA00598DF3 /* PBXTargetDependency */,
 			);
 			name = ScummVMwrapperConfig;
 			productInstallPath = "$(HOME)/Applications";
@@ -252,17 +333,29 @@
 				Japanese,
 				French,
 				German,
+				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* ScummVMwrapperConfig */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* ScummVMwrapperConfig */,
+				16BDBC3F14D2A10700193F7C /* scumm_w */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		16BDBC3E14D2A10700193F7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16BDBC4914D2A10700193F7C /* InfoPlist.strings in Resources */,
+				16BDBC4F14D2A10700193F7C /* Credits.rtf in Resources */,
+				16BDBC5514D2A10800193F7C /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D1107290486CEB800E47090 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -280,7 +373,32 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		16B7705614D2C8DB00598DF3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\n\necho \"Hello World\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		16BDBC3C14D2A10700193F7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16BDBC4B14D2A10700193F7C /* main.m in Sources */,
+				16BDBC5214D2A10700193F7C /* SVWAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -302,6 +420,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		16B7705414D2C8AA00598DF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 16BDBC3F14D2A10700193F7C /* scumm_w */;
+			targetProxy = 16B7705314D2C8AA00598DF3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -319,6 +445,30 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
+		16BDBC4714D2A10700193F7C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16BDBC4814D2A10700193F7C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		16BDBC4D14D2A10700193F7C /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16BDBC4E14D2A10700193F7C /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		16BDBC5314D2A10800193F7C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16BDBC5414D2A10800193F7C /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -330,6 +480,45 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		16BDBC5714D2A10800193F7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "svwlauncher/svwlauncher-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				INFOPLIST_FILE = "svwlauncher/svwlauncher-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		16BDBC5814D2A10800193F7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "svwlauncher/svwlauncher-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				INFOPLIST_FILE = "svwlauncher/svwlauncher-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -431,6 +620,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		16BDBC5614D2A10800193F7C /* Build configuration list for PBXNativeTarget "scumm_w" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16BDBC5714D2A10800193F7C /* Debug */,
+				16BDBC5814D2A10800193F7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "ScummVMwrapperConfig" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

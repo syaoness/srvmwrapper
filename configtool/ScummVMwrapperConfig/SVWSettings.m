@@ -30,7 +30,6 @@ NSString * const kGameIcns                   = @"%@/game.icns";
 NSString * const kOldIcns                    = @"%@/old.icns";
 NSString * const kSavesDir                   = @"%@/saves";
 NSString * const kSavesPlaceholder           = @"%@/saves/.dontdeletethis";
-NSString * const kInfoPlistPath              = @"%@/Contents/Info.plist";
 NSString * const kScummVMIcon                = @"scummvm.icns";
 NSString * const kResidualIcon               = @"residual.icns";
 
@@ -289,27 +288,48 @@ NSUInteger const kEngineTypeResidual         = 1;
 - (BOOL)loadData {
 	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 			stringByDeletingLastPathComponent]];
-	NSDictionary *prefs = [NSDictionary dictionaryWithDictionary:[wrapperBundle infoDictionary]];
+//	if (![[wrapperBundle bundlePath] hasSuffix:@".app"])
+//		return NO;
+
+	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:[[[wrapperBundle bundlePath]
+									   stringByAppendingPathComponent:@"Contents"]
+									  stringByAppendingPathComponent:@"Info.plist"]];
 	NSFileManager *filemanager = [NSFileManager defaultManager];
 	
 	[self resetDefaultValues];
 
 	if (prefs != nil && [prefs objectForKey:kCFBundleName] != nil) {
-		[self setEngineType:[[prefs objectForKey:kSVWEngineType] unsignedIntegerValue]];
-		[self setGameName:[prefs objectForKey:kCFBundleDisplayName]];
-		[self setGameID:[prefs objectForKey:kCFBundleName]];
-		[self setFullScreenMode:[[prefs valueForKey:kSVWFullScreen] boolValue]];
-		[self setAspectRatioCorrectionEnabled:[[prefs valueForKey:kSVWAspectRatio] boolValue]];
-		[self setGfxMode:[prefs objectForKey:kSVWGFXMode]];
-		[self setSubtitlesEnabled:[[prefs valueForKey:kSVWEnableSubtitles] boolValue]];
-		[self setGameLanguage:[prefs objectForKey:kSVWLanguage]];
-		[self setMusicVolume:[[prefs valueForKey:kSVWMusicVolume] unsignedIntegerValue]];
-		[self setSfxVolume:[[prefs valueForKey:kSVWSFXVolume] unsignedIntegerValue]];
-		[self setSpeechVolume:[[prefs valueForKey:kSVWSpeechVolume] unsignedIntegerValue]];
-		[self setExtraArguments:[prefs valueForKey:kSVWExtraArguments]];
-		[self setSw3DRenderer:[[prefs valueForKey:kSVWEnableSw3DRenderer] boolValue]];
-		[self setFpsCounterEnabled:[[prefs valueForKey:kSVWEnableFpsCounter] boolValue]];
-		[self setSpeechEnabled:[[prefs valueForKey:kSVWEnableSpeech] boolValue]];
+		id readObj;
+		if ((readObj=[prefs objectForKey:kSVWEngineType]) != nil)
+			[self setEngineType:[readObj unsignedIntegerValue]];
+		if ((readObj=[prefs objectForKey:kCFBundleDisplayName]) != nil)
+			[self setGameName:readObj];
+		if ((readObj=[prefs objectForKey:kCFBundleName]) != nil)
+			[self setGameID:readObj];
+		if ((readObj=[prefs objectForKey:kSVWFullScreen]) != nil)
+			[self setFullScreenMode:[readObj boolValue]];
+		if ((readObj=[prefs objectForKey:kSVWAspectRatio]) != nil)
+			[self setAspectRatioCorrectionEnabled:[readObj boolValue]];
+		if ((readObj=[prefs objectForKey:kSVWGFXMode]) != nil)
+			[self setGfxMode:readObj];
+		if ((readObj=[prefs objectForKey:kSVWEnableSubtitles]) != nil)
+			[self setSubtitlesEnabled:[readObj boolValue]];
+		if ((readObj=[prefs objectForKey:kSVWLanguage]) != nil)
+			[self setGameLanguage:readObj];
+		if ((readObj=[prefs objectForKey:kSVWMusicVolume]) != nil)
+			[self setMusicVolume:[readObj unsignedIntegerValue]];
+		if ((readObj=[prefs objectForKey:kSVWSFXVolume]) != nil)
+			[self setSfxVolume:[readObj unsignedIntegerValue]];
+		if ((readObj=[prefs objectForKey:kSVWSpeechVolume]) != nil)
+			[self setSpeechVolume:[readObj unsignedIntegerValue]];
+		if ((readObj=[prefs objectForKey:kSVWExtraArguments]) != nil)
+			[self setExtraArguments:readObj];
+		if ((readObj=[prefs objectForKey:kSVWEnableSw3DRenderer]) != nil)
+			[self setSw3DRenderer:[readObj boolValue]];
+		if ((readObj=[prefs objectForKey:kSVWEnableFpsCounter]) != nil)
+			[self setFpsCounterEnabled:[readObj boolValue]];
+		if ((readObj=[prefs objectForKey:kSVWEnableSpeech]) != nil)
+			[self setSpeechEnabled:[readObj boolValue]];
 	}
 	
 	if (([filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder,
@@ -328,7 +348,13 @@ NSUInteger const kEngineTypeResidual         = 1;
 - (void)saveData {
 	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 			stringByDeletingLastPathComponent]];
-	NSMutableDictionary *prefs = [NSMutableDictionary dictionaryWithDictionary:[wrapperBundle infoDictionary]];
+	NSMutableDictionary *prefs = [NSMutableDictionary dictionaryWithContentsOfFile: 
+				      [[[wrapperBundle bundlePath] stringByAppendingPathComponent:@"Contents"]
+				       stringByAppendingPathComponent:@"Info.plist"]];
+	if (prefs == nil) {
+		prefs = [NSMutableDictionary dictionary];
+	}
+	
 	NSFileManager *filemanager = [NSFileManager defaultManager];
 	
 	[prefs setObject:[self gameName] forKey:kCFBundleDisplayName];
@@ -359,7 +385,8 @@ NSUInteger const kEngineTypeResidual         = 1;
 				resourcePath]] contents:nil attributes:nil];
 	}
 	
-	[prefs writeToFile:[NSString stringWithFormat:kInfoPlistPath, [wrapperBundle bundlePath]] atomically: YES];
+	[prefs writeToFile:[[[wrapperBundle bundlePath] stringByAppendingPathComponent:@"Contents"]
+			    stringByAppendingPathComponent:@"Info.plist"] atomically: YES];
 	
 	if ([[self gameIconPath] isEqualToString:[[self class] defaultIconPath]]) {
 		[filemanager removeItemAtPath:[NSString stringWithFormat:kOldIcns, [wrapperBundle resourcePath]]

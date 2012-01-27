@@ -60,10 +60,14 @@ NSString * const kVersionArgument  = @"--version";
 	[self setConfigToolVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:kCFBundleShortVersionString]];
 	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
 							    stringByDeletingLastPathComponent]];
-	[self setWrapperVersion:[wrapperBundle objectForInfoDictionaryKey:kCFBundleShortVersionString]];
-	
 	[self setInsideWrapper:[self loadData]];
 
+	NSDictionary *config = [NSDictionary dictionaryWithContentsOfFile:[[[wrapperBundle bundlePath]
+									    stringByAppendingPathComponent:@"Contents"]
+									   stringByAppendingPathComponent:@"Info.plist"]];
+
+	[self setWrapperVersion:[config objectForKey:kCFBundleShortVersionString]];
+	
 	[self setScummVMVersion:[self scummVMVersionFromExe]];
 	[self setResidualVersion:[self residualVersionFromExe]];
 
