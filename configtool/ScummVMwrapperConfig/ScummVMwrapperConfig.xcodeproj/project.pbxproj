@@ -153,7 +153,7 @@
 				1626D4E814AA179400A07013 /* SVWWrapperUpdater.h */,
 				1626D4E914AA179400A07013 /* SVWWrapperUpdater.m */,
 			);
-			name = Classes;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -188,6 +188,16 @@
 				1626D4F714AA24C200A07013 /* zip.h */,
 			);
 			path = minizip;
+			sourceTree = "<group>";
+		};
+		16B7705714D2C9BC00598DF3 /* ScummVMWrapperConfig */ = {
+			isa = PBXGroup;
+			children = (
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+			);
+			path = ScummVMWrapperConfig;
 			sourceTree = "<group>";
 		};
 		16BDBC4414D2A10700193F7C /* svwlauncher */ = {
@@ -225,9 +235,7 @@
 		29B97314FDCFA39411CA2CEA /* ScummVMwrapperConfig */ = {
 			isa = PBXGroup;
 			children = (
-				080E96DDFE201D6D7F000001 /* Classes */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
+				16B7705714D2C9BC00598DF3 /* ScummVMWrapperConfig */,
 				16BDBC4414D2A10700193F7C /* svwlauncher */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -246,7 +254,7 @@
 				256AC3F00F4B6AF500CF3369 /* ScummVMwrapperConfig_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
-			name = "Other Sources";
+			path = "Other Sources";
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -262,7 +270,7 @@
 				16ACB65814D0C22A00B2A5DB /* WrapperInfo.plist */,
 				16ACB65A14D0CD6A00B2A5DB /* WrapperData.zip */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
