@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		16090FEE1265EDA300487973 /* SVWDropImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16090FED1265EDA300487973 /* SVWDropImageView.m */; };
+		1611DF4314D2F02E00E4FD00 /* game.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1611DF4214D2F02E00E4FD00 /* game.icns */; };
 		1626D4E114A9E82100A07013 /* WrapperDesc.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1626D4E014A9E82100A07013 /* WrapperDesc.plist */; };
 		1626D4E314A9EB0500A07013 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1626D4E214A9EB0500A07013 /* Sparkle.framework */; };
 		1626D4E514A9EB4400A07013 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1626D4E214A9EB0500A07013 /* Sparkle.framework */; };
@@ -68,6 +69,7 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		16090FEC1265EDA300487973 /* SVWDropImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWDropImageView.h; sourceTree = "<group>"; };
 		16090FED1265EDA300487973 /* SVWDropImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWDropImageView.m; sourceTree = "<group>"; };
+		1611DF4214D2F02E00E4FD00 /* game.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = game.icns; sourceTree = "<group>"; };
 		1626D4E014A9E82100A07013 /* WrapperDesc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WrapperDesc.plist; sourceTree = "<group>"; };
 		1626D4E214A9EB0500A07013 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		1626D4E614A9EC8600A07013 /* SVW_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SVW_dsa_pub.pem; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		1626D4FF14AA285A00A07013 /* ZipFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipFile.m; sourceTree = "<group>"; };
 		1626D50114AA337F00A07013 /* CocoaCryptoHashing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaCryptoHashing.h; sourceTree = "<group>"; };
 		1626D50214AA337F00A07013 /* CocoaCryptoHashing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaCryptoHashing.m; sourceTree = "<group>"; };
+		165548E214D2DB0900BEBFB8 /* makewrapperdata.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = makewrapperdata.sh; sourceTree = "<group>"; };
 		16864B4D126531EE00132103 /* scummvm.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = scummvm.icns; sourceTree = "<group>"; };
 		16864B5C1265369500132103 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		16864B5D1265369500132103 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
@@ -190,6 +193,14 @@
 			path = minizip;
 			sourceTree = "<group>";
 		};
+		165548E014D2DB0900BEBFB8 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				165548E214D2DB0900BEBFB8 /* makewrapperdata.sh */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
 		16B7705714D2C9BC00598DF3 /* ScummVMWrapperConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +246,7 @@
 		29B97314FDCFA39411CA2CEA /* ScummVMwrapperConfig */ = {
 			isa = PBXGroup;
 			children = (
+				165548E014D2DB0900BEBFB8 /* scripts */,
 				16B7705714D2C9BC00598DF3 /* ScummVMWrapperConfig */,
 				16BDBC4414D2A10700193F7C /* svwlauncher */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -262,8 +274,9 @@
 			children = (
 				1626D4E614A9EC8600A07013 /* SVW_dsa_pub.pem */,
 				168AEEF61266276100BC3F18 /* Credits.rtf */,
-				16864B4D126531EE00132103 /* scummvm.icns */,
 				8D1107310486CEB800E47090 /* ScummVMwrapperConfig-Info.plist */,
+				1611DF4214D2F02E00E4FD00 /* game.icns */,
+				16864B4D126531EE00132103 /* scummvm.icns */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				1626D4E014A9E82100A07013 /* WrapperDesc.plist */,
@@ -310,7 +323,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "ScummVMwrapperConfig" */;
 			buildPhases = (
-				16B7705614D2C8DB00598DF3 /* ShellScript */,
+				165548E414D2DB4800BEBFB8 /* ShellScript */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
@@ -376,13 +389,14 @@
 				1626D4E714A9EC8600A07013 /* SVW_dsa_pub.pem in Resources */,
 				16ACB65914D0C22A00B2A5DB /* WrapperInfo.plist in Resources */,
 				16ACB65B14D0CD6A00B2A5DB /* WrapperData.zip in Resources */,
+				1611DF4314D2F02E00E4FD00 /* game.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		16B7705614D2C8DB00598DF3 /* ShellScript */ = {
+		165548E414D2DB4800BEBFB8 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -393,7 +407,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\necho \"Hello World\"";
+			shellScript = ./scripts/makewrapperdata.sh;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -540,9 +554,9 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = ScummVMwrapperConfig_Prefix.pch;
+				GCC_PREFIX_HEADER = "ScummVMwrapperConfig/Other Sources/ScummVMwrapperConfig_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = USE_FILE32API;
-				INFOPLIST_FILE = "ScummVMwrapperConfig-Info.plist";
+				INFOPLIST_FILE = "ScummVMWrapperConfig/Resources/ScummVMwrapperConfig-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_LDFLAGS = "-lcrypto";
@@ -560,9 +574,9 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = ScummVMwrapperConfig_Prefix.pch;
+				GCC_PREFIX_HEADER = "ScummVMwrapperConfig/Other Sources/ScummVMwrapperConfig_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = USE_FILE32API;
-				INFOPLIST_FILE = "ScummVMwrapperConfig-Info.plist";
+				INFOPLIST_FILE = "ScummVMWrapperConfig/Resources/ScummVMwrapperConfig-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_LDFLAGS = "-lcrypto";

@@ -181,6 +181,8 @@ NSUInteger const kMaxFileLength       = 1000*1000*50; // 50MB
 				 stringByAppendingPathComponent:[[[NSBundle mainBundle] bundlePath] lastPathComponent]]
 			  error:nil])
 		return NO;
+
+	// FIXME: This shouldn't be needed anymore.  Remove?
 	NSDictionary *infoDict = [NSDictionary
 				  dictionaryWithContentsOfFile:[[NSBundle mainBundle]
 								pathForResource:kWrapperInfoFilename ofType:@"plist"]];
