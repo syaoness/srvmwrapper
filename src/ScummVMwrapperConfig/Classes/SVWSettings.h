@@ -14,38 +14,38 @@ extern NSString * const kCFBundleShortVersionString;
 
 #pragma mark Interface
 @interface SVWSettings : NSObject {
-	NSUInteger engineType;
-	BOOL edited;
-	NSArray *allScummGameIDs;
-	NSArray *allResidualGameIDs;
-	NSArray *allGameIDs;
-	NSArray *allGFXModes;
-	NSArray *allGameLanguages;
-	NSImage *engineIcon;
-	
-	/// Common
-	NSString *gameName;
-	NSString *gameID;
-	NSUInteger saveGameLocation;
-	NSUInteger saveGameLocationOriginal;
-	BOOL saveGameLocationEdited;
-	BOOL fullScreenMode;
-	NSString *gameLanguage;
-	NSString *gameIconPath;
-	NSString *extraArguments;
-	BOOL subtitlesEnabled;
-	NSUInteger musicVolume;
-	NSUInteger sfxVolume;
-	NSUInteger speechVolume;
+    NSUInteger engineType;
+    BOOL edited;
+    NSArray *allScummGameIDs;
+    NSArray *allResidualGameIDs;
+    NSArray *allGameIDs;
+    NSArray *allGFXModes;
+    NSArray *allGameLanguages;
+    NSImage *engineIcon;
+    
+    /// Common
+    NSString *gameName;
+    NSString *gameID;
+    NSUInteger saveGameLocation;
+    NSUInteger saveGameLocationOriginal;
+    BOOL saveGameLocationEdited;
+    BOOL fullScreenMode;
+    NSString *gameLanguage;
+    NSString *gameIconPath;
+    NSString *extraArguments;
+    BOOL subtitlesEnabled;
+    NSUInteger musicVolume;
+    NSUInteger sfxVolume;
+    NSUInteger speechVolume;
 
-	/// ScummVM
-	BOOL aspectRatioCorrectionEnabled;
-	NSString *gfxMode;
-	
-	/// Residual
-	BOOL sw3DRenderer;
-	BOOL fpsCounterEnabled;
-	BOOL speechEnabled;
+    /// ScummVM
+    BOOL aspectRatioCorrectionEnabled;
+    NSString *gfxMode;
+    
+    /// Residual
+    BOOL sw3DRenderer;
+    BOOL fpsCounterEnabled;
+    BOOL speechEnabled;
 }
 
 #pragma mark Methods

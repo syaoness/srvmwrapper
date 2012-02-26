@@ -36,8 +36,11 @@ NSString * const kResidualIcon               = @"residual.icns";
 NSUInteger const kSaveGameLocationLibrary    = 1;
 NSUInteger const kSaveGameLocationBundle     = 0;
 
+NSString * const kEngineType                 = @"engineType";
 NSUInteger const kEngineTypeScummVM          = 0;
 NSUInteger const kEngineTypeResidual         = 1;
+
+NSString * const kDefaultBundleName          = @"scumm_w";
 
 #pragma mark Implementation
 @implementation SVWSettings
@@ -304,8 +307,12 @@ NSUInteger const kEngineTypeResidual         = 1;
 			[self setEngineType:[readObj unsignedIntegerValue]];
 		if ((readObj=[prefs objectForKey:kCFBundleDisplayName]) != nil)
 			[self setGameName:readObj];
-		if ((readObj=[prefs objectForKey:kCFBundleName]) != nil)
-			[self setGameID:readObj];
+		if ((readObj=[prefs objectForKey:kCFBundleName]) != nil) {
+            if ([readObj isEqualToString:kDefaultBundleName])
+                [self setGameID:@""];
+            else
+                [self setGameID:readObj];
+        }
 		if ((readObj=[prefs objectForKey:kSVWFullScreen]) != nil)
 			[self setFullScreenMode:[readObj boolValue]];
 		if ((readObj=[prefs objectForKey:kSVWAspectRatio]) != nil)
@@ -358,9 +365,11 @@ NSUInteger const kEngineTypeResidual         = 1;
 	NSFileManager *filemanager = [NSFileManager defaultManager];
 	
 	[prefs setObject:[self gameName] forKey:kCFBundleDisplayName];
-	[prefs setObject:[self gameID] forKey:kCFBundleName];
-	[prefs setObject:[NSString stringWithFormat:@"com.dotalux.scummwrapper.%@", [self gameID]]
-			forKey:kCFBundleIdentifier];
+    NSString *safeGameID = [self gameID];
+    if ([[safeGameID stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
+        safeGameID = [NSString stringWithString:kDefaultBundleName];
+    [prefs setObject:safeGameID forKey:kCFBundleName];
+	[prefs setObject:[NSString stringWithFormat:@"com.dotalux.scummwrapper.%@", safeGameID] forKey:kCFBundleIdentifier];
 	[prefs setObject:[NSNumber numberWithBool:[self isFullScreenMode]] forKey:kSVWFullScreen];
 	[prefs setObject:[NSNumber numberWithBool:[self isAspectRatioCorrectionEnabled]] forKey:kSVWAspectRatio];
 	[prefs setObject:[self gfxMode] forKey:kSVWGFXMode];
@@ -423,7 +432,21 @@ NSUInteger const kEngineTypeResidual         = 1;
 }
 
 - (void)setValue:(id)value forKey:(NSString *)key {
-	// TODO: Switch allGameIDs depending on the current engine
+    if ([key isEqualToString:kEngineType]) {
+        NSNumber *num = value;
+        switch ([num integerValue]) {
+            case kEngineTypeScummVM:
+                [self setAllGameIDs:[self allScummGameIDs]];
+                [self setEngineIcon:[NSImage imageNamed:@"scummvm.icns"]];
+                break;
+            case kEngineTypeResidual:
+                [self setAllGameIDs:[self allResidualGameIDs]];
+                [self setEngineIcon:[NSImage imageNamed:@"residual.icns"]];
+                break;
+            default:
+                break;
+        }
+    }
 	if ([self valueForKey:key] == value)
 		return;
 	[super setValue:value forKey:key];

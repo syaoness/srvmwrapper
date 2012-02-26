@@ -16,7 +16,7 @@
 #pragma mark Notifications
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 #pragma unused (aNotification)
-	// Insert code here to initialize your application 
+    // Insert code here to initialize your application 
 }
 
 @end

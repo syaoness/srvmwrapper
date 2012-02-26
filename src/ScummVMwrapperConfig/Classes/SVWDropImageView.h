@@ -9,7 +9,7 @@
 
 #pragma mark Interface
 @interface SVWDropImageView : NSImageView {
-	NSString *filePath;
+    NSString *filePath;
 }
 
 #pragma mark Methods

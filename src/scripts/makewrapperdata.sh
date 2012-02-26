@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MASTERWRAPPER="${BUILT_PRODUCTS_DIR}/scumm_w.app/Contents/"
+MASTERWRAPPER="${SRCROOT}/MasterWrapper/Contents/"
 TEMPDIR="${DERIVED_FILES_DIR}/temp"
 DESTDIR="${SRCROOT}/ScummVMWrapperConfig/Resources/"
 
@@ -9,8 +9,10 @@ mkdir -p "${TEMPDIR}"
 
 # Gather MD5s
 if [ ! -d "${MASTERWRAPPER}" ]; then
-	exit 1
+    exit 1
 fi
+
+ditto "${BUILT_PRODUCTS_DIR}/scumm_w.app/Contents" "${MASTERWRAPPER}"
 
 cd "${MASTERWRAPPER}"
 
@@ -35,45 +37,45 @@ EOF
 
 # Directories
 find ./ -type d | {
-	while read line; do
-		if [[ "${line}" =~ /saves$ ]]; then
-			continue
-		fi
-		
-		filename="$(echo "${line}" | sed 's:./:Contents:')"
-		echo -e "\t\t<key>${filename}</key>\n\t\t<dict>" >> "${TEMPDIR}/WrapperDesc.plist"
-		if [[ "${line}" =~ /game$ ]]; then
-			echo -e "\t\t\t<key>Type</key>\n\t\t\t<string>Ignore</string>" >> "${TEMPDIR}/WrapperDesc.plist"
-		else
-			echo -e "\t\t\t<key>Type</key>\n\t\t\t<string>Dir</string>" >> "${TEMPDIR}/WrapperDesc.plist"
-		fi
-		echo -e "\t\t\t<key>Checksum</key>\n\t\t\t<string></string>" >> "${TEMPDIR}/WrapperDesc.plist"
-		echo -e "\t\t\t<key>Permissions</key>\n\t\t\t<integer>509</integer>" >> "${TEMPDIR}/WrapperDesc.plist"
-		echo -e "\t\t</dict>" >> "${TEMPDIR}/WrapperDesc.plist"
-	done
+    while read line; do
+    if [[ "${line}" =~ /saves$ ]]; then
+        continue
+    fi
+
+    filename="$(echo "${line}" | sed 's:./:Contents:')"
+    echo -e "\t\t<key>${filename}</key>\n\t\t<dict>" >> "${TEMPDIR}/WrapperDesc.plist"
+    if [[ "${line}" =~ /game$ ]]; then
+        echo -e "\t\t\t<key>Type</key>\n\t\t\t<string>Ignore</string>" >> "${TEMPDIR}/WrapperDesc.plist"
+    else
+        echo -e "\t\t\t<key>Type</key>\n\t\t\t<string>Dir</string>" >> "${TEMPDIR}/WrapperDesc.plist"
+    fi
+        echo -e "\t\t\t<key>Checksum</key>\n\t\t\t<string></string>" >> "${TEMPDIR}/WrapperDesc.plist"
+        echo -e "\t\t\t<key>Permissions</key>\n\t\t\t<integer>509</integer>" >> "${TEMPDIR}/WrapperDesc.plist"
+        echo -e "\t\t</dict>" >> "${TEMPDIR}/WrapperDesc.plist"
+    done
 }
 # Files
 find ./ -type f | {
-	while read line; do
-		if [[ "${line}" =~ \.(empty|dontdeletethis)$ ]]; then
-			continue
-		fi
-		filename="$(echo "${line}" | sed 's:\./:Contents:')"
-		echo -e "\t\t<key>${filename}</key>\n\t\t<dict>" >> "${TEMPDIR}/WrapperDesc.plist"
-		if [[ "${line}" =~ (/Info.plist|\.icns)$ ]]; then
-			echo -e "\t\t\t<key>Type</key>\n\t\t\t<string>Ignore</string>" >> "${TEMPDIR}/WrapperDesc.plist"
-			echo -e "\t\t\t<key>Checksum</key>\n\t\t\t<string></string>" >> "${TEMPDIR}/WrapperDesc.plist"
-		else
-			echo -e "\t\t\t<key>Type</key>\n\t\t\t<string>File</string>" >> "${TEMPDIR}/WrapperDesc.plist"
-			echo -e "\t\t\t<key>Checksum</key>\n\t\t\t<string>$(md5 -q "${line}")</string>" >> "${TEMPDIR}/WrapperDesc.plist"
-		fi
-		if [[ "${line}" =~ /MacOS/[^/]*$ ]]; then
-			echo -e "\t\t\t<key>Permissions</key>\n\t\t\t<integer>509</integer>" >> "${TEMPDIR}/WrapperDesc.plist"
-		else
-			echo -e "\t\t\t<key>Permissions</key>\n\t\t\t<integer>436</integer>" >> "${TEMPDIR}/WrapperDesc.plist"
-		fi
-		echo -e "\t\t</dict>" >> "${TEMPDIR}/WrapperDesc.plist"
-	done
+    while read line; do
+        if [[ "${line}" =~ \.(empty|dontdeletethis)$ ]]; then
+            continue
+        fi
+        filename="$(echo "${line}" | sed 's:\./:Contents:')"
+        echo -e "\t\t<key>${filename}</key>\n\t\t<dict>" >> "${TEMPDIR}/WrapperDesc.plist"
+        if [[ "${line}" =~ (/Info.plist|\.icns)$ ]]; then
+            echo -e "\t\t\t<key>Type</key>\n\t\t\t<string>Ignore</string>" >> "${TEMPDIR}/WrapperDesc.plist"
+            echo -e "\t\t\t<key>Checksum</key>\n\t\t\t<string></string>" >> "${TEMPDIR}/WrapperDesc.plist"
+        else
+            echo -e "\t\t\t<key>Type</key>\n\t\t\t<string>File</string>" >> "${TEMPDIR}/WrapperDesc.plist"
+            echo -e "\t\t\t<key>Checksum</key>\n\t\t\t<string>$(md5 -q "${line}")</string>" >> "${TEMPDIR}/WrapperDesc.plist"
+        fi
+        if [[ "${line}" =~ /MacOS/[^/]*$ ]]; then
+            echo -e "\t\t\t<key>Permissions</key>\n\t\t\t<integer>509</integer>" >> "${TEMPDIR}/WrapperDesc.plist"
+        else
+            echo -e "\t\t\t<key>Permissions</key>\n\t\t\t<integer>436</integer>" >> "${TEMPDIR}/WrapperDesc.plist"
+        fi
+        echo -e "\t\t</dict>" >> "${TEMPDIR}/WrapperDesc.plist"
+    done
 }
 
 cat >> "${TEMPDIR}/WrapperDesc.plist" << EOF
@@ -96,3 +98,4 @@ zip -r WrapperData Contents
 mv WrapperData.zip "${DESTDIR}"
 mv "${TEMPDIR}/WrapperDesc.plist" "${DESTDIR}"
 
+# vim: set ts=4 sw=4 smarttab expandtab cc=121 :

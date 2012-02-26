@@ -12,24 +12,24 @@
 
 #pragma mark Interface
 @interface AppController : NSObject <NSComboBoxDataSource> {
-	SVWWrapperUpdater *updateManager;
-	
-	IBOutlet SVWSettings *settings;
-	
-	IBOutlet SVWDropImageView *gameIconWell;
-	IBOutlet NSImageView *exclamationMarkImageView;
-	
-	IBOutlet NSComboBox *gameIDComboBox;
-	IBOutlet NSComboBox *gfxModeComboBox;
-	IBOutlet NSComboBox *gameLanguageComboBox;
+    SVWWrapperUpdater *updateManager;
 
-	NSString *configToolVersion;
-	NSString *wrapperVersion;
-	NSString *scummVMVersion;
-	NSString *residualVersion;
-	
-	BOOL updateAvailable;
-	BOOL insideWrapper;
+    IBOutlet SVWSettings *settings;
+    
+    IBOutlet SVWDropImageView *gameIconWell;
+    IBOutlet NSImageView *exclamationMarkImageView;
+    
+    IBOutlet NSComboBox *gameIDComboBox;
+    IBOutlet NSComboBox *gfxModeComboBox;
+    IBOutlet NSComboBox *gameLanguageComboBox;
+    
+    NSString *configToolVersion;
+    NSString *wrapperVersion;
+    NSString *scummVMVersion;
+    NSString *residualVersion;
+
+    BOOL updateAvailable;
+    BOOL insideWrapper;
 }
 
 #pragma mark Methods

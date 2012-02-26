@@ -9,30 +9,30 @@
 #import <Cocoa/Cocoa.h>
 
 @interface SVWAppDelegate : NSObject <NSApplicationDelegate> {
-	BOOL configRun;
-	BOOL configToolFound;
-	
-	BOOL loaded;
-	NSUInteger engineType;
-	
-	/// Common
-	NSString *gameID;
-	BOOL fullScreenMode;
-	NSString *gameLanguage;
-	NSString *extraArguments;
-	BOOL subtitlesEnabled;
-	NSUInteger musicVolume;
-	NSUInteger sfxVolume;
-	NSUInteger speechVolume;
-	
-	/// ScummVM
-	BOOL aspectRatioCorrectionEnabled;
-	NSString *gfxMode;
-	
-	/// Residual
-	BOOL sw3DRenderer;
-	BOOL fpsCounterEnabled;
-	BOOL speechEnabled;
+    BOOL configRun;
+    BOOL configToolFound;
+
+    BOOL loaded;
+    NSUInteger engineType;
+
+    /// Common
+    NSString *gameID;
+    BOOL fullScreenMode;
+    NSString *gameLanguage;
+    NSString *extraArguments;
+    BOOL subtitlesEnabled;
+    NSUInteger musicVolume;
+    NSUInteger sfxVolume;
+    NSUInteger speechVolume;
+
+    /// ScummVM
+    BOOL aspectRatioCorrectionEnabled;
+    NSString *gfxMode;
+
+    /// Residual
+    BOOL sw3DRenderer;
+    BOOL fpsCounterEnabled;
+    BOOL speechEnabled;
 }
 
 #pragma mark -
@@ -68,5 +68,8 @@
 - (BOOL)runConfig;
 - (BOOL)loadData;
 - (void)resetDefaultValues;
+- (NSString *)findOrCreateDirectory:(NSSearchPathDirectory)searchPathDirectory
+                           inDomain:(NSSearchPathDomainMask)domainMask appendPathComponent:(NSString *)appendComponent
+                              error:(NSError **)errorOut;
 
 @end

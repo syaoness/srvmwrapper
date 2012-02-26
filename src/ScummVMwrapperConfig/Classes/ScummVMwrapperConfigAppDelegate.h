@@ -9,7 +9,7 @@
 
 #pragma mark Interface
 @interface ScummVMwrapperConfigAppDelegate : NSObject <NSApplicationDelegate> {
-	NSWindow *window;
+    NSWindow *window;
 }
 
 #pragma mark Properties
