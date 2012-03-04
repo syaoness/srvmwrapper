@@ -28,6 +28,7 @@ NSString * const kSVWEnableSpeech            = @"SVWEnableSpeech";
 
 NSString * const kGameIcns                   = @"%@/game.icns";
 NSString * const kOldIcns                    = @"%@/old.icns";
+NSString * const kGameDir                    = @"%@/game";
 NSString * const kSavesDir                   = @"%@/saves";
 NSString * const kSavesPlaceholder           = @"%@/saves/.dontdeletethis";
 NSString * const kScummVMIcon                = @"scummvm.icns";
@@ -380,6 +381,7 @@ NSString * const kDefaultBundleName          = @"scumm_w";
 	[prefs setObject:[NSNumber numberWithUnsignedInteger:[self speechVolume]] forKey:kSVWSpeechVolume];
 	
 	if ([self saveGameLocation] == kSaveGameLocationLibrary) {
+        // TODO: Optimize this by adding an utility function to get the saves or game path (also useful in AppController)
 		[filemanager removeItemAtPath:[NSString stringWithFormat:kSavesDir, [wrapperBundle resourcePath]]
 				error:nil];
 	} else {

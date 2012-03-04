@@ -132,6 +132,7 @@ NSString * const kVersionArgument  = @"--version";
                                                    [wrapperPath lastPathComponent],
                                                    [wrapperPath stringByDeletingLastPathComponent]]];
                     [doneAlert setAlertStyle:NSCriticalAlertStyle];
+                    [doneAlert runModal];
                 }
                 [NSApp terminate:self];
             }
@@ -309,6 +310,52 @@ NSString * const kVersionArgument  = @"--version";
     [NSTask launchedTaskWithLaunchPath:[[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]
                                         stringByAppendingPathComponent:@"Contents/MacOS/scumm_w"]
                              arguments:[NSArray array]];
+    // TODO: Ask before terminating (avoid duplicating applicationShouldTerminate code)
+    [NSApp terminate:self];
+}
+
+- (IBAction)upgradeWrapper:(id)sender {
+#pragma unused (sender)
+    if (![self isInsideWrapper] || ![self isUpdateAvailable] || ![updateManager checkForUpdates])
+        return;
+    if (![updateManager update]) {
+        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+        [alert addButtonWithTitle:@"Dismiss"];
+        [alert setMessageText:@"Upgrade failed."];
+        [alert setAlertStyle:NSCriticalAlertStyle];
+        [alert runModal];
+    } else {
+        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+        [alert addButtonWithTitle:@"Ok"];
+        [alert setMessageText:@"Wapper upgrade completed."];
+        [alert setAlertStyle:NSInformationalAlertStyle];
+        [alert runModal];
+    }
+    [self setUpdateAvailable:[updateManager checkForUpdates]];
+}
+
+- (IBAction)revealSaveInFinder:(id)sender {
+#pragma unused (sender)
+    if (![self isInsideWrapper])
+        return;
+	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+                                                        stringByDeletingLastPathComponent]];
+    NSString *savesDir = [NSString stringWithFormat:kSavesDir, [wrapperBundle resourcePath]];
+    [[NSWorkspace sharedWorkspace] selectFile:savesDir
+                     inFileViewerRootedAtPath:[savesDir stringByDeletingLastPathComponent]];
+    // TODO: Handle return status
+}
+
+- (IBAction)revealGameInFinder:(id)sender {
+#pragma unused (sender)
+    if (![self isInsideWrapper])
+        return;
+	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+                                                        stringByDeletingLastPathComponent]];
+    NSString *gameDir = [NSString stringWithFormat:kGameDir, [wrapperBundle resourcePath]];
+    [[NSWorkspace sharedWorkspace] selectFile:gameDir
+                     inFileViewerRootedAtPath:[gameDir stringByDeletingLastPathComponent]];
+    // TODO: Handle return status
 }
 
 #pragma mark NSComboBoxDataSource

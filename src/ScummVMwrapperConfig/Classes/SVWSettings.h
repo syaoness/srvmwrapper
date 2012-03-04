@@ -10,6 +10,8 @@
 #pragma mark Constants
 extern NSUInteger const kSaveGameLocationLibrary;
 extern NSUInteger const kSaveGameLocationBundle;
+extern NSString * const kGameDir;
+extern NSString * const kSavesDir;
 extern NSString * const kCFBundleShortVersionString;
 
 #pragma mark Interface

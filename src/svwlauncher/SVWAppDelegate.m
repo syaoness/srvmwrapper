@@ -45,6 +45,7 @@ NSString * const kDefaultBundleName          = @"scumm_w";
 #pragma mark Object creation, initialization, desctruction
 - (id)init {
     self = [super init];
+    NSLog(@"Init");
     if (self) {
         loaded = NO;
         engineType = kEngineTypeScummVM;
@@ -76,6 +77,7 @@ NSString * const kDefaultBundleName          = @"scumm_w";
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
 #pragma unused (aNotification)
+    NSLog(@"Will Finish Launching");
     [self setConfigRun:NO];
     [self setConfigToolFound:NO];
 
@@ -105,6 +107,7 @@ NSString * const kDefaultBundleName          = @"scumm_w";
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 #pragma unused (aNotification)
+    NSLog(@"Did Finish Launching");
     if ([self isConfigRun]) {
         [self runConfig];
         [NSApp terminate:self];
@@ -167,13 +170,13 @@ NSString * const kDefaultBundleName          = @"scumm_w";
     }
     
     if ([self musicVolume] <= range)
-        [args addObject:[NSString stringWithFormat:@"--music-volume=%ul", (unsigned long)[self musicVolume]]];
+        [args addObject:[NSString stringWithFormat:@"--music-volume=%lu", (unsigned long)[self musicVolume]]];
     
     if ([self sfxVolume] <= range)
-        [args addObject:[NSString stringWithFormat:@"--sfx-volume=%ul", (unsigned long)[self sfxVolume]]];
+        [args addObject:[NSString stringWithFormat:@"--sfx-volume=%lu", (unsigned long)[self sfxVolume]]];
     
     if ([self speechVolume] <= range)
-        [args addObject:[NSString stringWithFormat:@"--speech-volume=%ul", (unsigned long)[self speechVolume]]];
+        [args addObject:[NSString stringWithFormat:@"--speech-volume=%lu", (unsigned long)[self speechVolume]]];
     
     engineExe = [[NSBundle mainBundle] pathForAuxiliaryExecutable:engineExe];
     if (engineExe == nil) {

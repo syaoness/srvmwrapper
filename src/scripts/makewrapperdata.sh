@@ -96,6 +96,7 @@ EOF
 cd ..
 zip -r WrapperData Contents
 mv WrapperData.zip "${DESTDIR}"
+cp "Contents/Info.plist" "${DESTDIR}/WrapperInfo.plist"
 mv "${TEMPDIR}/WrapperDesc.plist" "${DESTDIR}"
 
 # vim: set ts=4 sw=4 smarttab expandtab cc=121 :

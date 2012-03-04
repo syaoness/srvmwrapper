@@ -115,45 +115,79 @@ NSUInteger const kMaxFileLength       = 1000*1000*50; // 50MB
 - (BOOL)update {
 	NSDictionary *fileList = [wrapperDesc objectForKey:kFileListKey];
 	for (NSString *eachFilename in [fileList allKeys]) {
+        NSLog(@"Updating %@", eachFilename);
 		id eachEntry = [fileList objectForKey:eachFilename];
-		if (eachEntry == nil || ![eachEntry isKindOfClass:[NSString class]])
+		if (eachEntry == nil || ![eachEntry isKindOfClass:[NSDictionary class]])
 			continue;
 		if (![self updateFile:[self sanitizeFilename:eachFilename] withInfo:(NSDictionary *)eachEntry])
 			return NO;
+        NSLog(@"Updated it");
 	}
+    // Ensure Info.plist consistency
+    // TODO: Maybe this is part of SVWSettings.
+    NSArray *keys = [NSArray arrayWithObjects:
+                     @"LSApplicationCategoryType",
+                     @"LSMinimumSystemVersion",
+                     @"NSHumanReadableCopyright",
+                     @"NSMainNibFile",
+                     nil];
+    NSDictionary *newInfoDict = [NSDictionary dictionaryWithContentsOfFile:
+                              [[NSBundle mainBundle] pathForResource:kWrapperInfoFilename ofType:@"plist"]];
+    NSMutableDictionary *oldInfoDict = [NSMutableDictionary dictionaryWithContentsOfFile:
+                                        [self destinationFilename:@"Contents/Info.plist"]];
+    NSLog(@"New dict is: %@", newInfoDict);
+    for (NSString *eachKey in keys) {
+        id eachObject = [newInfoDict objectForKey:eachKey];
+        if (eachObject != nil) {
+            NSLog(@"Setting value %@ for key %@", eachObject, eachKey);
+            [oldInfoDict setObject:eachObject forKey:eachKey];
+        }
+    }
+    [oldInfoDict writeToFile:[self destinationFilename:@"Contents/Info.plist"] atomically:YES];
 	return YES;
 }
 
 - (BOOL)updateFile:(NSString *)filename withInfo:(NSDictionary *)fileinfo {
 #pragma unused (filename)
-	if (![self checkForUpdatesFile:filename withInfo:fileinfo])
+    NSLog(@"Updating file %@", filename);
+	if (![self checkForUpdatesFile:filename withInfo:fileinfo]) {
+        NSLog(@"Was up to date");
 		return YES;
+    }
 
 	NSString *fileType = [fileinfo objectForKey:kFileInfoType];
 	NSNumber *fileMod = [fileinfo objectForKey:kFileInfoMod];
 	NSDictionary *fileAttribs = [NSDictionary dictionaryWithObject:fileMod forKey:NSFilePosixPermissions];
 	NSFileManager *fm = [NSFileManager defaultManager];
 
-	if ([fileType isEqualToString:kFileDelete])
+	if ([fileType isEqualToString:kFileDelete]) {
+        NSLog(@"Deleting it");
 		return [fm removeItemAtPath:[self destinationFilename:filename] error:NULL];
+    }
 
 	// If file exists, it's either the wrong type or its digest doesn't match.  Let's delete it first.
 	if ([fm fileExistsAtPath:[self destinationFilename:filename]]
-	    && ![fm removeItemAtPath:[self destinationFilename:filename] error:NULL])
+	    && ![fm removeItemAtPath:[self destinationFilename:filename] error:NULL]) {
+        NSLog(@"Unable to remove file");
 		return NO;
+    }
 
-	if ([fileType isEqualToString:kFileDirectory])
+	if ([fileType isEqualToString:kFileDirectory]) {
+        NSLog(@"Creating dir");
 		return [fm createDirectoryAtPath:[self destinationFilename:filename] withIntermediateDirectories:YES
 				      attributes:fileAttribs error:NULL];
+    }
 
 	if (![fm fileExistsAtPath:[self destinationFilename:[filename stringByDeletingLastPathComponent]]] &&
 	    ![fm createDirectoryAtPath:[self destinationFilename:[filename stringByDeletingLastPathComponent]]
-	   withIntermediateDirectories:YES attributes:fileAttribs error:NULL]) {
+	   withIntermediateDirectories:YES attributes:nil error:NULL]) {
+            NSLog(@"Unable to create parent directory");
 		return NO;
 	}
 
 	NSData *fileData = [updateArchive readWithFileName:filename maxLength:kMaxFileLength];
 
+    NSLog(@"Regular update");
 	return [fm createFileAtPath:[self destinationFilename:filename] contents:fileData attributes:fileAttribs];
 }
 
@@ -183,12 +217,12 @@ NSUInteger const kMaxFileLength       = 1000*1000*50; // 50MB
 		return NO;
 
 	// FIXME: This shouldn't be needed anymore.  Remove?
-	NSDictionary *infoDict = [NSDictionary
-				  dictionaryWithContentsOfFile:[[NSBundle mainBundle]
-								pathForResource:kWrapperInfoFilename ofType:@"plist"]];
-	[infoDict writeToFile:[[destination
-				stringByAppendingPathComponent:kWrapperContentsDir]
-			       stringByAppendingPathComponent:@"Info.plist"] atomically:YES];
+//	NSDictionary *infoDict = [NSDictionary
+//				  dictionaryWithContentsOfFile:[[NSBundle mainBundle]
+//								pathForResource:kWrapperInfoFilename ofType:@"plist"]];
+//	[infoDict writeToFile:[[destination
+//				stringByAppendingPathComponent:kWrapperContentsDir]
+//			       stringByAppendingPathComponent:@"Info.plist"] atomically:YES];
 
 	// TODO: make it auto-extract the update archive
 	NSDictionary *fileList = [wrapperDesc objectForKey:kFileListKey];

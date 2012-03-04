@@ -44,6 +44,9 @@
 - (IBAction)save: (id)sender;
 
 - (IBAction)runGame: (id)sender;
+- (IBAction)upgradeWrapper:(id)sender;
+- (IBAction)revealSaveInFinder:(id)sender;
+- (IBAction)revealGameInFinder:(id)sender;
 
 #pragma mark Properties
 @property (retain) NSString *configToolVersion;
