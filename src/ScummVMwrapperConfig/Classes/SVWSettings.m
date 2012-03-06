@@ -41,7 +41,8 @@ NSString * const kEngineType                 = @"engineType";
 NSUInteger const kEngineTypeScummVM          = 0;
 NSUInteger const kEngineTypeResidual         = 1;
 
-NSString * const kDefaultBundleName          = @"scumm_w";
+NSString * const kDefaultBundleNameV2        = @"scumm_w";
+NSString * const kDefaultBundleNameV3        = @"svwlauncher";
 
 #pragma mark Implementation
 @implementation SVWSettings
@@ -309,7 +310,7 @@ NSString * const kDefaultBundleName          = @"scumm_w";
 		if ((readObj=[prefs objectForKey:kCFBundleDisplayName]) != nil)
 			[self setGameName:readObj];
 		if ((readObj=[prefs objectForKey:kCFBundleName]) != nil) {
-            if ([readObj isEqualToString:kDefaultBundleName])
+            if ([readObj isEqualToString:kDefaultBundleNameV2] || [readObj isEqualToString:kDefaultBundleNameV3])
                 [self setGameID:@""];
             else
                 [self setGameID:readObj];
@@ -368,7 +369,7 @@ NSString * const kDefaultBundleName          = @"scumm_w";
 	[prefs setObject:[self gameName] forKey:kCFBundleDisplayName];
     NSString *safeGameID = [self gameID];
     if ([[safeGameID stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
-        safeGameID = [NSString stringWithString:kDefaultBundleName];
+        safeGameID = [NSString stringWithString:kDefaultBundleNameV3];
     [prefs setObject:safeGameID forKey:kCFBundleName];
 	[prefs setObject:[NSString stringWithFormat:@"com.dotalux.scummwrapper.%@", safeGameID] forKey:kCFBundleIdentifier];
 	[prefs setObject:[NSNumber numberWithBool:[self isFullScreenMode]] forKey:kSVWFullScreen];

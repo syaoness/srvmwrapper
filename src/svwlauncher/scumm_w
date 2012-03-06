@@ -1,0 +1,120 @@
+#!/bin/bash
+
+WRAPPEREXEDIR="$(dirname "$0")"
+echo $WRAPPEREXEDIR
+if [ "$(arch)" != "ppc" ]; then
+"${WRAPPEREXEDIR}/svwlauncher"
+exit $?
+fi
+
+echo "ScummVMWrapper: Running in fallback shell mode"
+
+function GetFromInfoPlist {
+exec < "$1"
+while read LINE; do
+if [ "$OLDLINE" == "<key>$2</key>" ]; then
+if [ "$3" == "string" ]; then
+TEMPVAR=${LINE#<string>}
+TEMPVAR=${TEMPVAR%</string>}
+elif [ "$3" == "integer" ]; then
+TEMPVAR=${LINE#<integer>}
+TEMPVAR=${TEMPVAR%</integer>}
+elif [ "$3" == "boolean" ]; then
+TEMPVAR=${LINE#<}
+TEMPVAR=${TEMPVAR%/>}
+fi
+fi
+OLDLINE="$LINE"
+done
+echo "$TEMPVAR"
+}
+
+MACOSFOLD="${WRAPPEREXEDIR}"
+SWMPREFIX="${MACOSFOLD%/*S}/Resources"
+INFOPLISTFILE="${MACOSFOLD%/*S}/Info.plist"
+
+######### Read Info.plist for all info needed from it
+# NSString * const kCFBundleDisplayName        = @"CFBundleDisplayName";
+DESCNAME="$(GetFromInfoPlist "${INFOPLISTFILE}" "CFBundleDisplayName" "string")"
+# NSString * const kCFBundleName               = @"CFBundleName";
+GAME_ID="$(GetFromInfoPlist "${INFOPLISTFILE}" "CFBundleName" "string")"
+# NSString * const kSVWFullScreen              = @"SVWFullScreen";
+FULLSCREENMODE="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWFullScreen" "boolean")"
+# NSString * const kSVWAspectRatio             = @"SVWAspectRatio";
+ASPECTRATIO="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWAspectRatio" "boolean")"
+# NSString * const kSVWGFXMode                 = @"SVWGFXMode";
+GFXMODE="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWGFXMode" "string")"
+# NSString * const kSVWEnableSubtitles         = @"SVWEnableSubtitles";
+ENABLESUBS="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWEnableSubtitles" "boolean")"
+# NSString * const kSVWLanguage                = @"SVWLanguage";
+LANGUAGE_ID="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWLanguage" "string")"
+# NSString * const kSVWMusicVolume             = @"SVWMusicVolume";
+MUSIC_VOLUME="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWMusicVolume" "integer")"
+# NSString * const kSVWSFXVolume               = @"SVWSFXVolume";
+SFX_VOLUME="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWSFXVolume" "integer")"
+# NSString * const kSVWSpeechVolume            = @"SVWSpeechVolume";
+SPEECH_VOLUME="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWSpeechVolume" "integer")"
+# NSString * const kSVWEngineType              = @"SVWEngineType";
+ENGINETYPE="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWEngineType" "integer")"
+# NSString * const kSVWExtraArguments          = @"SVWExtraArguments";
+EXTRAARGS="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWExtraArguments" "string")"
+# NSString * const kSVWEnableSw3DRenderer      = @"SVWEnableSw3DRenderer";
+# NSString * const kSVWEnableFpsCounter        = @"SVWEnableFpsCounter";
+# NSString * const kSVWEnableSpeech            = @"SVWEnableSpeech";
+
+if [ "$ENGINETYPE" == "1" ]; then
+echo $ENGINETYPE
+osascript -e "display dialog \"You can't open this application because it doesn't support the architecture of your computer.\" buttons \"OK\" default button 1 with title \"Error\" with icon stop"
+exit 1
+fi
+
+SAVEPATH="${SWMPREFIX}/saves"
+GAMEPATH="${SWMPREFIX}/game"
+
+if [ ! -f "${SAVEPATH}/.dontdeletethis" ]; then
+mkdir -p "${HOME}/Library/SVWrapper/${GAME_ID}" > /dev/null 2>&1
+/bin/ln -sfh "${HOME}/Library/SVWrapper/${GAME_ID}" "${SAVEPATH}" > /dev/null 2>&1
+fi
+
+if [ "${FULLSCREENMODE}" == "true" ]; then
+ADDITIONALPARAMS=" --fullscreen"
+else
+ADDITIONALPARAMS=" --no-fullscreen"
+fi
+
+if [ "${ENABLESUBS}" == "true" ]; then
+ADDITIONALPARAMS="${ADDITIONALPARAMS} --subtitles"
+fi
+
+if [ -n "${GFXMODE}" ]; then
+ADDITIONALPARAMS="${ADDITIONALPARAMS} --gfx-mode=${GFXMODE}"
+fi
+
+if [ -n "${LANGUAGE_ID}" ]; then
+ADDITIONALPARAMS="${ADDITIONALPARAMS} --language=${LANGUAGE_ID}"
+fi
+
+if [ -n "${MUSIC_VOLUME}" ]; then
+ADDITIONALPARAMS="${ADDITIONALPARAMS} --music-volume=${MUSIC_VOLUME}"
+fi
+
+if [ -n "${SFX_VOLUME}" ]; then
+ADDITIONALPARAMS="${ADDITIONALPARAMS} --sfx-volume=${SFX_VOLUME}"
+fi
+
+if [ -n "${SPEECH_VOLUME}" ]; then
+ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-volume=${SPEECH_VOLUME}"
+fi
+
+if [ "${ASPECTRATIO}" == "true" ]; then
+ADDITIONALPARAMS="${ADDITIONALPARAMS} --aspect-ratio"
+fi
+
+if [ -n "${EXTRAARGS}" ]; then
+ADDITIONALPARAMS="${ADDITIONALPARAMS} ${EXTRAARGS}"
+fi
+
+echo "ScummvmWrapper: Starting ${DESCNAME}"
+"${MACOSFOLD}/scummvm" --savepath="$SAVEPATH" --path="$GAMEPATH" $ADDITIONALPARAMS $GAME_ID
+echo "ScummvmWrapper: Finished ${DESCNAME}"
+

@@ -130,6 +130,7 @@ NSUInteger const kMaxFileLength       = 1000*1000*50; // 50MB
                      @"LSMinimumSystemVersion",
                      @"NSHumanReadableCopyright",
                      @"NSMainNibFile",
+                     @"LSUIElement",
                      nil];
     NSDictionary *newInfoDict = [NSDictionary dictionaryWithContentsOfFile:
                               [[NSBundle mainBundle] pathForResource:kWrapperInfoFilename ofType:@"plist"]];

@@ -12,3 +12,16 @@
 /configtool/ScummVMwrapperConfig/build
 /src/DerivedData
 
+# Generated files
+/src/MasterWrapper/Contents/Info.plist
+/src/MasterWrapper/Contents/MacOS/svwlauncher
+/src/MasterWrapper/Contents/MacOS/scumm_w
+/src/MasterWrapper/Contents/PkgInfo
+/src/MasterWrapper/Contents/Resources/en.lproj
+/src/MasterWrapper/Contents/Resources/game.icns
+/src/MasterWrapper/Contents/Resources/GameIDs.txt
+/src/MasterWrapper/Contents/Resources/ReadME.txt
+
+/src/ScummVMwrapperConfig/Resources/WrapperData.zip
+/src/ScummVMwrapperConfig/Resources/WrapperDesc.plist
+/src/ScummVMwrapperConfig/Resources/WrapperInfo.plist

@@ -37,7 +37,10 @@ NSString * const kConfigToolName             = @"ScummVMWrapperConfig.app";
 NSUInteger const kEngineTypeScummVM          = 0;
 NSUInteger const kEngineTypeResidual         = 1;
 
-NSString * const kDefaultBundleName          = @"scumm_w";
+NSString * const kDefaultBundleNameV2        = @"scumm_w";
+NSString * const kDefaultBundleNameV3        = @"svwlauncher";
+
+NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
 
 @implementation SVWAppDelegate
 
@@ -232,7 +235,7 @@ NSString * const kDefaultBundleName          = @"scumm_w";
 		if ((readObj=[prefs objectForKey:kSVWEngineType]) != nil)
 			[self setEngineType:[readObj unsignedIntegerValue]];
 		if ((readObj=[prefs objectForKey:kCFBundleName]) != nil) {
-            if ([readObj isEqualToString:kDefaultBundleName]) {
+            if ([readObj isEqualToString:kDefaultBundleNameV2] || [readObj isEqualToString:kDefaultBundleNameV3]) {
                 [self setLoaded:NO];
                 return [self isLoaded];
             }
@@ -324,7 +327,8 @@ NSString * const kDefaultBundleName          = @"scumm_w";
     NSString *resolvedPath = [paths objectAtIndex:0];
     
     if (appendComponent) {
-        resolvedPath = [resolvedPath stringByAppendingPathComponent:appendComponent];
+        resolvedPath = [[resolvedPath stringByAppendingPathComponent:kApplicationSupportBaseDir]
+                        stringByAppendingPathComponent:appendComponent];
     }
     
     // Create the path if it doesn't exist

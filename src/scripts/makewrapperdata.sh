@@ -12,7 +12,7 @@ if [ ! -d "${MASTERWRAPPER}" ]; then
     exit 1
 fi
 
-ditto "${BUILT_PRODUCTS_DIR}/scumm_w.app/Contents" "${MASTERWRAPPER}"
+ditto "${BUILT_PRODUCTS_DIR}/svwlauncher.app/Contents" "${MASTERWRAPPER}"
 
 cd "${MASTERWRAPPER}"
 
