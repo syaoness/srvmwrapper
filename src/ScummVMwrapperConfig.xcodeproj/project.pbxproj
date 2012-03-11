@@ -22,10 +22,10 @@
 		1626D50014AA285A00A07013 /* ZipFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 1626D4FF14AA285A00A07013 /* ZipFile.m */; };
 		1626D50314AA337F00A07013 /* CocoaCryptoHashing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1626D50214AA337F00A07013 /* CocoaCryptoHashing.m */; };
 		1634F0DF1505969900632036 /* scumm_w in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1634F0DB1505965700632036 /* scumm_w */; };
+		1646D482150D5CC800F83327 /* residualvm.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1646D481150D5CC800F83327 /* residualvm.icns */; };
 		16864B4E126531EE00132103 /* scummvm.icns in Resources */ = {isa = PBXBuildFile; fileRef = 16864B4D126531EE00132103 /* scummvm.icns */; };
 		16864B5E1265369500132103 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16864B5D1265369500132103 /* AppController.m */; };
 		168AEEF81266276100BC3F18 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 168AEEF61266276100BC3F18 /* Credits.rtf */; };
-		16914A7614F9D2120039C6B3 /* residual.icns in Resources */ = {isa = PBXBuildFile; fileRef = 16914A7514F9D2120039C6B3 /* residual.icns */; };
 		16ACB65914D0C22A00B2A5DB /* WrapperInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16ACB65814D0C22A00B2A5DB /* WrapperInfo.plist */; };
 		16ACB65B14D0CD6A00B2A5DB /* WrapperData.zip in Resources */ = {isa = PBXBuildFile; fileRef = 16ACB65A14D0CD6A00B2A5DB /* WrapperData.zip */; };
 		16BDBC4314D2A10700193F7C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BDBC4214D2A10700193F7C /* Cocoa.framework */; };
@@ -102,12 +102,12 @@
 		1626D50114AA337F00A07013 /* CocoaCryptoHashing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaCryptoHashing.h; sourceTree = "<group>"; };
 		1626D50214AA337F00A07013 /* CocoaCryptoHashing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaCryptoHashing.m; sourceTree = "<group>"; };
 		1634F0DB1505965700632036 /* scumm_w */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = scumm_w; sourceTree = "<group>"; };
+		1646D481150D5CC800F83327 /* residualvm.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = residualvm.icns; sourceTree = "<group>"; };
 		165548E214D2DB0900BEBFB8 /* makewrapperdata.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = makewrapperdata.sh; sourceTree = "<group>"; };
 		16864B4D126531EE00132103 /* scummvm.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = scummvm.icns; sourceTree = "<group>"; };
 		16864B5C1265369500132103 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		16864B5D1265369500132103 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		168AEEF71266276100BC3F18 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
-		16914A7514F9D2120039C6B3 /* residual.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = residual.icns; sourceTree = "<group>"; };
 		16ACB65814D0C22A00B2A5DB /* WrapperInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WrapperInfo.plist; sourceTree = "<group>"; };
 		16ACB65A14D0CD6A00B2A5DB /* WrapperData.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = WrapperData.zip; sourceTree = "<group>"; };
 		16BDBC4014D2A10700193F7C /* svwlauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = svwlauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,8 +290,8 @@
 				1626D4E614A9EC8600A07013 /* SVW_dsa_pub.pem */,
 				168AEEF61266276100BC3F18 /* Credits.rtf */,
 				8D1107310486CEB800E47090 /* ScummVMwrapperConfig-Info.plist */,
-				16914A7514F9D2120039C6B3 /* residual.icns */,
 				1611DF4214D2F02E00E4FD00 /* game.icns */,
+				1646D481150D5CC800F83327 /* residualvm.icns */,
 				16864B4D126531EE00132103 /* scummvm.icns */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -410,7 +410,7 @@
 				16ACB65914D0C22A00B2A5DB /* WrapperInfo.plist in Resources */,
 				16ACB65B14D0CD6A00B2A5DB /* WrapperData.zip in Resources */,
 				1611DF4314D2F02E00E4FD00 /* game.icns in Resources */,
-				16914A7614F9D2120039C6B3 /* residual.icns in Resources */,
+				1646D482150D5CC800F83327 /* residualvm.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

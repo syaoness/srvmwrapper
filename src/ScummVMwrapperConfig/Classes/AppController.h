@@ -2,7 +2,7 @@
  *                                     ScummVMwrapper :: SVWconfig                                                 *
  *******************************************************************************************************************
  * File:             AppController.h                                                                               *
- * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ * Copyright:        (c) 2010-2012 dotalux.com; syao                                                               *
  *******************************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
@@ -26,7 +26,7 @@
     NSString *configToolVersion;
     NSString *wrapperVersion;
     NSString *scummVMVersion;
-    NSString *residualVersion;
+    NSString *residualVMVersion;
 
     BOOL updateAvailable;
     BOOL insideWrapper;
@@ -37,7 +37,7 @@
 - (void)saveData;
 
 - (NSString *)scummVMVersionFromExe;
-- (NSString *)residualVersionFromExe;
+- (NSString *)residualVMVersionFromExe;
 
 #pragma mark IBActions
 - (IBAction)revertToSaved: (id)sender;
@@ -52,7 +52,7 @@
 @property (retain) NSString *configToolVersion;
 @property (retain) NSString *wrapperVersion;
 @property (retain) NSString *scummVMVersion;
-@property (retain) NSString *residualVersion;
+@property (retain) NSString *residualVMVersion;
 @property (assign, getter=isUpdateAvailable) BOOL updateAvailable;
 @property (assign, getter=isInsideWrapper) BOOL insideWrapper;
 

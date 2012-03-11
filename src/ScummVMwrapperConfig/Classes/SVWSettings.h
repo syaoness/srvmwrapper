@@ -2,7 +2,7 @@
  *                                     ScummVMwrapper :: SVWconfig                                                 *
  *******************************************************************************************************************
  * File:             SVWSettings.h                                                                                 *
- * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ * Copyright:        (c) 2010-2012 dotalux.com; syao                                                               *
  *******************************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
@@ -19,7 +19,7 @@ extern NSString * const kCFBundleShortVersionString;
     NSUInteger engineType;
     BOOL edited;
     NSArray *allScummGameIDs;
-    NSArray *allResidualGameIDs;
+    NSArray *allResidualVMGameIDs;
     NSArray *allGameIDs;
     NSArray *allGFXModes;
     NSArray *allGameLanguages;
@@ -44,7 +44,7 @@ extern NSString * const kCFBundleShortVersionString;
     BOOL aspectRatioCorrectionEnabled;
     NSString *gfxMode;
     
-    /// Residual
+    /// ResidualVM
     BOOL sw3DRenderer;
     BOOL fpsCounterEnabled;
     BOOL speechEnabled;
@@ -63,7 +63,7 @@ extern NSString * const kCFBundleShortVersionString;
 @property (assign) NSUInteger engineType;
 @property (assign, getter=isEdited) BOOL edited;
 @property (nonatomic, readonly) NSArray *allScummGameIDs;
-@property (nonatomic, readonly) NSArray *allResidualGameIDs;
+@property (nonatomic, readonly) NSArray *allResidualVMGameIDs;
 @property (retain) NSArray *allGameIDs;
 @property (nonatomic, readonly) NSArray *allGFXModes;
 @property (nonatomic, readonly) NSArray *allGameLanguages;
@@ -88,7 +88,7 @@ extern NSString * const kCFBundleShortVersionString;
 @property (assign, getter=isAspectRatioCorrectionEnabled) BOOL aspectRatioCorrectionEnabled;
 @property (retain) NSString *gfxMode;
 
-#pragma mark Residual
+#pragma mark ResidualVM
 @property (assign, getter=isSw3DRenderer) BOOL sw3DRenderer;
 @property (assign, getter=isFpsCounterEnabled) BOOL fpsCounterEnabled;
 @property (assign, getter=isSpeechEnabled) BOOL speechEnabled;

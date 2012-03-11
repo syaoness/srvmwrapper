@@ -2,7 +2,7 @@
  *                                     ScummVMwrapper :: SVWconfig                                                 *
  *******************************************************************************************************************
  * File:             ScummVMWraperConfig_Prefix.pch                                                                *
- * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ * Copyright:        (c) 2010-2012 dotalux.com; syao                                                               *
  *******************************************************************************************************************
  * Prefix header for all source files of the 'ScummVMwrapperConfig' target in the 'ScummVMwrapperConfig' project   *
  *******************************************************************************************************************/

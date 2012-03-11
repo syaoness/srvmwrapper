@@ -2,7 +2,7 @@
  *                                     ScummVMwrapper :: SVWconfig                                                 *
  *******************************************************************************************************************
  * File:             SVWSettings.m                                                                                 *
- * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ * Copyright:        (c) 2010-2012 dotalux.com; syao                                                               *
  *******************************************************************************************************************/
 
 #import "SVWSettings.h"
@@ -32,14 +32,14 @@ NSString * const kGameDir                    = @"%@/game";
 NSString * const kSavesDir                   = @"%@/saves";
 NSString * const kSavesPlaceholder           = @"%@/saves/.dontdeletethis";
 NSString * const kScummVMIcon                = @"scummvm.icns";
-NSString * const kResidualIcon               = @"residual.icns";
+NSString * const kResidualVMIcon             = @"residualvm.icns";
 
 NSUInteger const kSaveGameLocationLibrary    = 1;
 NSUInteger const kSaveGameLocationBundle     = 0;
 
 NSString * const kEngineType                 = @"engineType";
 NSUInteger const kEngineTypeScummVM          = 0;
-NSUInteger const kEngineTypeResidual         = 1;
+NSUInteger const kEngineTypeResidualVM       = 1;
 
 NSString * const kDefaultBundleNameV2        = @"scumm_w";
 NSString * const kDefaultBundleNameV3        = @"svwlauncher";
@@ -52,7 +52,7 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
 @synthesize engineType;
 @synthesize edited;
 @synthesize allScummGameIDs;
-@synthesize allResidualGameIDs;
+@synthesize allResidualVMGameIDs;
 @synthesize allGameIDs;
 @synthesize allGFXModes;
 @synthesize allGameLanguages;
@@ -77,7 +77,7 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
 @synthesize aspectRatioCorrectionEnabled;
 @synthesize gfxMode;
 
-#pragma mark Residual
+#pragma mark ResidualVM
 @synthesize sw3DRenderer;
 @synthesize fpsCounterEnabled;
 @synthesize speechEnabled;
@@ -209,7 +209,7 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
 			@"waxworks",		// Waxworks
 			@"zak",			// Zak McKracken and the Alien Mindbenders
 			nil];
-	allResidualGameIDs = [[NSArray alloc] initWithObjects:
+	allResidualVMGameIDs = [[NSArray alloc] initWithObjects:
 			@"grim",		// Grim Fandango
 			nil];
 	allGameIDs = [allScummGameIDs retain];
@@ -282,7 +282,7 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
 
 	[allGameIDs release];
 	[allScummGameIDs release];
-	[allResidualGameIDs release];
+	[allResidualVMGameIDs release];
 	[allGFXModes release];
 	[allGameLanguages release];
 	
@@ -440,11 +440,11 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
         switch ([num integerValue]) {
             case kEngineTypeScummVM:
                 [self setAllGameIDs:[self allScummGameIDs]];
-                [self setEngineIcon:[NSImage imageNamed:@"scummvm.icns"]];
+                [self setEngineIcon:[NSImage imageNamed:kScummVMIcon]];
                 break;
-            case kEngineTypeResidual:
-                [self setAllGameIDs:[self allResidualGameIDs]];
-                [self setEngineIcon:[NSImage imageNamed:@"residual.icns"]];
+            case kEngineTypeResidualVM:
+                [self setAllGameIDs:[self allResidualVMGameIDs]];
+                [self setEngineIcon:[NSImage imageNamed:kResidualVMIcon]];
                 break;
             default:
                 break;

@@ -1,10 +1,9 @@
-//
-//  SVWAppDelegate.h
-//  svwlauncher
-//
-//  Created by Emanuele Alimonda on 2012-01-27.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+/*******************************************************************************************************************
+ *                                     ScummVMwrapper :: svwlauncher                                               *
+ *******************************************************************************************************************
+ * File:             SVWAppDelegate.h                                                                              *
+ * Copyright:        (c) 2010-2012 dotalux.com; syao                                                               *
+ *******************************************************************************************************************/
 
 #import <Cocoa/Cocoa.h>
 
@@ -29,7 +28,7 @@
     BOOL aspectRatioCorrectionEnabled;
     NSString *gfxMode;
 
-    /// Residual
+    /// ResidualVM
     BOOL sw3DRenderer;
     BOOL fpsCounterEnabled;
     BOOL speechEnabled;
@@ -57,7 +56,7 @@
 @property (assign, getter=isAspectRatioCorrectionEnabled) BOOL aspectRatioCorrectionEnabled;
 @property (retain) NSString *gfxMode;
 
-#pragma mark Residual
+#pragma mark ResidualVM
 @property (assign, getter=isSw3DRenderer) BOOL sw3DRenderer;
 @property (assign, getter=isFpsCounterEnabled) BOOL fpsCounterEnabled;
 @property (assign, getter=isSpeechEnabled) BOOL speechEnabled;

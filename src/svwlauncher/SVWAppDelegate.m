@@ -1,10 +1,8 @@
-// FIXME: HEADER!!!!
-
 /*******************************************************************************************************************
- *                                     ScummVMwrapper :: SVWLauncher                                               *
+ *                                     ScummVMwrapper :: svwlauncher                                               *
  *******************************************************************************************************************
- * File:             main.m                                                                                        *
- * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ * File:             SVWAppDelegate.m                                                                              *
+ * Copyright:        (c) 2010-2012 dotalux.com; syao                                                               *
  *******************************************************************************************************************/
 
 #import "SVWAppDelegate.h"
@@ -31,11 +29,11 @@ NSString * const kGameDir                    = @"%@/game";
 NSString * const kSavesPlaceholder           = @"%@/saves/.dontdeletethis";
 
 NSString * const kScummVMExe                 = @"scummvm";
-NSString * const kResidualExe                = @"residual";
+NSString * const kResidualVMExe              = @"residualvm";
 NSString * const kConfigToolName             = @"ScummVMWrapperConfig.app";
 
 NSUInteger const kEngineTypeScummVM          = 0;
-NSUInteger const kEngineTypeResidual         = 1;
+NSUInteger const kEngineTypeResidualVM       = 1;
 
 NSString * const kDefaultBundleNameV2        = @"scumm_w";
 NSString * const kDefaultBundleNameV3        = @"svwlauncher";
@@ -152,8 +150,8 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
             if (![self isFullScreenMode])
                 [args addObject:@"--no-fullscreen"];
             break;
-        case kEngineTypeResidual:
-            engineExe = kResidualExe;
+        case kEngineTypeResidualVM:
+            engineExe = kResidualVMExe;
             range = 127;
             if ([self isFpsCounterEnabled])
                 [args addObject:@"--show-fps=true"];
@@ -371,7 +369,7 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
 @synthesize aspectRatioCorrectionEnabled;
 @synthesize gfxMode;
 
-#pragma mark Residual
+#pragma mark ResidualVM
 @synthesize sw3DRenderer;
 @synthesize fpsCounterEnabled;
 @synthesize speechEnabled;

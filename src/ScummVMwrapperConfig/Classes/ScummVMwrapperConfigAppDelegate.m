@@ -2,7 +2,7 @@
  *                                     ScummVMwrapper :: SVWconfig                                                 *
  *******************************************************************************************************************
  * File:             ScummVMwrapperConfigAppDelegate.m                                                             *
- * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ * Copyright:        (c) 2010-2012 dotalux.com; syao                                                               *
  *******************************************************************************************************************/
 
 #import "ScummVMwrapperConfigAppDelegate.h"

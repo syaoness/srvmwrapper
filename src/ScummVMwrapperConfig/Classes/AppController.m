@@ -2,7 +2,7 @@
  *                                     ScummVMwrapper :: SVWconfig                                                 *
  *******************************************************************************************************************
  * File:             AppController.m                                                                               *
- * Copyright:        (c) 2010-2011 dotalux.com; syao                                                               *
+ * Copyright:        (c) 2010-2012 dotalux.com; syao                                                               *
  *******************************************************************************************************************/
 
 #import "AppController.h"
@@ -15,14 +15,14 @@ NSString * const kEditedObserver   = @"EditedObserver";
 NSString * const kSaveGameObserver = @"SaveGameObserver";
 
 NSString * const kScummVMExe       = @"scummvm";
-NSString * const kResidualExe      = @"residual";
+NSString * const kResidualVMExe    = @"residualvm";
 NSString * const kVersionArgument  = @"--version";
 
 #pragma mark Properties
 @synthesize configToolVersion;
 @synthesize wrapperVersion;
 @synthesize scummVMVersion;
-@synthesize residualVersion;
+@synthesize residualVMVersion;
 @synthesize updateAvailable;
 @synthesize insideWrapper;
 
@@ -34,7 +34,7 @@ NSString * const kVersionArgument  = @"--version";
         configToolVersion = [[NSString alloc] initWithString:@""];
         wrapperVersion = [[NSString alloc] initWithString:@""];
         scummVMVersion = [[NSString alloc] initWithString:@""];
-        residualVersion = [[NSString alloc] initWithString:@""];
+        residualVMVersion = [[NSString alloc] initWithString:@""];
         updateAvailable = NO;
         insideWrapper = NO;
         updateManager = [[SVWWrapperUpdater alloc] init];
@@ -47,7 +47,7 @@ NSString * const kVersionArgument  = @"--version";
     [configToolVersion release];
     [wrapperVersion release];
     [scummVMVersion release];
-    [residualVersion release];
+    [residualVMVersion release];
 
     [super dealloc];
 }
@@ -69,7 +69,7 @@ NSString * const kVersionArgument  = @"--version";
     [self setWrapperVersion:[config objectForKey:kCFBundleShortVersionString]];
     
     [self setScummVMVersion:[self scummVMVersionFromExe]];
-    [self setResidualVersion:[self residualVersionFromExe]];
+    [self setResidualVMVersion:[self residualVMVersionFromExe]];
 
     [settings addObserver:self forKeyPath:@"edited" options:0 context:kEditedObserver];
     [gameIconWell bind:@"filePath" toObject:settings withKeyPath:@"gameIconPath" options:nil];
@@ -259,14 +259,14 @@ NSString * const kVersionArgument  = @"--version";
     return string;
 }
 
-- (NSString *)residualVersionFromExe {
+- (NSString *)residualVMVersionFromExe {
     if (![self isInsideWrapper])
         return @"";
     NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
                                                         stringByDeletingLastPathComponent]];
     if (wrapperBundle == nil)
         return @"";
-    NSString *executablePath = [wrapperBundle pathForAuxiliaryExecutable:kResidualExe];
+    NSString *executablePath = [wrapperBundle pathForAuxiliaryExecutable:kResidualVMExe];
     if (executablePath == nil)
         return @"";
     NSTask *task = [[NSTask alloc] init];
