@@ -57,62 +57,62 @@ static NSString *digestToHex(NSData *data, int digestLength);
 
 - (NSData *)md2Hash
 {
-        return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] md2Hash];
+    return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] md2Hash];
 }
 
 - (NSString *)md2HexHash
 {
-        return digestToHex([self md2Hash], MD2_DIGEST_LENGTH);
+    return digestToHex([self md2Hash], MD2_DIGEST_LENGTH);
 }
 
 - (NSData *)md4Hash
 {
-	return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] md4Hash];
+    return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] md4Hash];
 }
 
 - (NSString *)md4HexHash
 {
-        return digestToHex([self md4Hash], MD4_DIGEST_LENGTH);
+    return digestToHex([self md4Hash], MD4_DIGEST_LENGTH);
 }
 
 - (NSData *)md5Hash
 {
-	return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] md5Hash];
+    return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] md5Hash];
 }
 
 - (NSString *)md5HexHash
 {
-        return digestToHex([self md5Hash], MD5_DIGEST_LENGTH);
+    return digestToHex([self md5Hash], MD5_DIGEST_LENGTH);
 }
 
 - (NSData *)rmd160Hash
 {
-        return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] rmd160Hash];
+    return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] rmd160Hash];
 }
 
 - (NSString *)rmd160HexHash
 {
-        return digestToHex([self rmd160Hash], RIPEMD160_DIGEST_LENGTH);
+    return digestToHex([self rmd160Hash], RIPEMD160_DIGEST_LENGTH);
 }
 
 - (NSData *)shaHash
 {
-        return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] shaHash];
+    return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] shaHash];
 }
 
 - (NSString *)shaHexHash
 {
-        return digestToHex([self shaHash], SHA_DIGEST_LENGTH);
+    return digestToHex([self shaHash], SHA_DIGEST_LENGTH);
 }
 
 - (NSData *)sha1Hash
 {
-	return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] sha1Hash];
+    return [[self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO] sha1Hash];
 }
 
 - (NSString *)sha1HexHash
 {
-        return digestToHex([self sha1Hash], SHA_DIGEST_LENGTH);
+    return digestToHex([self sha1Hash], SHA_DIGEST_LENGTH);
 }
 
 @end
@@ -135,7 +135,7 @@ static NSString *digestToHex(NSData *data, int digestLength);
 }
 
 - (NSString *)md4HexHash
-{	
+{
         return digestToHex([self md4Hash], MD4_DIGEST_LENGTH);
 }
 
@@ -280,9 +280,9 @@ static NSData *digestForFile(int fileDescriptor, const EVP_MD *md)
                 if (0 == i) {
                         break;
                 } else if (-1 == i) {
-                        [[NSException exceptionWithName:@"DigestException" 
+                        [[NSException exceptionWithName:@"DigestException"
                                                  reason:[NSString stringWithCString:strerror(errno)
-									   encoding:NSASCIIStringEncoding]
+                                                                           encoding:NSASCIIStringEncoding]
                                                userInfo:nil] raise];
                 } else {
                         EVP_DigestUpdate(&mdctx, buf, i);
@@ -300,7 +300,7 @@ static NSString *digestToHex(NSData *data, int digestLength)
         unsigned char *buf = (unsigned char *)[data bytes];
         
         for (i = 0; i < digestLength; i++) {
-		sprintf(hexDigest + i * 2, "%02x", buf[i]);
-	}
+            sprintf(hexDigest + i * 2, "%02x", buf[i]);
+        }
         return [NSString stringWithCString:hexDigest encoding:NSASCIIStringEncoding];
 }

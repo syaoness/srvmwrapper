@@ -10,8 +10,8 @@
 @class ZipFile;
 
 @interface SVWWrapperUpdater : NSObject {
-	NSDictionary *wrapperDesc;
-	ZipFile *updateArchive;
+    NSDictionary *wrapperDesc;
+    ZipFile *updateArchive;
 }
 
 - (BOOL)checkForUpdates;

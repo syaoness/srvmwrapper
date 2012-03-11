@@ -338,7 +338,7 @@ NSString * const kVersionArgument  = @"--version";
 #pragma unused (sender)
     if (![self isInsideWrapper])
         return;
-	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+    NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
                                                         stringByDeletingLastPathComponent]];
     NSString *savesDir = [NSString stringWithFormat:kSavesDir, [wrapperBundle resourcePath]];
     [[NSWorkspace sharedWorkspace] selectFile:savesDir
@@ -350,7 +350,7 @@ NSString * const kVersionArgument  = @"--version";
 #pragma unused (sender)
     if (![self isInsideWrapper])
         return;
-	NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
+    NSBundle *wrapperBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] bundlePath]
                                                         stringByDeletingLastPathComponent]];
     NSString *gameDir = [NSString stringWithFormat:kGameDir, [wrapperBundle resourcePath]];
     [[NSWorkspace sharedWorkspace] selectFile:gameDir

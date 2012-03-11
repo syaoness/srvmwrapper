@@ -9,8 +9,8 @@
 #import "unzip.h"
 
 @interface ZipFile : NSObject {
-	NSString *path_;
-	unzFile unzipFile_;
+    NSString *path_;
+    unzFile unzipFile_;
 }
 
 - (id)initWithFileAtPath:(NSString *)path;

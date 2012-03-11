@@ -228,42 +228,42 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
     
     [self resetDefaultValues];
     
-	if (prefs != nil && [prefs objectForKey:kCFBundleName] != nil) {
-		id readObj;
-		if ((readObj=[prefs objectForKey:kSVWEngineType]) != nil)
-			[self setEngineType:[readObj unsignedIntegerValue]];
-		if ((readObj=[prefs objectForKey:kCFBundleName]) != nil) {
+    if (prefs != nil && [prefs objectForKey:kCFBundleName] != nil) {
+        id readObj;
+        if ((readObj=[prefs objectForKey:kSVWEngineType]) != nil)
+            [self setEngineType:[readObj unsignedIntegerValue]];
+        if ((readObj=[prefs objectForKey:kCFBundleName]) != nil) {
             if ([readObj isEqualToString:kDefaultBundleNameV2] || [readObj isEqualToString:kDefaultBundleNameV3]) {
                 [self setLoaded:NO];
                 return [self isLoaded];
             }
             [self setGameID:readObj];
         }
-		if ((readObj=[prefs objectForKey:kSVWFullScreen]) != nil)
-			[self setFullScreenMode:[readObj boolValue]];
-		if ((readObj=[prefs objectForKey:kSVWAspectRatio]) != nil)
-			[self setAspectRatioCorrectionEnabled:[readObj boolValue]];
-		if ((readObj=[prefs objectForKey:kSVWGFXMode]) != nil)
-			[self setGfxMode:readObj];
-		if ((readObj=[prefs objectForKey:kSVWEnableSubtitles]) != nil)
-			[self setSubtitlesEnabled:[readObj boolValue]];
-		if ((readObj=[prefs objectForKey:kSVWLanguage]) != nil)
-			[self setGameLanguage:readObj];
-		if ((readObj=[prefs objectForKey:kSVWMusicVolume]) != nil)
-			[self setMusicVolume:[readObj unsignedIntegerValue]];
-		if ((readObj=[prefs objectForKey:kSVWSFXVolume]) != nil)
-			[self setSfxVolume:[readObj unsignedIntegerValue]];
-		if ((readObj=[prefs objectForKey:kSVWSpeechVolume]) != nil)
-			[self setSpeechVolume:[readObj unsignedIntegerValue]];
-		if ((readObj=[prefs objectForKey:kSVWExtraArguments]) != nil)
-			[self setExtraArguments:readObj];
-		if ((readObj=[prefs objectForKey:kSVWEnableSw3DRenderer]) != nil)
-			[self setSw3DRenderer:[readObj boolValue]];
-		if ((readObj=[prefs objectForKey:kSVWEnableFpsCounter]) != nil)
-			[self setFpsCounterEnabled:[readObj boolValue]];
-		if ((readObj=[prefs objectForKey:kSVWEnableSpeech]) != nil)
-			[self setSpeechEnabled:[readObj boolValue]];
-	} else {
+        if ((readObj=[prefs objectForKey:kSVWFullScreen]) != nil)
+            [self setFullScreenMode:[readObj boolValue]];
+        if ((readObj=[prefs objectForKey:kSVWAspectRatio]) != nil)
+            [self setAspectRatioCorrectionEnabled:[readObj boolValue]];
+        if ((readObj=[prefs objectForKey:kSVWGFXMode]) != nil)
+            [self setGfxMode:readObj];
+        if ((readObj=[prefs objectForKey:kSVWEnableSubtitles]) != nil)
+            [self setSubtitlesEnabled:[readObj boolValue]];
+        if ((readObj=[prefs objectForKey:kSVWLanguage]) != nil)
+            [self setGameLanguage:readObj];
+        if ((readObj=[prefs objectForKey:kSVWMusicVolume]) != nil)
+            [self setMusicVolume:[readObj unsignedIntegerValue]];
+        if ((readObj=[prefs objectForKey:kSVWSFXVolume]) != nil)
+            [self setSfxVolume:[readObj unsignedIntegerValue]];
+        if ((readObj=[prefs objectForKey:kSVWSpeechVolume]) != nil)
+            [self setSpeechVolume:[readObj unsignedIntegerValue]];
+        if ((readObj=[prefs objectForKey:kSVWExtraArguments]) != nil)
+            [self setExtraArguments:readObj];
+        if ((readObj=[prefs objectForKey:kSVWEnableSw3DRenderer]) != nil)
+            [self setSw3DRenderer:[readObj boolValue]];
+        if ((readObj=[prefs objectForKey:kSVWEnableFpsCounter]) != nil)
+            [self setFpsCounterEnabled:[readObj boolValue]];
+        if ((readObj=[prefs objectForKey:kSVWEnableSpeech]) != nil)
+            [self setSpeechEnabled:[readObj boolValue]];
+    } else {
         [self setLoaded:NO];
         return [self isLoaded];
     }
@@ -317,7 +317,7 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
             //                          nil];
             *errorOut = nil; // FIXME
             //*errorOut = [NSError errorWithDomain:myDomain code:myCode userInfo:userInfo];
-		}
+        }
         return nil;
     }
     
