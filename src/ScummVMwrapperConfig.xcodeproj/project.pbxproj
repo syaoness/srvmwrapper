@@ -34,6 +34,7 @@
 		16BDBC4F14D2A10700193F7C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 16BDBC4D14D2A10700193F7C /* Credits.rtf */; };
 		16BDBC5214D2A10700193F7C /* SVWAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BDBC5114D2A10700193F7C /* SVWAppDelegate.m */; };
 		16BDBC5514D2A10800193F7C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16BDBC5314D2A10800193F7C /* MainMenu.xib */; };
+		16C3B1C5150E151900DE83C7 /* NSObject+SVWBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C3B1C4150E151900DE83C7 /* NSObject+SVWBindings.m */; };
 		16F7D19F12B122B3002AD0C7 /* SVWSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7D19E12B122B3002AD0C7 /* SVWSettings.m */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* ScummVMwrapperConfigAppDelegate.m */; };
@@ -120,6 +121,8 @@
 		16BDBC5014D2A10700193F7C /* SVWAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SVWAppDelegate.h; sourceTree = "<group>"; };
 		16BDBC5114D2A10700193F7C /* SVWAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SVWAppDelegate.m; sourceTree = "<group>"; };
 		16BDBC5414D2A10800193F7C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		16C3B1C3150E151900DE83C7 /* NSObject+SVWBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+SVWBindings.h"; path = "ScummVMwrapperConfig/Classes/NSObject+SVWBindings.h"; sourceTree = SOURCE_ROOT; };
+		16C3B1C4150E151900DE83C7 /* NSObject+SVWBindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SVWBindings.m"; path = "ScummVMwrapperConfig/Classes/NSObject+SVWBindings.m"; sourceTree = SOURCE_ROOT; };
 		16F7D19D12B122B3002AD0C7 /* SVWSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWSettings.h; sourceTree = "<group>"; };
 		16F7D19E12B122B3002AD0C7 /* SVWSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWSettings.m; sourceTree = "<group>"; };
 		16FE983E14D155C0001971A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -169,6 +172,8 @@
 				16F7D19E12B122B3002AD0C7 /* SVWSettings.m */,
 				1626D4E814AA179400A07013 /* SVWWrapperUpdater.h */,
 				1626D4E914AA179400A07013 /* SVWWrapperUpdater.m */,
+				16C3B1C3150E151900DE83C7 /* NSObject+SVWBindings.h */,
+				16C3B1C4150E151900DE83C7 /* NSObject+SVWBindings.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -458,6 +463,7 @@
 				1626D4FB14AA24C200A07013 /* zip.c in Sources */,
 				1626D50014AA285A00A07013 /* ZipFile.m in Sources */,
 				1626D50314AA337F00A07013 /* CocoaCryptoHashing.m in Sources */,
+				16C3B1C5150E151900DE83C7 /* NSObject+SVWBindings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

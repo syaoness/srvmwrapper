@@ -6,6 +6,7 @@
  *******************************************************************************************************************/
 
 #import "SVWDropImageView.h"
+#import "NSObject+SVWBindings.h"
 
 #pragma mark Implementation
 @implementation SVWDropImageView
@@ -17,6 +18,7 @@
 
 - (void)setFilePath:(NSString *)aFilePath {
     if (aFilePath != filePath) {
+        //[self willChangeValueForKey:@"filePath"];
         if (filePath != nil)
             [filePath release];
         if (aFilePath == nil) {
@@ -30,10 +32,17 @@
                 filePath = nil;
             }
         }
+        //[self didChangeValueForKey:@"filePath"];
+        [self propagateValue:filePath forBinding:@"filePath"];
     }
 }
 
 #pragma mark Object creation, initialization, destruction
++ (void)initialize {
+    NSLog(@"Called initialize");
+    [self exposeBinding:@"filePath"];
+}
+
 - (id)init {
     self = [super init];
     if (self) {

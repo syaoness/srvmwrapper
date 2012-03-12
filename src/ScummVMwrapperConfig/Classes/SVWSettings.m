@@ -402,7 +402,7 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
     [prefs writeToFile:[[[wrapperBundle bundlePath] stringByAppendingPathComponent:@"Contents"] 
                         stringByAppendingPathComponent:@"Info.plist"] atomically: YES];
 
-    if ([[self gameIconPath] isEqualToString:[[self class] defaultIconPath]]) {
+    if (![[self gameIconPath] isEqualToString:[[self class] defaultIconPath]]) {
         [filemanager removeItemAtPath:[NSString stringWithFormat:kOldIcns, [wrapperBundle resourcePath]] error:nil];
         [filemanager moveItemAtPath:[[self class] defaultIconPath] toPath:[NSString stringWithFormat:kOldIcns,
                                                                            [wrapperBundle resourcePath]] error:nil];
