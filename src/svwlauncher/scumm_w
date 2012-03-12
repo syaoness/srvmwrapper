@@ -1,32 +1,37 @@
 #!/bin/bash
+#*******************************************************************************************************************
+#*                                     ScummVMwrapper :: svwlauncher                                               *
+#*******************************************************************************************************************
+#* File:             scumm_w                                                                                       *
+#* Copyright:        (c) 2010-2012 dotalux.com; syao                                                               *
+#*******************************************************************************************************************
 
 WRAPPEREXEDIR="$(dirname "$0")"
-echo $WRAPPEREXEDIR
 if [ "$(arch)" != "ppc" ]; then
-"${WRAPPEREXEDIR}/svwlauncher"
-exit $?
+    "${WRAPPEREXEDIR}/svwlauncher"
+    exit $?
 fi
 
 echo "ScummVMWrapper: Running in fallback shell mode"
 
 function GetFromInfoPlist {
-exec < "$1"
-while read LINE; do
-if [ "$OLDLINE" == "<key>$2</key>" ]; then
-if [ "$3" == "string" ]; then
-TEMPVAR=${LINE#<string>}
-TEMPVAR=${TEMPVAR%</string>}
-elif [ "$3" == "integer" ]; then
-TEMPVAR=${LINE#<integer>}
-TEMPVAR=${TEMPVAR%</integer>}
-elif [ "$3" == "boolean" ]; then
-TEMPVAR=${LINE#<}
-TEMPVAR=${TEMPVAR%/>}
-fi
-fi
-OLDLINE="$LINE"
-done
-echo "$TEMPVAR"
+    exec < "$1"
+    while read LINE; do
+        if [ "$OLDLINE" == "<key>$2</key>" ]; then
+            if [ "$3" == "string" ]; then
+                TEMPVAR=${LINE#<string>}
+                TEMPVAR=${TEMPVAR%</string>}
+            elif [ "$3" == "integer" ]; then
+                TEMPVAR=${LINE#<integer>}
+                TEMPVAR=${TEMPVAR%</integer>}
+            elif [ "$3" == "boolean" ]; then
+                TEMPVAR=${LINE#<}
+                TEMPVAR=${TEMPVAR%/>}
+            fi
+        fi
+        OLDLINE="$LINE"
+    done
+    echo "$TEMPVAR"
 }
 
 MACOSFOLD="${WRAPPEREXEDIR}"
@@ -59,62 +64,91 @@ ENGINETYPE="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWEngineType" "integer")"
 # NSString * const kSVWExtraArguments          = @"SVWExtraArguments";
 EXTRAARGS="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWExtraArguments" "string")"
 # NSString * const kSVWEnableSw3DRenderer      = @"SVWEnableSw3DRenderer";
+SW3DRENDERER="$(GetFromInfoPlist "${INFOPLISTFILE}" "kSVWEnableSw3DRenderer" "boolean")"
 # NSString * const kSVWEnableFpsCounter        = @"SVWEnableFpsCounter";
+FPSCOUNTER="$(GetFromInfoPlist "${INFOPLISTFILE}" "kSVWEnableFpsCounter" "boolean")"
 # NSString * const kSVWEnableSpeech            = @"SVWEnableSpeech";
-
-if [ "$ENGINETYPE" == "1" ]; then
-echo $ENGINETYPE
-osascript -e "display dialog \"You can't open this application because it doesn't support the architecture of your computer.\" buttons \"OK\" default button 1 with title \"Error\" with icon stop"
-exit 1
-fi
+ENABLESPEECH="$(GetFromInfoPlist "${INFOPLISTFILE}" "kSVWEnableSpeech" "boolean")"
 
 SAVEPATH="${SWMPREFIX}/saves"
 GAMEPATH="${SWMPREFIX}/game"
 
 if [ ! -f "${SAVEPATH}/.dontdeletethis" ]; then
-mkdir -p "${HOME}/Library/SVWrapper/${GAME_ID}" > /dev/null 2>&1
-/bin/ln -sfh "${HOME}/Library/SVWrapper/${GAME_ID}" "${SAVEPATH}" > /dev/null 2>&1
+    mkdir -p "${HOME}/Library/SVWrapper/${GAME_ID}" > /dev/null 2>&1
+    ln -sfh "${HOME}/Library/SVWrapper/${GAME_ID}" "${SAVEPATH}" > /dev/null 2>&1
 fi
+
+ADDITIONALPARAMS=""
 
 if [ "${FULLSCREENMODE}" == "true" ]; then
-ADDITIONALPARAMS=" --fullscreen"
-else
-ADDITIONALPARAMS=" --no-fullscreen"
-fi
-
-if [ "${ENABLESUBS}" == "true" ]; then
-ADDITIONALPARAMS="${ADDITIONALPARAMS} --subtitles"
-fi
-
-if [ -n "${GFXMODE}" ]; then
-ADDITIONALPARAMS="${ADDITIONALPARAMS} --gfx-mode=${GFXMODE}"
+    ADDITIONALPARAMS="${ADDITIONALPARAMS} --fullscreen"
 fi
 
 if [ -n "${LANGUAGE_ID}" ]; then
-ADDITIONALPARAMS="${ADDITIONALPARAMS} --language=${LANGUAGE_ID}"
+    ADDITIONALPARAMS="${ADDITIONALPARAMS} --language=${LANGUAGE_ID}"
 fi
 
 if [ -n "${MUSIC_VOLUME}" ]; then
-ADDITIONALPARAMS="${ADDITIONALPARAMS} --music-volume=${MUSIC_VOLUME}"
+    ADDITIONALPARAMS="${ADDITIONALPARAMS} --music-volume=${MUSIC_VOLUME}"
 fi
 
 if [ -n "${SFX_VOLUME}" ]; then
-ADDITIONALPARAMS="${ADDITIONALPARAMS} --sfx-volume=${SFX_VOLUME}"
+    ADDITIONALPARAMS="${ADDITIONALPARAMS} --sfx-volume=${SFX_VOLUME}"
 fi
 
 if [ -n "${SPEECH_VOLUME}" ]; then
-ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-volume=${SPEECH_VOLUME}"
+    ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-volume=${SPEECH_VOLUME}"
 fi
 
-if [ "${ASPECTRATIO}" == "true" ]; then
-ADDITIONALPARAMS="${ADDITIONALPARAMS} --aspect-ratio"
-fi
+
+case "$ENGINETYPE" in
+    "0")
+        if [ "${FULLSCREENMODE}" != "true" ]; then
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --no-fullscreen"
+        fi
+        if [ "${ENABLESUBS}" == "true" ]; then
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --subtitles"
+        fi
+        if [ -n "${GFXMODE}" ]; then
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --gfx-mode=${GFXMODE}"
+        fi
+        if [ "${ASPECTRATIO}" == "true" ]; then
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --aspect-ratio"
+        fi
+        ENGINEEXE="scummvm"
+    ;;
+    "1")
+        if [ "${SW3DRENDERER}" == "true" ]; then
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --soft-renderer=true"
+        else
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --soft-renderer=false"
+        fi
+        if [ "${FPSCOUNTER}" == "true" ]; then
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --show-fps=true"
+        else
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --show-fps=false"
+        fi
+        if [ "${ENABLESUBS}" == "true" -a "${ENABLESPEECH}" == "true" ]; then
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-mode=3"
+        elif [ "${ENABLESPEECH}" == "true" ]; then
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-mode=2"
+        elif [ "${ENABLESUBS}" == "true" ]; then
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-mode=1"
+        else
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-mode=0"
+        fi
+        ENGINEEXE="residualvm"
+    ;;
+    *)
+        osascript -e "display dialog \"You can't open this application because the engine it uses isn't supported.\" buttons \"OK\" default button 1 with title \"Error\" with icon stop"
+        exit 1
+esac
 
 if [ -n "${EXTRAARGS}" ]; then
 ADDITIONALPARAMS="${ADDITIONALPARAMS} ${EXTRAARGS}"
 fi
 
 echo "ScummvmWrapper: Starting ${DESCNAME}"
-"${MACOSFOLD}/scummvm" --savepath="$SAVEPATH" --path="$GAMEPATH" $ADDITIONALPARAMS $GAME_ID
+"${MACOSFOLD}/${ENGINEEXE}" --savepath="$SAVEPATH" --path="$GAMEPATH" $ADDITIONALPARAMS $GAME_ID
 echo "ScummvmWrapper: Finished ${DESCNAME}"
 
