@@ -383,6 +383,11 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
     [prefs setObject:[NSNumber numberWithUnsignedInteger:[self musicVolume]] forKey:kSVWMusicVolume];
     [prefs setObject:[NSNumber numberWithUnsignedInteger:[self sfxVolume]] forKey:kSVWSFXVolume];
     [prefs setObject:[NSNumber numberWithUnsignedInteger:[self speechVolume]] forKey:kSVWSpeechVolume];
+    [prefs setObject:[NSNumber numberWithUnsignedInteger:[self engineType]] forKey:kSVWEngineType];
+    [prefs setObject:[NSString stringWithString:[self extraArguments]] forKey:kSVWExtraArguments];
+    [prefs setObject:[NSNumber numberWithBool:[self isSw3DRenderer]] forKey:kSVWEnableSw3DRenderer];
+    [prefs setObject:[NSNumber numberWithBool:[self isFpsCounterEnabled]] forKey:kSVWEnableFpsCounter];
+    [prefs setObject:[NSNumber numberWithBool:[self isSpeechEnabled]] forKey:kSVWEnableSpeech];
 
     if ([self saveGameLocation] == kSaveGameLocationLibrary) {
         // TODO: Optimize this by adding an utility function to get the saves or game path (also useful in AppController)
