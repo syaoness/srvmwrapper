@@ -31,7 +31,6 @@
     /// ResidualVM
     BOOL sw3DRenderer;
     BOOL fpsCounterEnabled;
-    BOOL speechEnabled;
 }
 
 #pragma mark -
@@ -59,7 +58,6 @@
 #pragma mark ResidualVM
 @property (assign, getter=isSw3DRenderer) BOOL sw3DRenderer;
 @property (assign, getter=isFpsCounterEnabled) BOOL fpsCounterEnabled;
-@property (assign, getter=isSpeechEnabled) BOOL speechEnabled;
 
 
 //- (NSString *)systemCommand:(NSString *)command; //run system command with output returned

@@ -67,8 +67,6 @@ EXTRAARGS="$(GetFromInfoPlist "${INFOPLISTFILE}" "SVWExtraArguments" "string")"
 SW3DRENDERER="$(GetFromInfoPlist "${INFOPLISTFILE}" "kSVWEnableSw3DRenderer" "boolean")"
 # NSString * const kSVWEnableFpsCounter        = @"SVWEnableFpsCounter";
 FPSCOUNTER="$(GetFromInfoPlist "${INFOPLISTFILE}" "kSVWEnableFpsCounter" "boolean")"
-# NSString * const kSVWEnableSpeech            = @"SVWEnableSpeech";
-ENABLESPEECH="$(GetFromInfoPlist "${INFOPLISTFILE}" "kSVWEnableSpeech" "boolean")"
 
 SAVEPATH="${SWMPREFIX}/saves"
 GAMEPATH="${SWMPREFIX}/game"
@@ -82,6 +80,8 @@ ADDITIONALPARAMS=""
 
 if [ "${FULLSCREENMODE}" == "true" ]; then
     ADDITIONALPARAMS="${ADDITIONALPARAMS} --fullscreen"
+else
+    ADDITIONALPARAMS="${ADDITIONALPARAMS} --no-fullscreen"
 fi
 
 if [ -n "${LANGUAGE_ID}" ]; then
@@ -100,15 +100,13 @@ if [ -n "${SPEECH_VOLUME}" ]; then
     ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-volume=${SPEECH_VOLUME}"
 fi
 
+if [ "${ENABLESUBS}" == "true" ]; then
+    ADDITIONALPARAMS="${ADDITIONALPARAMS} --subtitles"
+fi
+
 
 case "$ENGINETYPE" in
     "0")
-        if [ "${FULLSCREENMODE}" != "true" ]; then
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --no-fullscreen"
-        fi
-        if [ "${ENABLESUBS}" == "true" ]; then
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --subtitles"
-        fi
         if [ -n "${GFXMODE}" ]; then
             ADDITIONALPARAMS="${ADDITIONALPARAMS} --gfx-mode=${GFXMODE}"
         fi
@@ -119,23 +117,14 @@ case "$ENGINETYPE" in
     ;;
     "1")
         if [ "${SW3DRENDERER}" == "true" ]; then
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --soft-renderer=true"
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --soft-renderer"
         else
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --soft-renderer=false"
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --no-soft-renderer"
         fi
         if [ "${FPSCOUNTER}" == "true" ]; then
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --show-fps=true"
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --show-fps"
         else
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --show-fps=false"
-        fi
-        if [ "${ENABLESUBS}" == "true" -a "${ENABLESPEECH}" == "true" ]; then
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-mode=3"
-        elif [ "${ENABLESPEECH}" == "true" ]; then
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-mode=2"
-        elif [ "${ENABLESUBS}" == "true" ]; then
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-mode=1"
-        else
-            ADDITIONALPARAMS="${ADDITIONALPARAMS} --speech-mode=0"
+            ADDITIONALPARAMS="${ADDITIONALPARAMS} --no-show-fps"
         fi
         ENGINEEXE="residualvm"
     ;;

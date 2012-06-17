@@ -47,7 +47,6 @@ extern NSString * const kCFBundleShortVersionString;
     /// ResidualVM
     BOOL sw3DRenderer;
     BOOL fpsCounterEnabled;
-    BOOL speechEnabled;
 }
 
 #pragma mark Methods
@@ -91,6 +90,5 @@ extern NSString * const kCFBundleShortVersionString;
 #pragma mark ResidualVM
 @property (assign, getter=isSw3DRenderer) BOOL sw3DRenderer;
 @property (assign, getter=isFpsCounterEnabled) BOOL fpsCounterEnabled;
-@property (assign, getter=isSpeechEnabled) BOOL speechEnabled;
 
 @end

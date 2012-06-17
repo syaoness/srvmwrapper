@@ -22,7 +22,6 @@ NSString * const kSVWEngineType              = @"SVWEngineType";
 NSString * const kSVWExtraArguments          = @"SVWExtraArguments";
 NSString * const kSVWEnableSw3DRenderer      = @"SVWEnableSw3DRenderer";
 NSString * const kSVWEnableFpsCounter        = @"SVWEnableFpsCounter";
-NSString * const kSVWEnableSpeech            = @"SVWEnableSpeech";
 
 NSString * const kSavesDir                   = @"%@/saves";
 NSString * const kGameDir                    = @"%@/game";
@@ -62,7 +61,6 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
         extraArguments = [[NSString alloc] initWithString:@""];
         sw3DRenderer = NO;
         fpsCounterEnabled = NO;
-        speechEnabled = YES;
     }
     return self;
 }
@@ -108,7 +106,7 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 #pragma unused (aNotification)
-    NSLog(@"Did Finish Launching");
+    NSLog(@"Did Finish Launching"); // FIXME: Remove
     if ([self isConfigRun]) {
         [self runConfig];
         [NSApp terminate:self];
@@ -131,42 +129,35 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
     
     if ([self isFullScreenMode])
         [args addObject:@"--fullscreen"];
-    
+    else
+        [args addObject:@"--no-fullscreen"];
+
     if ([self gameLanguage] != nil && [[self gameLanguage] length] > 0)
         [args addObject:[@"--language=" stringByAppendingString:[self gameLanguage]]];
     
+    if ([self isSubtitlesEnabled])
+        [args addObject:@"--subtitles"];
+
     NSString *engineExe = nil;
-    NSUInteger range = 0;
+    NSUInteger range = 255;
     switch ([self engineType]) {
         case kEngineTypeScummVM:
             engineExe = kScummVMExe;
-            range = 255;
-            if ([self isSubtitlesEnabled])
-                [args addObject:@"--subtitles"];
             if ([self isAspectRatioCorrectionEnabled])
                 [args addObject:@"--aspect-ratio"];
             if ([self gfxMode] != nil && [[self gfxMode] length] > 0)
                 [args addObject:[@"--gfx-mode=" stringByAppendingString:[self gfxMode]]];
-            if (![self isFullScreenMode])
-                [args addObject:@"--no-fullscreen"];
             break;
         case kEngineTypeResidualVM:
             engineExe = kResidualVMExe;
-            range = 127;
             if ([self isFpsCounterEnabled])
-                [args addObject:@"--show-fps=true"];
+                [args addObject:@"--show-fps"];
             else
-                [args addObject:@"--show-fps=false"];
+                [args addObject:@"--no-show-fps"];
             if ([self isSw3DRenderer])
-                [args addObject:@"--soft-renderer=true"];
+                [args addObject:@"--soft-renderer"];
             else
-                [args addObject:@"--soft-renderer=false"];
-            int speechMode = 0;
-            if ([self isSubtitlesEnabled])
-                speechMode |= 1;
-            if ([self isSpeechEnabled])
-                speechMode |= 2;
-            [args addObject:[NSString stringWithFormat:@"--speech-mode=%d", speechMode]];
+                [args addObject:@"--no-soft-renderer"];
             break;
     }
     
@@ -261,8 +252,6 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
             [self setSw3DRenderer:[readObj boolValue]];
         if ((readObj=[prefs objectForKey:kSVWEnableFpsCounter]) != nil)
             [self setFpsCounterEnabled:[readObj boolValue]];
-        if ((readObj=[prefs objectForKey:kSVWEnableSpeech]) != nil)
-            [self setSpeechEnabled:[readObj boolValue]];
     } else {
         [self setLoaded:NO];
         return [self isLoaded];
@@ -295,7 +284,6 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
     [self setSpeechVolume:192];
     [self setSw3DRenderer:NO];
     [self setFpsCounterEnabled:NO];
-    [self setSpeechEnabled:YES];
     [self setExtraArguments:[NSString stringWithString:@""]];
 }
 
@@ -372,7 +360,6 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
 #pragma mark ResidualVM
 @synthesize sw3DRenderer;
 @synthesize fpsCounterEnabled;
-@synthesize speechEnabled;
 
 @end
 

@@ -24,7 +24,6 @@ NSString * const kSVWEngineType              = @"SVWEngineType";
 NSString * const kSVWExtraArguments          = @"SVWExtraArguments";
 NSString * const kSVWEnableSw3DRenderer      = @"SVWEnableSw3DRenderer";
 NSString * const kSVWEnableFpsCounter        = @"SVWEnableFpsCounter";
-NSString * const kSVWEnableSpeech            = @"SVWEnableSpeech";
 
 NSString * const kGameIcns                   = @"%@/game.icns";
 NSString * const kOldIcns                    = @"%@/old.icns";
@@ -80,7 +79,6 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
 #pragma mark ResidualVM
 @synthesize sw3DRenderer;
 @synthesize fpsCounterEnabled;
-@synthesize speechEnabled;
 
 #pragma mark -
 #pragma mark Object creation, initialization, desctruction
@@ -267,7 +265,6 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
         extraArguments = [[NSString alloc] initWithString:@""];
         sw3DRenderer = NO;
         fpsCounterEnabled = NO;
-        speechEnabled = YES;
 
         [self loadData];
     }
@@ -341,8 +338,6 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
             [self setSw3DRenderer:[readObj boolValue]];
         if ((readObj=[prefs objectForKey:kSVWEnableFpsCounter]) != nil)
             [self setFpsCounterEnabled:[readObj boolValue]];
-        if ((readObj=[prefs objectForKey:kSVWEnableSpeech]) != nil)
-            [self setSpeechEnabled:[readObj boolValue]];
     }
 
     if (([filemanager fileExistsAtPath:[NSString stringWithFormat:kSavesPlaceholder, [wrapperBundle resourcePath]]]))
@@ -387,7 +382,6 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
     [prefs setObject:[NSString stringWithString:[self extraArguments]] forKey:kSVWExtraArguments];
     [prefs setObject:[NSNumber numberWithBool:[self isSw3DRenderer]] forKey:kSVWEnableSw3DRenderer];
     [prefs setObject:[NSNumber numberWithBool:[self isFpsCounterEnabled]] forKey:kSVWEnableFpsCounter];
-    [prefs setObject:[NSNumber numberWithBool:[self isSpeechEnabled]] forKey:kSVWEnableSpeech];
 
     if ([self saveGameLocation] == kSaveGameLocationLibrary) {
         // TODO: Optimize this by adding an utility function to get the saves or game path (also useful in AppController)
@@ -435,7 +429,6 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
     [self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
     [self setSw3DRenderer:NO];
     [self setFpsCounterEnabled:NO];
-    [self setSpeechEnabled:YES];
     [self setExtraArguments:[NSString stringWithString:@""]];
 //  [self setEdited:NO];
 }
