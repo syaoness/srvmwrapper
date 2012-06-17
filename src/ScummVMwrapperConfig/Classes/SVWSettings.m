@@ -364,22 +364,44 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
 
     NSFileManager *filemanager = [NSFileManager defaultManager];
 
-    [prefs setObject:[self gameName] forKey:kCFBundleDisplayName];
+    if ([self gameName] != nil && ![[self gameName] isEqualToString:@""])
+        [prefs setObject:[NSString stringWithString:[self gameName]] forKey:kCFBundleDisplayName];
+    else
+        [prefs removeObjectForKey:kCFBundleDisplayName];
+    
     NSString *safeGameID = [self gameID];
     if ([[safeGameID stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""])
         safeGameID = [NSString stringWithString:kDefaultBundleNameV3];
     [prefs setObject:safeGameID forKey:kCFBundleName];
     [prefs setObject:[NSString stringWithFormat:@"com.dotalux.scummwrapper.%@", safeGameID] forKey:kCFBundleIdentifier];
+
     [prefs setObject:[NSNumber numberWithBool:[self isFullScreenMode]] forKey:kSVWFullScreen];
+    
     [prefs setObject:[NSNumber numberWithBool:[self isAspectRatioCorrectionEnabled]] forKey:kSVWAspectRatio];
-    [prefs setObject:[self gfxMode] forKey:kSVWGFXMode];
+    
+    if ([self gfxMode] != nil && ![[self gfxMode] isEqualToString:@""])
+        [prefs setObject:[NSString stringWithString:[self gfxMode]] forKey:kSVWGFXMode];
+    else
+        [prefs removeObjectForKey:kSVWGFXMode];
+
     [prefs setObject:[NSNumber numberWithBool:[self isSubtitlesEnabled]] forKey:kSVWEnableSubtitles];
-    [prefs setObject:[self gameLanguage] forKey:kSVWLanguage];
+
+    if ([self gameLanguage] != nil && ![[self gameLanguage] isEqualToString:@""])
+        [prefs setObject:[NSString stringWithString:[self gameLanguage]] forKey:kSVWLanguage];
+    else
+        [prefs removeObjectForKey:kSVWLanguage];
+
     [prefs setObject:[NSNumber numberWithUnsignedInteger:[self musicVolume]] forKey:kSVWMusicVolume];
     [prefs setObject:[NSNumber numberWithUnsignedInteger:[self sfxVolume]] forKey:kSVWSFXVolume];
     [prefs setObject:[NSNumber numberWithUnsignedInteger:[self speechVolume]] forKey:kSVWSpeechVolume];
+
     [prefs setObject:[NSNumber numberWithUnsignedInteger:[self engineType]] forKey:kSVWEngineType];
-    [prefs setObject:[NSString stringWithString:[self extraArguments]] forKey:kSVWExtraArguments];
+
+    if ([self extraArguments] != nil && ![[self extraArguments] isEqualToString:@""])
+        [prefs setObject:[NSString stringWithString:[self extraArguments]] forKey:kSVWExtraArguments];
+    else
+        [prefs removeObjectForKey:kSVWExtraArguments];
+
     [prefs setObject:[NSNumber numberWithBool:[self isSw3DRenderer]] forKey:kSVWEnableSw3DRenderer];
     [prefs setObject:[NSNumber numberWithBool:[self isFpsCounterEnabled]] forKey:kSVWEnableFpsCounter];
 
