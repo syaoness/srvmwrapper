@@ -137,6 +137,8 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
     
     if ([self isSubtitlesEnabled])
         [args addObject:@"--subtitles"];
+    else
+        [args addObject:@"--no-subtitles"];
 
     NSString *engineExe = nil;
     NSUInteger range = 255;

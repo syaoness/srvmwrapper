@@ -102,6 +102,8 @@ fi
 
 if [ "${ENABLESUBS}" == "true" ]; then
     ADDITIONALPARAMS="${ADDITIONALPARAMS} --subtitles"
+else
+    ADDITIONALPARAMS="${ADDITIONALPARAMS} --no-subtitles"
 fi
 
 
