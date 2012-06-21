@@ -70,6 +70,7 @@ FPSCOUNTER="$(GetFromInfoPlist "${INFOPLISTFILE}" "kSVWEnableFpsCounter" "boolea
 
 SAVEPATH="${SWMPREFIX}/saves"
 GAMEPATH="${SWMPREFIX}/game"
+THEMEPATH="${SVWPREFIX}/themes"
 
 if [ ! -f "${SAVEPATH}/.dontdeletethis" ]; then
     mkdir -p "${HOME}/Library/SVWrapper/${GAME_ID}" > /dev/null 2>&1
@@ -140,6 +141,6 @@ ADDITIONALPARAMS="${ADDITIONALPARAMS} ${EXTRAARGS}"
 fi
 
 echo "ScummvmWrapper: Starting ${DESCNAME}"
-"${MACOSFOLD}/${ENGINEEXE}" --savepath="$SAVEPATH" --path="$GAMEPATH" $ADDITIONALPARAMS $GAME_ID
+"${MACOSFOLD}/${ENGINEEXE}" --savepath="$SAVEPATH" --themepath="$THEMEPATH" --path="$GAMEPATH" $ADDITIONALPARAMS $GAME_ID
 echo "ScummvmWrapper: Finished ${DESCNAME}"
 

@@ -25,6 +25,7 @@ NSString * const kSVWEnableFpsCounter        = @"SVWEnableFpsCounter";
 
 NSString * const kSavesDir                   = @"%@/saves";
 NSString * const kGameDir                    = @"%@/game";
+NSString * const kThemeDir                   = @"%@/themes";
 NSString * const kSavesPlaceholder           = @"%@/saves/.dontdeletethis";
 
 NSString * const kScummVMExe                 = @"scummvm";
@@ -124,6 +125,8 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
     
     [args addObject:[NSString stringWithFormat:@"--savepath=%@",
                      [NSString stringWithFormat:kSavesDir, [[NSBundle mainBundle] resourcePath]]]];
+    [args addObject:[NSString stringWithFormat:@"--themepath=%@",
+                     [NSString stringWithFormat:kThemeDir, [[NSBundle mainBundle] resourcePath]]]];
     [args addObject:[NSString stringWithFormat:@"--path=%@",
                      [NSString stringWithFormat:kGameDir, [[NSBundle mainBundle] resourcePath]]]];
     
