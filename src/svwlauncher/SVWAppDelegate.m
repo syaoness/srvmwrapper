@@ -281,7 +281,7 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
     [self setGameID:@""];
     [self setFullScreenMode:NO];
     [self setAspectRatioCorrectionEnabled:NO];
-    [self setGfxMode:[NSString stringWithString:@""]];
+    [self setGfxMode:@""];
     [self setSubtitlesEnabled:YES];
     [self setGameLanguage:@""];
     [self setMusicVolume:192];
@@ -289,7 +289,7 @@ NSString * const kApplicationSupportBaseDir  = @"SVWrapper";
     [self setSpeechVolume:192];
     [self setSw3DRenderer:NO];
     [self setFpsCounterEnabled:NO];
-    [self setExtraArguments:[NSString stringWithString:@""]];
+    [self setExtraArguments:@""];
 }
 
 - (NSString *)findOrCreateDirectory:(NSSearchPathDirectory)searchPathDirectory

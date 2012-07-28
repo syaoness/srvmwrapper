@@ -451,7 +451,7 @@ NSString * const kDefaultBundleNameV3        = @"svwlauncher";
     [self setGameIconPath:[NSString stringWithString:[[self class] defaultIconPath]]];
     [self setSw3DRenderer:NO];
     [self setFpsCounterEnabled:NO];
-    [self setExtraArguments:[NSString stringWithString:@""]];
+    [self setExtraArguments:@""];
 //  [self setEdited:NO];
 }
 
